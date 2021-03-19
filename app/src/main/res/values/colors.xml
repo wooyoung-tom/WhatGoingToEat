@@ -11,8 +11,20 @@
     <color name="carnation">#FE5C5D</color>
     
     <color name="apricot">#ED9966</color>
+    <color name="apricot_alpha_80">#CCED9966</color>
 
     <color name="energy_yellow">#F3E15E</color>
 
     <color name="transparent">#00000000</color>
+
+    <color name="dusty_gray">#999999</color>
+    <color name="dusty_gray_alpha_40">#66999999</color>
+
+    <color name="dorado">#555555</color>
+    <color name="silver">#CCCCCC</color>
+
+    <color name="silver_chalice">#9F9F9F</color>
+    <color name="silver_chalice_light">#AAAAAA</color>
+
+    <color name="gray">#7F7F7F</color>
 </resources>

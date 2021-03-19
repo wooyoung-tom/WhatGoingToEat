@@ -1,10 +1,10 @@
-package tom.dev.whatgoingtoeat.ui
+package tom.dev.whatgoingtoeat
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(): ViewModel() {
 
 }
