@@ -4,5 +4,8 @@
     <string name="string_hint_sign_in_name">Name</string>
     <string name="string_title_sign_in">Sign In</string>
     <string name="string_hint_sign_in_team_name">Team Name</string>
-    <string name="string_btn_sign_in">Sign In</string>
+    <string name="string_text_need_to_sign_up">Simple Sign Up is needed.</string>
+
+    <string name="string_title_sign_up">Sign Up</string>
+    <string name="string_team_title_product">Product</string>
 </resources>

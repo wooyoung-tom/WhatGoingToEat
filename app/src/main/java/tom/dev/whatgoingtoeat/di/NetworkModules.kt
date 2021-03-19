@@ -1,16 +1,12 @@
-package tom.dev.whatgoingtoeat
+package tom.dev.whatgoingtoeat.di
 
-import android.os.Build
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.scopes.ActivityScoped
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import tom.dev.whatgoingtoeat.BuildConfig
 import javax.inject.Singleton
 
 @Module
@@ -18,7 +14,7 @@ import javax.inject.Singleton
 object NetworkModules {
 
     @Provides
-    fun provideBaseUrl() = "http://92fdac950869.ngrok.io"
+    fun provideBaseUrl() = "http://de8917581bb8.ngrok.io"
 
     @Singleton
     @Provides

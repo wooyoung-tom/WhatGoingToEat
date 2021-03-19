@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="@string/string_title_sign_in"
+        android:text="@string/string_title_sign_up"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         android:textColor="@color/apricot_alpha_80"
         android:textStyle="bold"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_sign_in_name"
+        android:id="@+id/til_sign_up_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,42 +30,36 @@
         app:startIconDrawable="@drawable/ic_baseline_person_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_sign_in_name"
+            android:id="@+id/et_sign_up_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_sign_up_team_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="18dp"
+        android:hint="@string/string_hint_sign_in_team_name"
+        android:textColorHint="@color/dusty_gray"
+        app:layout_constraintTop_toBottomOf="@id/til_sign_up_name"
+        app:startIconDrawable="@drawable/ic_baseline_supervisor_account_24">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/auto_sign_up_team_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
-        android:id="@+id/btn_sign_in"
+        android:id="@+id/btn_sign_up"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_marginHorizontal="18dp"
         android:layout_marginTop="24dp"
-        android:text="@string/string_title_sign_in"
-        app:layout_constraintTop_toBottomOf="@id/til_sign_in_name" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_sign_in">
-
-        <TextView
-            android:id="@+id/tv_sign_in_to_sign_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/string_text_need_to_sign_up" />
-
-        <Button
-            android:id="@+id/btn_sign_up"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:text="@string/string_title_sign_up" />
-    </LinearLayout>
+        android:text="@string/string_title_sign_up"
+        app:layout_constraintTop_toBottomOf="@id/til_sign_up_team_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,23 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="tom.dev.whatgoingtoeat.ui.SignInFragment"
+        android:name="tom.dev.whatgoingtoeat.ui.sign_in.SignInFragment"
         android:label="SignInFragment"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/fragment_open_enter" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="tom.dev.whatgoingtoeat.ui.sign_up.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_pop"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popUpTo="@id/signUpFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
