@@ -26,9 +26,7 @@ allprojects {
         jcenter()
 
         // Naver Maps Repository
-        maven {
-            url 'https://naver.jfrog.io/artifactory/maven/'
-        }
+        maven { url 'https://naver.jfrog.io/artifactory/maven/' }
     }
 }
 
