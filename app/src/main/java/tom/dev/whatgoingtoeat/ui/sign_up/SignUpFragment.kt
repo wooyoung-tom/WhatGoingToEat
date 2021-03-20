@@ -28,7 +28,6 @@ class SignUpFragment : Fragment() {
         super.onResume()
 
         setTeamNameDropDownMenu()
-
         setSignUpButtonClickListener()
     }
 
