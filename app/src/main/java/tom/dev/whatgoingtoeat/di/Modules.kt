@@ -4,7 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -12,14 +12,15 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import tom.dev.whatgoingtoeat.BuildConfig
 import tom.dev.whatgoingtoeat.repository.UserRepository
+import tom.dev.whatgoingtoeat.repository.UserRepositoryImpl
 import tom.dev.whatgoingtoeat.service.UserService
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 object NetworkModules {
 
-    private const val BASE_URL = "http://de8917581bb8.ngrok.io"
+    private const val BASE_URL = "http://4e66705f52be.ngrok.io"
 
     @Provides
     @Singleton
@@ -45,4 +46,12 @@ object NetworkModules {
     @Provides
     @Singleton
     fun provideUserService(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModules {
+
+    @Binds
+    abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
 }

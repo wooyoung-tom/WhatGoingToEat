@@ -26,9 +26,10 @@
         android:layout_marginTop="24dp"
         android:hint="@string/string_hint_sign_in_name"
         android:textColorHint="@color/dusty_gray"
+        app:boxStrokeErrorColor="@color/carnation"
         app:errorEnabled="true"
+        app:errorIconTint="@color/carnation"
         app:errorTextColor="@color/carnation"
-        app:counterMaxLength="10"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_in_title"
         app:startIconDrawable="@drawable/ic_baseline_person_24">
 
@@ -48,28 +49,14 @@
         android:text="@string/string_title_sign_in"
         app:layout_constraintTop_toBottomOf="@id/til_sign_in_name" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_sign_up"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:orientation="horizontal"
+        android:text="@string/string_text_need_to_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_sign_in">
-
-        <TextView
-            android:id="@+id/tv_sign_in_to_sign_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/string_text_need_to_sign_up" />
-
-        <Button
-            android:id="@+id/btn_sign_up"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:text="@string/string_title_sign_up" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/btn_sign_in" />
 </androidx.constraintlayout.widget.ConstraintLayout>

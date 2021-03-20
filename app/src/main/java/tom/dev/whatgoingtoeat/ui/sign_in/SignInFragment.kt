@@ -32,6 +32,7 @@ class SignInFragment : Fragment() {
         super.onResume()
 
         setNameTextWatcher()
+
         setSignInButtonClickListener()
         setSignUpButtonClickListener()
 
@@ -52,7 +53,7 @@ class SignInFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 val length = s?.length ?: 0
 
-                if (length == 0 || length > 10) binding.btnSignIn.disable()
+                if (length == 0) binding.btnSignIn.disable()
                 else binding.btnSignIn.enable()
             }
         })
@@ -86,7 +87,7 @@ class SignInFragment : Fragment() {
 
         // 실패 시
         viewModel.failedToSignIn.observe(viewLifecycleOwner) {
-            binding.etSignInName.error = "Cannot found user, please sign up."
+            binding.tilSignInName.error = "Cannot found user, please sign up."
             binding.btnSignIn.disable()
         }
     }
