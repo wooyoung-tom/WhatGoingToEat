@@ -1,20 +1,22 @@
 package tom.dev.whatgoingtoeat.ui.sign_up
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentSignUpBinding
-import tom.dev.whatgoingtoeat.utils.disable
-import tom.dev.whatgoingtoeat.utils.enable
+import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
+
+    private val viewModel: SignUpViewModel by viewModels()
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
@@ -29,6 +31,12 @@ class SignUpFragment : Fragment() {
 
         setTeamNameDropDownMenu()
         setSignUpButtonClickListener()
+
+        // Observer Register
+        setNameDuplicateEventObserver()
+        setNameLengthInvalidEventObserver()
+        setTeamNameNotSelectedEventObserver()
+        setCompleteSignUpEventObserver()
     }
 
     // Destroy 시에 _binding null
@@ -49,11 +57,36 @@ class SignUpFragment : Fragment() {
             val name = getName()
             val teamName = getTeamName()
 
-
+            viewModel.signUp(name, teamName)
         }
     }
 
     private fun getName() = binding.etSignUpName.text.toString()
 
     private fun getTeamName() = binding.autoSignUpTeamName.text.toString()
+
+    private fun setNameDuplicateEventObserver() {
+        viewModel.nameDuplicationEvent.observe(viewLifecycleOwner) {
+            binding.tilSignUpName.error = "중복된 이름이 존재합니다. 다른 이름으로 시도해주세요."
+        }
+    }
+
+    private fun setNameLengthInvalidEventObserver() {
+        viewModel.nameLengthInvalidEvent.observe(viewLifecycleOwner) {
+            binding.tilSignUpName.error = "글자수가 10자를 초과하였습니다."
+        }
+    }
+
+    private fun setTeamNameNotSelectedEventObserver() {
+        viewModel.teamNameNotSelectedEvent.observe(viewLifecycleOwner) {
+            binding.tilSignUpTeamName.error = "팀 이름을 선택하지 않았습니다."
+        }
+    }
+
+    private fun setCompleteSignUpEventObserver() {
+        viewModel.completeSignUpEvent.observe(viewLifecycleOwner) {
+            view?.showShortSnackBar("가입이 완료되었습니다.")
+            findNavController().navigate(R.id.action_signUpFragment_pop)
+        }
+    }
 }

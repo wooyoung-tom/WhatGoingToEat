@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="@string/string_title_sign_in"
+        android:text="@string/string_tile_en_sign_in"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         android:textColor="@color/apricot_alpha_80"
         android:textStyle="bold"

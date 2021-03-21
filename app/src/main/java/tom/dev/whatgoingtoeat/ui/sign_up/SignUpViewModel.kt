@@ -24,6 +24,12 @@ constructor(
     private val _exceptionOccurred: SingleLiveEvent<String> = SingleLiveEvent()
     val exceptionOccurred: LiveData<String> get() = _exceptionOccurred
 
+    private val _nameLengthInvalidEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val nameLengthInvalidEvent: LiveData<Any> get() = _nameLengthInvalidEvent
+
+    private val _teamNameNotSelectedEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val teamNameNotSelectedEvent: LiveData<Any> get() = _teamNameNotSelectedEvent
+
     private val _nameDuplicationEvent: SingleLiveEvent<Any> = SingleLiveEvent()
     val nameDuplicationEvent: LiveData<Any> get() = _nameDuplicationEvent
 
@@ -31,6 +37,17 @@ constructor(
     val completeSignUpEvent: LiveData<Any> get() = _completeSignUpEvent
 
     fun signUp(name: String, teamName: String) {
+        // 이름 길이가 10자를 넘어가게되면 invalid
+        if (name.length > 10) {
+            _nameLengthInvalidEvent.call()
+            return
+        }
+        // 팀 이름 고르지 않았다면
+        if (teamName.isEmpty() || teamName.isBlank()) {
+            _teamNameNotSelectedEvent.call()
+            return
+        }
+
         val newUser = User(name, teamName)
 
         compositeDisposable.add(

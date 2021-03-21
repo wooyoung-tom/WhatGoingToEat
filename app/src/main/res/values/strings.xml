@@ -1,11 +1,24 @@
 <resources>
     <string name="app_name">WhatGoingToEat</string>
 
-    <string name="string_hint_sign_in_name">Name</string>
-    <string name="string_title_sign_in">Sign In</string>
-    <string name="string_hint_sign_in_team_name">Team Name</string>
+    <string name="string_tile_en_sign_in">Sign In</string>
+    <string name="string_title_sign_in">로그인</string>
+    <string name="string_hint_sign_in_name">이름을 입력해주세요.</string>
+    <string name="string_hint_team_name">팀을 선택해주세요.</string>
     <string name="string_text_need_to_sign_up">Create new account</string>
 
-    <string name="string_title_sign_up">Sign Up</string>
+    <string name="string_title_en_sign_up">Sign Up</string>
+    <string name="string_title_sign_up">등록하기</string>
+
     <string name="string_team_title_product">Product</string>
+
+    <string-array name="category">
+        <item>한식</item>
+        <item>양식</item>
+        <item>일식</item>
+        <item>중식</item>
+        <item>분식</item>
+        <item>치킨∙피자</item>
+        <item>패스트푸드</item>
+    </string-array>
 </resources>
