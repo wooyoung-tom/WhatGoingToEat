@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import tom.dev.whatgoingtoeat.dto.UserRequest
+import tom.dev.whatgoingtoeat.dto.user.User
 import tom.dev.whatgoingtoeat.repository.UserRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import java.net.UnknownHostException
@@ -20,6 +20,11 @@ constructor(
 ) : ViewModel() {
 
     private val compositeDisposable by lazy { CompositeDisposable() }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
 
     private val _exceptionOccurred: SingleLiveEvent<String> = SingleLiveEvent()
     val exceptionOccurred: LiveData<String> get() = _exceptionOccurred
@@ -48,7 +53,7 @@ constructor(
             return
         }
 
-        val newUser = UserRequest(name, teamName)
+        val newUser = User(name, teamName)
 
         compositeDisposable.add(
             userRepository.signUp(newUser)
@@ -60,7 +65,7 @@ constructor(
                     else _completeSignUpEvent.call()
                 }, {
                     when (it.cause) {
-                        is UnknownHostException -> _exceptionOccurred.postValue("네트워크 ㅂㅅ됨")
+                        is UnknownHostException -> _exceptionOccurred.postValue("네트워크 오류가 발생했습니다.")
                     }
                 })
         )

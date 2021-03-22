@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import tom.dev.whatgoingtoeat.dto.UserRequest
+import tom.dev.whatgoingtoeat.dto.user.User
 import tom.dev.whatgoingtoeat.repository.UserRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import java.net.UnknownHostException
@@ -19,17 +19,22 @@ class SignInViewModel @Inject constructor(
 
     private val compositeDisposable by lazy { CompositeDisposable() }
 
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
+
     private val _exceptionOccurred: SingleLiveEvent<String> = SingleLiveEvent()
     val exceptionOccurred: LiveData<String> get() = _exceptionOccurred
 
     private val _failedToSignIn: SingleLiveEvent<Any> = SingleLiveEvent()
     val failedToSignIn: LiveData<Any> get() = _failedToSignIn
 
-    private val _needToRegisterHistory: SingleLiveEvent<UserRequest> = SingleLiveEvent()
-    val needToRegisterHistory: LiveData<UserRequest> get() = _needToRegisterHistory
+    private val _needToRegisterHistory: SingleLiveEvent<User> = SingleLiveEvent()
+    val needToRegisterHistory: LiveData<User> get() = _needToRegisterHistory
 
-    private val _successToSignIn: SingleLiveEvent<UserRequest> = SingleLiveEvent()
-    val successToSignIn: LiveData<UserRequest> get() = _successToSignIn
+    private val _successToSignIn: SingleLiveEvent<User> = SingleLiveEvent()
+    val successToSignIn: LiveData<User> get() = _successToSignIn
 
     // 로그인 함수
     fun signIn(name: String) {
@@ -46,7 +51,7 @@ class SignInViewModel @Inject constructor(
                     }
                 }, {
                     when (it.cause) {
-                        is UnknownHostException -> _exceptionOccurred.postValue("네트워크 ㅂㅅ됨")
+                        is UnknownHostException -> _exceptionOccurred.postValue("네트워크 오류가 발생했습니다.")
                     }
                 })
         )

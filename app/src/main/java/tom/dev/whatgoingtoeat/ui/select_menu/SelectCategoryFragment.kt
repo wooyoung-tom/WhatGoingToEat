@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
@@ -45,6 +46,8 @@ class SelectCategoryFragment : Fragment() {
         setCategoryListSelectionTracker()
 
         setSelectCategoryButtonClickListener()
+
+        observeSaveCategoryHistoryComplete()
     }
 
     private fun getCategoryList() = resources.getStringArray(R.array.category).toList()
@@ -84,7 +87,7 @@ class SelectCategoryFragment : Fragment() {
             } else {
                 val yesterdayStr = getYesterdayDateForString()
 
-                viewModel.completeSelectCategory()
+                viewModel.completeSelectCategory(user, yesterdayStr)
             }
         }
     }
@@ -96,5 +99,12 @@ class SelectCategoryFragment : Fragment() {
                 time = Date()
                 add(Calendar.DATE, -1)
             }.time).toString()
+    }
+
+    private fun observeSaveCategoryHistoryComplete() {
+        viewModel.saveCategoryHistoryComplete.observe(viewLifecycleOwner) {
+            Log.d("Category History", "$it")
+            findNavController().navigate(R.id.action_selectMenuFragment_to_selectResultFragment)
+        }
     }
 }

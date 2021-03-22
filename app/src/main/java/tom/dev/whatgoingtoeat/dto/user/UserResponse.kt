@@ -1,4 +1,4 @@
-package tom.dev.whatgoingtoeat.dto
+package tom.dev.whatgoingtoeat.dto.user
 
 data class UserResponse<out T>(
     val selected: Boolean,

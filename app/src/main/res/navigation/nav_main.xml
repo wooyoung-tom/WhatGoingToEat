@@ -18,6 +18,9 @@
             android:id="@+id/action_signInFragment_to_selectMenuFragment"
             app:destination="@id/selectMenuFragment"
             app:enterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_signInFragment_to_selectResultFragment"
+            app:destination="@id/selectResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -36,6 +39,14 @@
         tools:layout="@layout/fragment_select_category">
         <argument
             android:name="user"
-            app:argType="tom.dev.whatgoingtoeat.dto.UserRequest" />
+            app:argType="tom.dev.whatgoingtoeat.dto.user.User" />
+        <action
+            android:id="@+id/action_selectMenuFragment_to_selectResultFragment"
+            app:destination="@id/selectResultFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/selectResultFragment"
+        android:name="tom.dev.whatgoingtoeat.ui.select_result.SelectResultFragment"
+        android:label="SelectResultFragment"
+        tools:layout="@layout/fragment_select_result"/>
 </navigation>

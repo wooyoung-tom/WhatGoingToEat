@@ -1,12 +1,12 @@
 package tom.dev.whatgoingtoeat.repository
 
 import io.reactivex.Single
-import tom.dev.whatgoingtoeat.dto.UserResponse
-import tom.dev.whatgoingtoeat.dto.UserRequest
+import tom.dev.whatgoingtoeat.dto.user.UserResponse
+import tom.dev.whatgoingtoeat.dto.user.User
 
 interface UserRepository {
 
-    fun signIn(name: String): Single<UserResponse<UserRequest>>
+    fun signIn(name: String): Single<UserResponse<User>>
 
-    fun signUp(userRequest: UserRequest): Single<UserResponse<UserRequest>>
+    fun signUp(userRequest: User): Single<UserResponse<User>>
 }
