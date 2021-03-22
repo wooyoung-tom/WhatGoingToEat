@@ -2,6 +2,7 @@ package tom.dev.whatgoingtoeat.utils
 
 import android.view.View
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 
 fun Button.enable() {
@@ -13,5 +14,5 @@ fun Button.disable() {
 }
 
 fun View.showShortSnackBar(message: String) {
-    Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
+    Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
 }

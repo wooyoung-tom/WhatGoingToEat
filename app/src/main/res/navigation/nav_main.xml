@@ -31,7 +31,11 @@
     </fragment>
     <fragment
         android:id="@+id/selectMenuFragment"
-        android:name="tom.dev.whatgoingtoeat.ui.select_menu.SelectMenuFragment"
+        android:name="tom.dev.whatgoingtoeat.ui.select_menu.SelectCategoryFragment"
         android:label="SelectMenuFragment"
-        tools:layout="@layout/fragment_select_menu"/>
+        tools:layout="@layout/fragment_select_category">
+        <argument
+            android:name="user"
+            app:argType="tom.dev.whatgoingtoeat.dto.User" />
+    </fragment>
 </navigation>

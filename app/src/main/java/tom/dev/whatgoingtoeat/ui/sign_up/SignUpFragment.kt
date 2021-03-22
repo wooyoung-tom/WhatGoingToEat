@@ -85,7 +85,7 @@ class SignUpFragment : Fragment() {
 
     private fun setCompleteSignUpEventObserver() {
         viewModel.completeSignUpEvent.observe(viewLifecycleOwner) {
-            view?.showShortSnackBar("가입이 완료되었습니다.")
+            requireView().showShortSnackBar("가입이 완료되었습니다.")
             findNavController().navigate(R.id.action_signUpFragment_pop)
         }
     }

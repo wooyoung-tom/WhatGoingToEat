@@ -10,7 +10,8 @@
     <string name="string_title_en_sign_up">Sign Up</string>
     <string name="string_title_sign_up">등록하기</string>
 
-    <string name="string_team_title_product">Product</string>
+    <string name="string_title_select_category">Select Category</string>
+    <string name="string_complete_select_category">선택완료</string>
 
     <string-array name="category">
         <item>한식</item>
@@ -18,7 +19,8 @@
         <item>일식</item>
         <item>중식</item>
         <item>분식</item>
-        <item>치킨∙피자</item>
+        <item>치킨</item>
+        <item>피자</item>
         <item>패스트푸드</item>
     </string-array>
 </resources>

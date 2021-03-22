@@ -8,7 +8,7 @@
     app:cardBackgroundColor="@color/transparent"
     app:cardCornerRadius="12dp"
     app:cardElevation="0dp"
-    app:strokeColor="@color/silver_chalice_light"
+    app:strokeColor="@color/dorado"
     app:strokeWidth="1dp">
 
     <TextView
@@ -18,5 +18,6 @@
         android:layout_gravity="center"
         android:backgroundTint="@color/transparent"
         android:paddingVertical="12dp"
+        android:textColor="@color/dusty_gray"
         tools:text="카테고리" />
 </com.google.android.material.card.MaterialCardView>
