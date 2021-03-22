@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import tom.dev.whatgoingtoeat.dto.User
+import tom.dev.whatgoingtoeat.dto.UserRequest
 import tom.dev.whatgoingtoeat.repository.UserRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import java.net.UnknownHostException
@@ -48,7 +48,7 @@ constructor(
             return
         }
 
-        val newUser = User(name, teamName)
+        val newUser = UserRequest(name, teamName)
 
         compositeDisposable.add(
             userRepository.signUp(newUser)

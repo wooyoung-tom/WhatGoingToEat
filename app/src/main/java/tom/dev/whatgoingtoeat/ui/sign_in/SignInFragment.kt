@@ -82,7 +82,11 @@ class SignInFragment : Fragment() {
     private fun observeSignInResult() {
         // 성공 시
         viewModel.successToSignIn.observe(viewLifecycleOwner) {
-            // 다음 화면으로 이동
+
+        }
+
+        viewModel.needToRegisterHistory.observe(viewLifecycleOwner) {
+            // 카테고리 고르는 화면으로 이동
             val action = SignInFragmentDirections.actionSignInFragmentToSelectMenuFragment(it)
             findNavController().navigate(action)
         }

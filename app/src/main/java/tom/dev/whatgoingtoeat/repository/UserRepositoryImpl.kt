@@ -1,8 +1,8 @@
 package tom.dev.whatgoingtoeat.repository
 
 import io.reactivex.Single
-import tom.dev.whatgoingtoeat.dto.NetworkResponse
-import tom.dev.whatgoingtoeat.dto.User
+import tom.dev.whatgoingtoeat.dto.UserResponse
+import tom.dev.whatgoingtoeat.dto.UserRequest
 import tom.dev.whatgoingtoeat.service.UserService
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,11 +14,11 @@ constructor(
     private val userService: UserService
 ) : UserRepository {
 
-    override fun signIn(name: String): Single<NetworkResponse<User>> {
+    override fun signIn(name: String): Single<UserResponse<UserRequest>> {
         return userService.signIn(name)
     }
 
-    override fun signUp(user: User): Single<NetworkResponse<User>> {
-        return userService.signUp(user)
+    override fun signUp(userRequest: UserRequest): Single<UserResponse<UserRequest>> {
+        return userService.signUp(userRequest)
     }
 }

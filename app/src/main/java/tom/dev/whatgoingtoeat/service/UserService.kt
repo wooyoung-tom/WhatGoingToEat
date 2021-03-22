@@ -5,18 +5,18 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
-import tom.dev.whatgoingtoeat.dto.NetworkResponse
-import tom.dev.whatgoingtoeat.dto.User
+import tom.dev.whatgoingtoeat.dto.UserResponse
+import tom.dev.whatgoingtoeat.dto.UserRequest
 
 interface UserService {
 
     @GET("/lunch/users/{name}")
     fun signIn(
         @Path("name") name: String
-    ): Single<NetworkResponse<User>>
+    ): Single<UserResponse<UserRequest>>
 
     @POST("/lunch/users")
     fun signUp(
-        @Body user: User
-    ): Single<NetworkResponse<User>>
+        @Body userRequest: UserRequest
+    ): Single<UserResponse<UserRequest>>
 }

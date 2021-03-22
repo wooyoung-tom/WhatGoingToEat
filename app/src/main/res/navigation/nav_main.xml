@@ -36,6 +36,6 @@
         tools:layout="@layout/fragment_select_category">
         <argument
             android:name="user"
-            app:argType="tom.dev.whatgoingtoeat.dto.User" />
+            app:argType="tom.dev.whatgoingtoeat.dto.UserRequest" />
     </fragment>
 </navigation>
