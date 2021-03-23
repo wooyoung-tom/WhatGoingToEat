@@ -11,11 +11,9 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import tom.dev.whatgoingtoeat.BuildConfig
-import tom.dev.whatgoingtoeat.repository.HistoryRepository
-import tom.dev.whatgoingtoeat.repository.HistoryRepositoryImpl
-import tom.dev.whatgoingtoeat.repository.UserRepository
-import tom.dev.whatgoingtoeat.repository.UserRepositoryImpl
+import tom.dev.whatgoingtoeat.repository.*
 import tom.dev.whatgoingtoeat.service.HistoryService
+import tom.dev.whatgoingtoeat.service.SearchService
 import tom.dev.whatgoingtoeat.service.UserService
 import javax.inject.Singleton
 
@@ -53,6 +51,10 @@ object NetworkModules {
     @Provides
     @Singleton
     fun provideHistoryService(retrofit: Retrofit): HistoryService = retrofit.create(HistoryService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideSearchService(retrofit: Retrofit): SearchService = retrofit.create(SearchService::class.java)
 }
 
 @Module
@@ -64,4 +66,7 @@ abstract class RepositoryModules {
 
     @Binds
     abstract fun bindHistoryRepository(historyRepositoryImpl: HistoryRepositoryImpl): HistoryRepository
+
+    @Binds
+    abstract fun bindSearchRepository(searchRepositoryImpl: SearchRepositoryImpl): SearchRepository
 }

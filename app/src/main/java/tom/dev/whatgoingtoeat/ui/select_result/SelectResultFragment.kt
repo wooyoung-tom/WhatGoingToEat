@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.databinding.FragmentSelectResultBinding
 import tom.dev.whatgoingtoeat.dto.history.HistoryCounter
+import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
 class SelectResultFragment : Fragment() {
@@ -77,7 +78,10 @@ class SelectResultFragment : Fragment() {
     private fun getMemberCountString(count: Long) = "${count}명"
 
     private fun setSelectResultAdapter() {
-        selectResultListAdapter = SelectResultListAdapter()
+        selectResultListAdapter = SelectResultListAdapter {
+            requireView().showShortSnackBar("$it")
+        }
+
         binding.recyclerviewSelectResult.apply {
             adapter = selectResultListAdapter
             layoutManager = LinearLayoutManager(requireContext())
