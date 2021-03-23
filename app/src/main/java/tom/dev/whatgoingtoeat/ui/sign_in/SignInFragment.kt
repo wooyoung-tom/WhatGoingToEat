@@ -82,7 +82,8 @@ class SignInFragment : Fragment() {
     private fun observeSignInResult() {
         // 성공 시
         viewModel.successToSignIn.observe(viewLifecycleOwner) {
-
+            val action = SignInFragmentDirections.actionSignInFragmentToSelectResultFragment(it)
+            findNavController().navigate(action)
         }
 
         viewModel.needToRegisterHistory.observe(viewLifecycleOwner) {

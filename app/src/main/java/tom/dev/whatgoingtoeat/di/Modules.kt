@@ -23,7 +23,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModules {
 
-    private const val BASE_URL = "http://37a022b5ff78.ngrok.io"
+    private const val BASE_URL = "http://28f88045bdaf.ngrok.io"
 
     @Provides
     @Singleton

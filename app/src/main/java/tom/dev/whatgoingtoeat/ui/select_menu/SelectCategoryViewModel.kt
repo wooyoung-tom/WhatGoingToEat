@@ -39,7 +39,7 @@ constructor(
         val newHistory = History(
             name = user.name,
             teamName = user.teamName,
-            historyDate = date,
+            date = date,
             category = currentSelectedCategory!!
         )
 

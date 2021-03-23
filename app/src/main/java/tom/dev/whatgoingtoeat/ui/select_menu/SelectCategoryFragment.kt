@@ -103,8 +103,8 @@ class SelectCategoryFragment : Fragment() {
 
     private fun observeSaveCategoryHistoryComplete() {
         viewModel.saveCategoryHistoryComplete.observe(viewLifecycleOwner) {
-            Log.d("Category History", "$it")
-            findNavController().navigate(R.id.action_selectMenuFragment_to_selectResultFragment)
+            val action = SelectCategoryFragmentDirections.actionSelectMenuFragmentToSelectResultFragment(user)
+            findNavController().navigate(action)
         }
     }
 }
