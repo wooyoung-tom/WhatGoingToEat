@@ -30,7 +30,7 @@
         android:id="@+id/signUpFragment"
         android:name="tom.dev.whatgoingtoeat.ui.sign_up.SignUpFragment"
         android:label="SignUpFragment"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_pop"
             app:popUpTo="@id/signUpFragment"
@@ -58,5 +58,17 @@
         <argument
             android:name="user"
             app:argType="tom.dev.whatgoingtoeat.dto.user.User" />
+        <action
+            android:id="@+id/action_selectResultFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="tom.dev.whatgoingtoeat.ui.search_result.SearchResultFragment"
+        android:label="SearchResultFragment"
+        tools:layout="@layout/fragment_search_result" >
+        <argument
+            android:name="category"
+            app:argType="string" />
     </fragment>
 </navigation>

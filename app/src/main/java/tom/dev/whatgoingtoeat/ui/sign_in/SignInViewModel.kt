@@ -36,10 +36,26 @@ class SignInViewModel @Inject constructor(
     private val _successToSignIn: SingleLiveEvent<User> = SingleLiveEvent()
     val successToSignIn: LiveData<User> get() = _successToSignIn
 
+    private val _startLoadingDialogEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val startLoadingDialogEvent: LiveData<Any> get() = _startLoadingDialogEvent
+
+    private val _stopLoadingDialogEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val stopLoadingDialogEvent: LiveData<Any> get() = _stopLoadingDialogEvent
+
+    private fun startLoading() {
+        _startLoadingDialogEvent.call()
+    }
+
+    private fun stopLoading() {
+        _stopLoadingDialogEvent.call()
+    }
+
     // 로그인 함수
     fun signIn(name: String) {
         compositeDisposable.add(
             userRepository.signIn(name)
+                .doOnSubscribe { startLoading() }
+                .doOnSuccess { stopLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

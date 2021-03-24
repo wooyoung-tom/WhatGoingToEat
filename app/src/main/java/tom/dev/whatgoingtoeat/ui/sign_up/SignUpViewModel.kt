@@ -41,6 +41,20 @@ constructor(
     private val _completeSignUpEvent: SingleLiveEvent<Any> = SingleLiveEvent()
     val completeSignUpEvent: LiveData<Any> get() = _completeSignUpEvent
 
+    private val _startLoadingDialogEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val startLoadingDialogEvent: LiveData<Any> get() = _startLoadingDialogEvent
+
+    private val _stopLoadingDialogEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val stopLoadingDialogEvent: LiveData<Any> get() = _stopLoadingDialogEvent
+
+    private fun startLoading() {
+        _startLoadingDialogEvent.call()
+    }
+
+    private fun stopLoading() {
+        _stopLoadingDialogEvent.call()
+    }
+
     fun signUp(name: String, teamName: String) {
         // 이름 길이가 10자를 넘어가게되면 invalid
         if (name.length > 10) {
@@ -57,6 +71,8 @@ constructor(
 
         compositeDisposable.add(
             userRepository.signUp(newUser)
+                .doOnSubscribe { startLoading() }
+                .doOnSuccess { stopLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

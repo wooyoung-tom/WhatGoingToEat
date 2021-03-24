@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentSignInBinding
+import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.disable
 import tom.dev.whatgoingtoeat.utils.enable
 
@@ -37,6 +38,7 @@ class SignInFragment : Fragment() {
         setSignUpButtonClickListener()
 
         observeSignInResult()
+        observeLoading()
     }
 
     // Destroy 시에 _binding null
@@ -96,6 +98,16 @@ class SignInFragment : Fragment() {
         viewModel.failedToSignIn.observe(viewLifecycleOwner) {
             binding.tilSignInName.error = "Cannot found user, please sign up."
             binding.btnSignIn.disable()
+        }
+    }
+
+    private fun observeLoading() {
+        val loading = LoadingDialog(requireContext())
+        viewModel.startLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.show()
+        }
+        viewModel.stopLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.dismiss()
         }
     }
 }

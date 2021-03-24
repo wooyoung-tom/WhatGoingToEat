@@ -83,6 +83,11 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-    // Chart 3rd party library
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'gun0912.ted:tedpermission-rx2:2.2.3'
+
+    implementation "androidx.paging:paging-runtime-ktx:3.0.0-beta02"
+    testImplementation "androidx.paging:paging-common-ktx:3.0.0-beta02"
+
+    // Lottie
+    implementation "com.airbnb.android:lottie:3.4.1"
 }

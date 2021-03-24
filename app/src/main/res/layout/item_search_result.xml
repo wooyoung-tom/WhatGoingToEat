@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="18dp"
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="12dp">
+
+        <TextView
+            android:id="@+id/tv_item_search_result_category"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:textColor="@color/apricot"
+            app:drawableStartCompat="@drawable/ic_baseline_food_bank_24"
+            app:drawableTint="@color/apricot_alpha_80"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="카테고리 (ex.한식)" />
+
+        <TextView
+            android:id="@+id/tv_item_search_result_name"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:singleLine="true"
+            app:layout_constraintStart_toStartOf="@id/tv_item_search_result_category"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_search_result_category"
+            tools:text="음식점 이름" />
+
+        <TextView
+            android:id="@+id/tv_item_search_result_doro_title"
+            style="@style/TextAppearance.MaterialComponents.Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/background_textview"
+            android:text="도로명"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@id/tv_item_search_result_category"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_search_result_name" />
+
+        <TextView
+            android:id="@+id/tv_item_search_result_doro"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:singleLine="true"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_search_result_doro_title"
+            app:layout_constraintEnd_toStartOf="@id/imageview_item_search_result_enter"
+            app:layout_constraintStart_toEndOf="@id/tv_item_search_result_doro_title"
+            app:layout_constraintTop_toTopOf="@id/tv_item_search_result_doro_title"
+            tools:text="도로명 주소입니다." />
+
+        <TextView
+            android:id="@+id/tv_item_search_result_jibun_title"
+            style="@style/TextAppearance.MaterialComponents.Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_textview"
+            android:text="지번"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@id/tv_item_search_result_category"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_search_result_doro_title" />
+
+        <TextView
+            android:id="@+id/tv_item_search_result_jibun"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:singleLine="true"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_search_result_jibun_title"
+            app:layout_constraintEnd_toStartOf="@id/imageview_item_search_result_enter"
+            app:layout_constraintStart_toEndOf="@id/tv_item_search_result_jibun_title"
+            app:layout_constraintTop_toTopOf="@id/tv_item_search_result_jibun_title"
+            tools:text="지번 주소입니다." />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_search_result_jibun_title">
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="현재위치와의 거리 "
+                app:drawableStartCompat="@drawable/ic_baseline_location_on_24" />
+
+            <TextView
+                android:id="@+id/tv_item_search_result_distance"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/apricot"
+                tools:text="494m" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageview_item_search_result_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

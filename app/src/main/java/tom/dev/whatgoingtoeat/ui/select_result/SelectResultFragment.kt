@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.databinding.FragmentSelectResultBinding
@@ -79,7 +80,8 @@ class SelectResultFragment : Fragment() {
 
     private fun setSelectResultAdapter() {
         selectResultListAdapter = SelectResultListAdapter {
-            requireView().showShortSnackBar("$it")
+            val action = SelectResultFragmentDirections.actionSelectResultFragmentToSearchResultFragment(it.category)
+            findNavController().navigate(action)
         }
 
         binding.recyclerviewSelectResult.apply {

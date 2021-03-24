@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentSignUpBinding
+import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
@@ -37,6 +38,8 @@ class SignUpFragment : Fragment() {
         setNameLengthInvalidEventObserver()
         setTeamNameNotSelectedEventObserver()
         setCompleteSignUpEventObserver()
+
+        observeLoading()
     }
 
     // Destroy 시에 _binding null
@@ -87,6 +90,16 @@ class SignUpFragment : Fragment() {
         viewModel.completeSignUpEvent.observe(viewLifecycleOwner) {
             requireView().showShortSnackBar("가입이 완료되었습니다.")
             findNavController().navigate(R.id.action_signUpFragment_pop)
+        }
+    }
+
+    private fun observeLoading() {
+        val loading = LoadingDialog(requireContext())
+        viewModel.startLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.show()
+        }
+        viewModel.stopLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.dismiss()
         }
     }
 }
