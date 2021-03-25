@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.databinding.FragmentSelectResultBinding
 import tom.dev.whatgoingtoeat.dto.history.HistoryCounter
+import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
@@ -87,6 +88,16 @@ class SelectResultFragment : Fragment() {
         binding.recyclerviewSelectResult.apply {
             adapter = selectResultListAdapter
             layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun observeLoading() {
+        val loading = LoadingDialog(requireContext())
+        viewModel.startLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.show()
+        }
+        viewModel.stopLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.dismiss()
         }
     }
 }

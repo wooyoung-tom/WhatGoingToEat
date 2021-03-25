@@ -56,6 +56,7 @@ class SignInViewModel @Inject constructor(
             userRepository.signIn(name)
                 .doOnSubscribe { startLoading() }
                 .doOnSuccess { stopLoading() }
+                .doOnError { stopLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

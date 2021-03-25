@@ -1,16 +1,18 @@
 package tom.dev.whatgoingtoeat.ui.map
 
+import android.content.Intent
+import android.content.Intent.ACTION_DIAL
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.*
 import com.naver.maps.map.MapFragment
-import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.util.MarkerIcons
@@ -67,6 +69,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         setMapUIInit()
         setMapLocationInit()
         setMapSearchResultMarkerInit()
+        setMapSearchResultBottomView()
+
+        setPhoneButtonClickListener()
+        setDetailButtonClickListener()
     }
 
     private fun setMapUIInit() {
@@ -78,6 +84,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             isCompassEnabled = false
             isLogoClickEnabled = false
             isScaleBarEnabled = false
+
+            // 스크롤 제스쳐 -> 맵 이동 block
+            isScrollGesturesEnabled = false
         }
     }
 
@@ -85,22 +94,54 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         naverMap.locationSource = locationSource
         // 위치 모드 수정
         naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
-        // 위치 변경 이벤트 등록
-        naverMap.addOnLocationChangeListener(locationChangeListener)
-    }
 
-    private val locationChangeListener = NaverMap.OnLocationChangeListener { location ->
-        // 내 현재 위치로 카메라를 옮긴다.
-        val cameraUpdate = CameraUpdate.scrollTo(LatLng(location.latitude, location.longitude))
+        // 카메라 위치 수정
+        val cameraUpdate = CameraUpdate.scrollTo(targetLatLng)
         naverMap.moveCamera(cameraUpdate)
     }
 
     private fun setMapSearchResultMarkerInit() {
         // 식당의 위치에 마커 표시
-        val marker = Marker().apply {
+        Marker().apply {
             position = targetLatLng
             icon = MarkerIcons.RED
             map = naverMap
+        }
+    }
+
+    private fun setMapSearchResultBottomView() {
+        binding.tvBottomSheetTitle.text = searchResult.placeName
+        binding.tvBottomSheetCategory.text = searchResult.categoryName
+        binding.tvBottomSheetDistance.text = getDistanceText()
+        binding.tvBottomSheetDoro.text = searchResult.roadAddressName
+        binding.tvBottomSheetJibun.text = searchResult.addressName
+
+        if (searchResult.phone.isBlank()) {
+            binding.buttonBottomSheetPhone.isEnabled = false
+            binding.buttonBottomSheetPhone.icon = null
+            binding.buttonBottomSheetPhone.text = "등록된 번호가 없습니다."
+        } else {
+            binding.buttonBottomSheetPhone.text = searchResult.phone
+        }
+    }
+
+    private fun getDistanceText() = "${searchResult.distance}m"
+
+    private fun setPhoneButtonClickListener() {
+        val phoneStrArr = searchResult.phone.split("-")
+        val phoneStr = phoneStrArr[0] + phoneStrArr[1] + phoneStrArr[2]
+        val phoneUri = "tel:$phoneStr"
+
+        binding.buttonBottomSheetPhone.setOnClickListener {
+            val intent = Intent(ACTION_DIAL, Uri.parse(phoneUri))
+            startActivity(intent)
+        }
+    }
+
+    private fun setDetailButtonClickListener() {
+        binding.buttonBottomSheetDetail.setOnClickListener {
+            val action = MapFragmentDirections.actionMapFragmentToWebViewFragment(searchResult.placeUrl)
+            findNavController().navigate(action)
         }
     }
 

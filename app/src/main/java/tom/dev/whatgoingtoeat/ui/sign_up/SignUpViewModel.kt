@@ -73,6 +73,7 @@ constructor(
             userRepository.signUp(newUser)
                 .doOnSubscribe { startLoading() }
                 .doOnSuccess { stopLoading() }
+                .doOnError { stopLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

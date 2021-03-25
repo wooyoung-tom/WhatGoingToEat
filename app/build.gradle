@@ -90,4 +90,7 @@ dependencies {
 
     // Lottie
     implementation "com.airbnb.android:lottie:3.4.1"
+
+    // Jsoup
+    implementation 'org.jsoup:jsoup:1.11.3'
 }

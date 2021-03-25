@@ -82,5 +82,18 @@
         <argument
             android:name="info"
             app:argType="tom.dev.whatgoingtoeat.dto.search.SearchDocument" />
+        <action
+            android:id="@+id/action_mapFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="tom.dev.whatgoingtoeat.ui.webview.WebViewFragment"
+        android:label="WebViewFragment"
+        tools:layout="@layout/fragment_webview">
+        <argument
+            android:name="uri"
+            app:argType="string" />
     </fragment>
 </navigation>

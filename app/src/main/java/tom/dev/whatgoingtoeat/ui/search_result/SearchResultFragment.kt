@@ -73,8 +73,6 @@ class SearchResultFragment : Fragment() {
         setSearchResultListAdapter()
 
         setSettingButtonClickListener()
-
-        observeLoading()
     }
 
     private fun setSearchResultListAdapter() {
@@ -145,16 +143,6 @@ class SearchResultFragment : Fragment() {
             viewModel.searchByKeyword(query, latitude, longitude).collectLatest {
                 searchResultListAdapter.submitData(it)
             }
-        }
-    }
-
-    private fun observeLoading() {
-        val loading = LoadingDialog(requireContext())
-        viewModel.startLoadingDialogEvent.observe(viewLifecycleOwner) {
-            loading.show()
-        }
-        viewModel.stopLoadingDialogEvent.observe(viewLifecycleOwner) {
-            loading.dismiss()
         }
     }
 }

@@ -41,18 +41,4 @@ constructor(
         currentSearchResult = newResult
         return newResult
     }
-
-    private val _startLoadingDialogEvent: SingleLiveEvent<Any> = SingleLiveEvent()
-    val startLoadingDialogEvent: LiveData<Any> get() = _startLoadingDialogEvent
-
-    private val _stopLoadingDialogEvent: SingleLiveEvent<Any> = SingleLiveEvent()
-    val stopLoadingDialogEvent: LiveData<Any> get() = _stopLoadingDialogEvent
-
-    private fun startLoading() {
-        _startLoadingDialogEvent.call()
-    }
-
-    private fun stopLoading() {
-        _stopLoadingDialogEvent.call()
-    }
 }
