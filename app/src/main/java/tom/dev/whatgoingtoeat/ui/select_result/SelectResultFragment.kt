@@ -43,6 +43,7 @@ class SelectResultFragment : Fragment() {
         setSelectResultAdapter()
 
         observeSelectResult()
+        observeLoading()
     }
 
     private fun setProgressInit() {
