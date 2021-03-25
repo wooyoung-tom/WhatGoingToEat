@@ -1,5 +1,9 @@
 package tom.dev.whatgoingtoeat.dto.search
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class SearchDocument(
     val id: String,
     val placeName: String,
@@ -9,8 +13,8 @@ data class SearchDocument(
     val phone: String,
     val addressName: String,
     val roadAddressName: String,
-    val lat: String,
     val lng: String,
+    val lat: String,
     val placeUrl: String,
     val distance: String
-)
+): Parcelable

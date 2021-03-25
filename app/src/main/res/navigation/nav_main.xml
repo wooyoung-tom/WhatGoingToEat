@@ -66,9 +66,21 @@
         android:id="@+id/searchResultFragment"
         android:name="tom.dev.whatgoingtoeat.ui.search_result.SearchResultFragment"
         android:label="SearchResultFragment"
-        tools:layout="@layout/fragment_search_result" >
+        tools:layout="@layout/fragment_search_result">
         <argument
             android:name="category"
             app:argType="string" />
+        <action
+            android:id="@+id/action_searchResultFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="tom.dev.whatgoingtoeat.ui.map.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map" >
+        <argument
+            android:name="info"
+            app:argType="tom.dev.whatgoingtoeat.dto.search.SearchDocument" />
     </fragment>
 </navigation>

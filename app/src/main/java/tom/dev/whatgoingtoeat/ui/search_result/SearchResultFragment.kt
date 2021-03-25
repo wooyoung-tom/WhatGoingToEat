@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -24,6 +26,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import tom.dev.whatgoingtoeat.databinding.FragmentSearchResultBinding
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
+import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
 class SearchResultFragment : Fragment() {
@@ -75,7 +78,31 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun setSearchResultListAdapter() {
-        searchResultListAdapter = SearchResultListAdapter()
+        val dialog = LoadingDialog(requireContext())
+
+        searchResultListAdapter = SearchResultListAdapter {
+            if (it != null) {
+                val action = SearchResultFragmentDirections.actionSearchResultFragmentToMapFragment(it)
+                findNavController().navigate(action)
+            } else {
+                requireView().showShortSnackBar("해당 결과가 초기화 되지 않았습니다.")
+            }
+        }.apply {
+            addLoadStateListener { loadState ->
+                when (loadState.source.refresh) {
+                    is LoadState.NotLoading -> dialog.dismiss()
+                    is LoadState.Loading -> dialog.show()
+                    is LoadState.Error -> dialog.dismiss()
+                }
+
+                val errorState = loadState.source.append as? LoadState.Error
+                    ?: loadState.source.prepend as? LoadState.Error
+                    ?: loadState.append as? LoadState.Error
+                    ?: loadState.prepend as? LoadState.Error
+
+                errorState?.let { requireView().showShortSnackBar("${it.error}") }
+            }
+        }
 
         binding.recyclerviewSearchResult.apply {
             adapter = searchResultListAdapter

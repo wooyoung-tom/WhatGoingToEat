@@ -34,15 +34,11 @@ constructor(
     private var currentSearchResult: Flow<PagingData<SearchDocument>>? = null
 
     fun searchByKeyword(query: String, latitude: String, longitude: String): Flow<PagingData<SearchDocument>> {
-        startLoading()
-
         val lastResult = currentSearchResult
         if (query == currentQueryValue && lastResult != null) return lastResult
         currentQueryValue = query
         val newResult = searchRepository.searchByKeyword(query, latitude, longitude).cachedIn(viewModelScope)
         currentSearchResult = newResult
-
-        stopLoading()
         return newResult
     }
 

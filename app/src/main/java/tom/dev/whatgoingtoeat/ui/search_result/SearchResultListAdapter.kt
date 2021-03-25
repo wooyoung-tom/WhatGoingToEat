@@ -1,6 +1,5 @@
 package tom.dev.whatgoingtoeat.ui.search_result
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -9,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import tom.dev.whatgoingtoeat.databinding.ItemSearchResultBinding
 import tom.dev.whatgoingtoeat.databinding.ItemSearchResultHeaderBinding
 import tom.dev.whatgoingtoeat.dto.search.SearchDocument
-import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
-class SearchResultListAdapter : PagingDataAdapter<SearchDocument, RecyclerView.ViewHolder>(Companion) {
+class SearchResultListAdapter(
+    private val searchResultClickListener: (SearchDocument?) -> Unit
+) : PagingDataAdapter<SearchDocument, RecyclerView.ViewHolder>(Companion) {
 
     companion object : DiffUtil.ItemCallback<SearchDocument>() {
         override fun areItemsTheSame(oldItem: SearchDocument, newItem: SearchDocument) = oldItem.id == newItem.id
@@ -60,14 +60,14 @@ class SearchResultListAdapter : PagingDataAdapter<SearchDocument, RecyclerView.V
                 val currentItem = getItem(randomPosition)
                 holder.bind(currentItem)
                 holder.binding.cardviewItemSearchResultHeader.setOnClickListener {
-                    it.showShortSnackBar("$currentItem")
+                    searchResultClickListener(currentItem)
                 }
             }
             is SearchResultListViewHolder -> {
                 val currentItem = getItem(position)
                 holder.bind(currentItem)
                 holder.itemView.setOnClickListener {
-                    it.showShortSnackBar("$currentItem")
+                    searchResultClickListener(currentItem)
                 }
             }
         }
