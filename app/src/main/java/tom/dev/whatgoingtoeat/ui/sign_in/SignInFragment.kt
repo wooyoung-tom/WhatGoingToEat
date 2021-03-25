@@ -96,7 +96,7 @@ class SignInFragment : Fragment() {
 
         // 실패 시
         viewModel.failedToSignIn.observe(viewLifecycleOwner) {
-            binding.tilSignInName.error = "Cannot found user, please sign up."
+            binding.tilSignInName.error = "존재하지 않는 이름입니다. 먼저 등록해주세요."
             binding.btnSignIn.disable()
         }
     }
