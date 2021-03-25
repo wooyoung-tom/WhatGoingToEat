@@ -1,7 +1,6 @@
 package tom.dev.whatgoingtoeat.ui.select_result
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.databinding.FragmentSelectResultBinding
 import tom.dev.whatgoingtoeat.dto.history.HistoryCounter
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
-import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
 class SelectResultFragment : Fragment() {
