@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.Intent.ACTION_DIAL
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -128,9 +129,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun getDistanceText() = "${searchResult.distance}m"
 
     private fun setPhoneButtonClickListener() {
-        val phoneStrArr = searchResult.phone.split("-")
-        val phoneStr = phoneStrArr[0] + phoneStrArr[1] + phoneStrArr[2]
-        val phoneUri = "tel:$phoneStr"
+        val phoneUri = if (searchResult.phone.isNotBlank()) {
+            val phoneStrArr = searchResult.phone.split("-")
+            val phoneStr = phoneStrArr[0] + phoneStrArr[1] + phoneStrArr[2]
+
+            "tel:$phoneStr"
+        } else searchResult.phone
 
         binding.buttonBottomSheetPhone.setOnClickListener {
             val intent = Intent(ACTION_DIAL, Uri.parse(phoneUri))
