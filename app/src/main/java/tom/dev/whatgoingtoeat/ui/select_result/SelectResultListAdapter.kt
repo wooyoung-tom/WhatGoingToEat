@@ -19,6 +19,7 @@ class SelectResultListAdapter(
 
     inner class SelectResultViewHolder(private val binding: ItemSelectResultBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HistoryCounter) {
+            // 카테고리가 존재하면
             binding.tvItemSelectResultCategory.text = item.category
             binding.tvItemSelectResultCount.text = getCountString(item.count)
             binding.progressItemSelectResultCategory.progress = getProgress(item.selectedMemberCount, item.count)

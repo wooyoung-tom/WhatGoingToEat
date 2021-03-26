@@ -1,6 +1,7 @@
 package tom.dev.whatgoingtoeat.ui.select_result
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentSelectResultBinding
+import tom.dev.whatgoingtoeat.dto.history.History
 import tom.dev.whatgoingtoeat.dto.history.HistoryCounter
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
 
@@ -58,9 +61,16 @@ class SelectResultFragment : Fragment() {
             // 프로그레스 설정
             setProgressIndicatorView(it.meta.selectedMemberCount, it.meta.teamMemberCount)
 
-            selectResultListAdapter.submitList(it.body?.map { result ->
-                HistoryCounter(it.meta.selectedMemberCount, result.category, result.count)
-            })
+            val categoryList = resources.getStringArray(R.array.category)
+            val historyCounterList = categoryList.map { localCategory ->
+                it.body?.find { historyResult ->
+                    historyResult.category == localCategory
+                }?.let { result ->
+                    HistoryCounter(it.meta.selectedMemberCount, result.category, result.count)
+                } ?: HistoryCounter(0, localCategory, 0)
+            }
+
+            selectResultListAdapter.submitList(historyCounterList.sortedBy { result -> result.count })
         }
     }
 

@@ -84,9 +84,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_select_result"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        tools:listitem="@layout/item_select_result"
-        app:layout_constraintTop_toBottomOf="@id/progress_indicator_select_result" />
-
+        android:clipToPadding="false"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_indicator_select_result"
+        tools:listitem="@layout/item_select_result" />
 </androidx.constraintlayout.widget.ConstraintLayout>

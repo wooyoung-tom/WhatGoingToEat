@@ -8,6 +8,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tom.dev.whatgoingtoeat.dto.history.History
 import tom.dev.whatgoingtoeat.dto.user.User
+import tom.dev.whatgoingtoeat.repository.CategoryRepository
 import tom.dev.whatgoingtoeat.repository.HistoryRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import java.net.UnknownHostException
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class SelectCategoryViewModel
 @Inject
 constructor(
-    private val historyRepository: HistoryRepository
+    private val historyRepository: HistoryRepository,
+    private val categoryRepository: CategoryRepository
 ): ViewModel() {
 
     private val compositeDisposable by lazy { CompositeDisposable() }

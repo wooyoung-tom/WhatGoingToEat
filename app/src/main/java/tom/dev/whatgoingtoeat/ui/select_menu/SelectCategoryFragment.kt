@@ -54,7 +54,6 @@ class SelectCategoryFragment : Fragment() {
 
     private fun setCategoryListAdapter() {
         categoryListAdapter = CategoryListAdapter(getCategoryList()) {
-            Log.d("Selection", "$it")
             viewModel.currentSelectedCategory = it
         }
     }
