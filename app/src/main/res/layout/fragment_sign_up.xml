@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="18dp"
         android:layout_marginTop="24dp"
-        android:hint="@string/string_hint_sign_in_name"
+        android:hint="@string/string_hint_sign_in_id"
         android:textColorHint="@color/dusty_gray"
         app:counterEnabled="true"
         app:counterMaxLength="10"

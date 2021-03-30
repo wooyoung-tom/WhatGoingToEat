@@ -7,7 +7,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tom.dev.whatgoingtoeat.dto.user.User
-import tom.dev.whatgoingtoeat.repository.UserRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -63,7 +62,7 @@ class SignInViewModel @Inject constructor(
                     // body 가 null 이면 찾지 못해서 가입 해야 하는 것
                     if (it.body == null) _failedToSignIn.call()
                     else {
-                        if (it.selected) _successToSignIn.postValue(it.body)
+                        if (it.code == "SUCCESS") _successToSignIn.postValue(it.body)
                         else _needToRegisterHistory.postValue(it.body)
                     }
                 }, {
