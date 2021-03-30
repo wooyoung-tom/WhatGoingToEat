@@ -1,8 +1,6 @@
 package tom.dev.whatgoingtoeat.ui.sign_in
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentSignInBinding
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
-import tom.dev.whatgoingtoeat.utils.disable
-import tom.dev.whatgoingtoeat.utils.enable
 
 @AndroidEntryPoint
 class SignInFragment : Fragment() {
@@ -33,6 +29,7 @@ class SignInFragment : Fragment() {
         super.onResume()
 
         setSignUpButtonClickListener()
+        setSignInButtonClickListener()
 
         observeLoading()
     }
@@ -46,6 +43,12 @@ class SignInFragment : Fragment() {
     private fun setSignUpButtonClickListener() {
         binding.btnSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+        }
+    }
+
+    private fun setSignInButtonClickListener() {
+        binding.btnSignIn.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
         }
     }
 
