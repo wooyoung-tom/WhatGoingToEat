@@ -30,15 +30,6 @@ class SignUpFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        setTeamNameDropDownMenu()
-        setSignUpButtonClickListener()
-
-        // Observer Register
-        setNameDuplicateEventObserver()
-        setNameLengthInvalidEventObserver()
-        setTeamNameNotSelectedEventObserver()
-        setCompleteSignUpEventObserver()
-
         observeLoading()
     }
 
@@ -46,51 +37,6 @@ class SignUpFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    // 팀 이름 입력 칸에서 DropDown Menu 지정
-    private fun setTeamNameDropDownMenu() {
-        val items = listOf("Product")
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_team_name, items)
-        binding.autoSignUpTeamName.setAdapter(adapter)
-    }
-
-    private fun setSignUpButtonClickListener() {
-        binding.btnSignUp.setOnClickListener {
-            val name = getName()
-            val teamName = getTeamName()
-
-            viewModel.signUp(name, teamName)
-        }
-    }
-
-    private fun getName() = binding.etSignUpName.text.toString()
-
-    private fun getTeamName() = binding.autoSignUpTeamName.text.toString()
-
-    private fun setNameDuplicateEventObserver() {
-        viewModel.nameDuplicationEvent.observe(viewLifecycleOwner) {
-            binding.tilSignUpName.error = "중복된 이름이 존재합니다. 다른 이름으로 시도해주세요."
-        }
-    }
-
-    private fun setNameLengthInvalidEventObserver() {
-        viewModel.nameLengthInvalidEvent.observe(viewLifecycleOwner) {
-            binding.tilSignUpName.error = "글자수가 10자를 초과하였습니다."
-        }
-    }
-
-    private fun setTeamNameNotSelectedEventObserver() {
-        viewModel.teamNameNotSelectedEvent.observe(viewLifecycleOwner) {
-            binding.tilSignUpTeamName.error = "팀 이름을 선택하지 않았습니다."
-        }
-    }
-
-    private fun setCompleteSignUpEventObserver() {
-        viewModel.completeSignUpEvent.observe(viewLifecycleOwner) {
-            requireView().showShortSnackBar("가입이 완료되었습니다.")
-            findNavController().navigate(R.id.action_signUpFragment_pop)
-        }
     }
 
     private fun observeLoading() {

@@ -12,6 +12,7 @@
     <string name="string_title_select_result">진행 현황</string>
     <string name="string_label_select_category">어제 드신 메뉴의 카테고리를 골라주세요.</string>
     <string name="string_hint_sign_in_password">비밀번호를 입력해주세요.</string>
+    <string name="string_hint_sign_in_password_check">비밀번호를 다시 입력해주세요.</string>
 
     <string-array name="category">
         <item>한식</item>
