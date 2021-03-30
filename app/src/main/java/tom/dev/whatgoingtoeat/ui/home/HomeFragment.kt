@@ -18,4 +18,38 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setKoreanButtonClickListener()
+        setChineseButtonClickListener()
+        setWesternButtonClickListener()
+        setJapaneseButtonClickListener()
+        
+    }
+
+    private fun setKoreanButtonClickListener() {
+        binding.btnHomeMenuKorean.setOnClickListener {
+
+        }
+    }
+
+    private fun setWesternButtonClickListener() {
+        binding.btnHomeMenuWestern.setOnClickListener {
+
+        }
+    }
+
+    private fun setChineseButtonClickListener() {
+        binding.btnHomeMenuChinese.setOnClickListener {
+
+        }
+    }
+
+    private fun setJapaneseButtonClickListener() {
+        binding.btnHomeMenuJapanese.setOnClickListener {
+
+        }
+    }
 }

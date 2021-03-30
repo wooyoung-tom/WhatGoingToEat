@@ -14,6 +14,7 @@
         android:layout_marginTop="24dp"
         android:textColor="@color/apricot"
         android:textStyle="bold"
+        android:text="웅영잉"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="센디" />
