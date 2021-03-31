@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.databinding.FragmentHomeBinding
 
@@ -31,25 +32,33 @@ class HomeFragment : Fragment() {
 
     private fun setKoreanButtonClickListener() {
         binding.btnHomeMenuKorean.setOnClickListener {
-
+            val category = binding.tvHomeMenuKorean.text.toString()
+            val action = HomeFragmentDirections.actionHomeFragmentToRestaurantFragment(category)
+            findNavController().navigate(action)
         }
     }
 
     private fun setWesternButtonClickListener() {
         binding.btnHomeMenuWestern.setOnClickListener {
-
+            val category = binding.tvHomeMenuWestern.text.toString()
+            val action = HomeFragmentDirections.actionHomeFragmentToRestaurantFragment(category)
+            findNavController().navigate(action)
         }
     }
 
     private fun setChineseButtonClickListener() {
         binding.btnHomeMenuChinese.setOnClickListener {
-
+            val category = binding.tvHomeMenuChinese.text.toString()
+            val action = HomeFragmentDirections.actionHomeFragmentToRestaurantFragment(category)
+            findNavController().navigate(action)
         }
     }
 
     private fun setJapaneseButtonClickListener() {
         binding.btnHomeMenuJapanese.setOnClickListener {
-
+            val category = binding.tvHomeMenuJapanese.text.toString()
+            val action = HomeFragmentDirections.actionHomeFragmentToRestaurantFragment(category)
+            findNavController().navigate(action)
         }
     }
 }

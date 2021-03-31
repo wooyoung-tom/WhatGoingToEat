@@ -91,6 +91,7 @@
             tools:text="지번 주소입니다." />
 
         <LinearLayout
+            android:id="@+id/linearlayout_item_search_result_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
@@ -115,6 +116,31 @@
                 android:textColor="@color/apricot"
                 tools:text="494m" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_item_search_result_favorite_cnt"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            app:drawableStartCompat="@drawable/ic_baseline_favorite_24"
+            app:layout_constraintStart_toStartOf="@id/linearlayout_item_search_result_distance"
+            app:layout_constraintTop_toBottomOf="@id/linearlayout_item_search_result_distance"
+            tools:text="123" />
+
+        <TextView
+            android:id="@+id/tv_item_search_result_review_cnt"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="18dp"
+            app:drawableStartCompat="@drawable/ic_baseline_edit_note_24"
+            app:layout_constraintStart_toEndOf="@id/tv_item_search_result_favorite_cnt"
+            app:layout_constraintTop_toTopOf="@id/tv_item_search_result_favorite_cnt"
+            tools:text="123" />
 
         <ImageView
             android:id="@+id/imageview_item_search_result_enter"

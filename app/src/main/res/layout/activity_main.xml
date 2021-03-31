@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:visibility="gone"
-        app:title="런치마켓"
-        app:titleMarginStart="24dp">
+        app:title="런치마켓">
 
         <Button
             android:id="@+id/btn_shopping_basket"

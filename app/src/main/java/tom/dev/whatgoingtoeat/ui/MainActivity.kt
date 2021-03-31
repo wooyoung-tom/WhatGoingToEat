@@ -46,13 +46,14 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.signInFragment -> binding.toolbarMain.hide()
-                R.id.signUpFragment -> binding.toolbarMain.hide()
-                R.id.homeFragment -> {
-                    binding.toolbarMain.title = "런치마켓"
-                    binding.toolbarMain.show()
-                }
+                R.id.signInFragment, R.id.signUpFragment -> binding.toolbarMain.hide()
+                R.id.homeFragment, R.id.restaurantFragment -> setToolbar()
             }
         }
+    }
+
+    private fun setToolbar() {
+        binding.toolbarMain.title = "런치마켓"
+        binding.toolbarMain.show()
     }
 }
