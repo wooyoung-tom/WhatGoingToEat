@@ -1,5 +1,7 @@
 package tom.dev.whatgoingtoeat.di
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -9,20 +11,17 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import tom.dev.whatgoingtoeat.BuildConfig
 import tom.dev.whatgoingtoeat.repository.*
-import tom.dev.whatgoingtoeat.service.CategoryService
-import tom.dev.whatgoingtoeat.service.HistoryService
-import tom.dev.whatgoingtoeat.service.SearchService
-import tom.dev.whatgoingtoeat.service.UserService
+import tom.dev.whatgoingtoeat.service.RestaurantService
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModules {
 
-    private const val BASE_URL = "http://0fe78762a9d6.ngrok.io"
+    private const val BASE_URL = "http://c262e9f53de8.ngrok.io"
 
     @Provides
     @Singleton
@@ -36,30 +35,30 @@ object NetworkModules {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideMoshiBuilder() = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideUserService(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
+    fun provideRestaurantService(retrofit: Retrofit): RestaurantService = retrofit.create(RestaurantService::class.java)
 
-    @Provides
-    @Singleton
-    fun provideHistoryService(retrofit: Retrofit): HistoryService = retrofit.create(HistoryService::class.java)
+//    @Provides
+//    @Singleton
+//    fun provideHistoryService(retrofit: Retrofit): HistoryService = retrofit.create(HistoryService::class.java)
 
-    @Provides
-    @Singleton
-    fun provideSearchService(retrofit: Retrofit): SearchService = retrofit.create(SearchService::class.java)
-
-    @Provides
-    @Singleton
-    fun provideCategoryService(retrofit: Retrofit): CategoryService = retrofit.create(CategoryService::class.java)
+//    @Provides
+//    @Singleton
+//    fun provideSearchService(retrofit: Retrofit): SearchService = retrofit.create(SearchService::class.java)
 }
 
 @Module
@@ -67,14 +66,11 @@ object NetworkModules {
 abstract class RepositoryModules {
 
     @Binds
-    abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
+    abstract fun bindRestaurantRepository(restaurantRepositoryImpl: RestaurantRepositoryImpl): RestaurantRepository
 
-    @Binds
-    abstract fun bindHistoryRepository(historyRepositoryImpl: HistoryRepositoryImpl): HistoryRepository
+//    @Binds
+//    abstract fun bindHistoryRepository(historyRepositoryImpl: HistoryRepositoryImpl): HistoryRepository
 
-    @Binds
-    abstract fun bindSearchRepository(searchRepositoryImpl: SearchRepositoryImpl): SearchRepository
-
-    @Binds
-    abstract fun bindCategoryRepository(categoryRepositoryImpl: CategoryRepositoryImpl): CategoryRepository
+//    @Binds
+//    abstract fun bindSearchRepository(searchRepositoryImpl: SearchRepositoryImpl): SearchRepository
 }

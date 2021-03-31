@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_item_menu_title"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:drawablePadding="8dp"
+        android:paddingVertical="12dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        app:drawableStartCompat="@drawable/ic_baseline_food_bank_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="메뉴이름" />
+
+    <TextView
+        android:id="@+id/tv_item_menu_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:paddingVertical="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="8000원" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout_item_menu_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/tv_item_menu_price"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_menu_price">
+
+        <TextView
+            android:id="@+id/btn_item_menu_minus"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@color/silver_chalice"
+            android:gravity="center"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/tv_item_menu_counter"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@color/silver"
+            android:gravity="center"
+            android:paddingHorizontal="36dp"
+            tools:text="12" />
+
+        <TextView
+            android:id="@+id/btn_item_menu_plus"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@color/silver_chalice"
+            android:gravity="center"
+            android:text="+" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
