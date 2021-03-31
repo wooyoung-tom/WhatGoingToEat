@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.signInFragment, R.id.signUpFragment -> binding.toolbarMain.hide()
-                R.id.homeFragment, R.id.restaurantFragment -> setToolbar()
+                R.id.homeFragment, R.id.restaurantFragment, R.id.restaurantInfoFragment -> setToolbar()
             }
         }
     }

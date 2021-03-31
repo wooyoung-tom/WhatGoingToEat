@@ -20,8 +20,6 @@
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="18dp"
             android:background="@color/silver"
             app:layout_constraintDimensionRatio="1.5:1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +31,7 @@
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="18dp"
             android:textColor="@color/apricot"
             android:textStyle="bold"
@@ -45,7 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            app:layout_constraintStart_toStartOf="@id/map"
+            android:textColor="@color/apricot_alpha_80"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
             app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_name"
             tools:text="카테고리" />
 
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/map"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
             app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_category"
             tools:text="주소입니다." />
 
@@ -66,7 +66,7 @@
             android:layout_marginEnd="8dp"
             app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="@id/guideline_restaurant_info_v50"
-            app:layout_constraintStart_toStartOf="@id/map"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
             app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_address"
             app:strokeColor="@color/silver_chalice"
             app:strokeWidth="1dp">
@@ -87,8 +87,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="18dp"
+            android:layout_marginEnd="24dp"
             app:cardCornerRadius="8dp"
-            app:layout_constraintEnd_toEndOf="@id/map"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline_restaurant_info_v50"
             app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_address"
             app:strokeColor="@color/silver_chalice"
@@ -109,9 +110,10 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="18dp"
+            android:layout_marginEnd="24dp"
             android:background="@color/gray"
-            app:layout_constraintEnd_toEndOf="@id/map"
-            app:layout_constraintStart_toStartOf="@id/map"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
             app:layout_constraintTop_toBottomOf="@id/btn_restaurant_info_favorite" />
 
         <TextView
@@ -132,5 +134,15 @@
             android:layout_marginTop="8dp"
             android:nestedScrollingEnabled="false"
             app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_menu_title" />
+
+        <LinearLayout
+            android:id="@+id/linearlayout_restaurant_info_selected_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/recyclerview_restaurant_menu">
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

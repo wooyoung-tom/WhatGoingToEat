@@ -1,11 +1,13 @@
 package tom.dev.whatgoingtoeat.ui.restaurant_info
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
@@ -16,13 +18,14 @@ import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentRestaurantInfoBinding
 
 @AndroidEntryPoint
-class RestaurantInfoFragment: Fragment(), OnMapReadyCallback {
+class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentRestaurantInfoBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
+    private lateinit var restaurantMenuListAdapter: RestaurantMenuListAdapter
 
     private val restaurant by lazy { RestaurantInfoFragmentArgs.fromBundle(requireArguments()).restaurant }
 
@@ -54,6 +57,27 @@ class RestaurantInfoFragment: Fragment(), OnMapReadyCallback {
             }
 
         mapFragment.getMapAsync(this)
+
+        setRestaurantInfo()
+        setRestaurantMenuAdapter()
+    }
+
+    private fun setRestaurantInfo() {
+        binding.tvRestaurantInfoName.text = restaurant.restaurantName
+        binding.tvRestaurantInfoCategory.text = restaurant.category
+        binding.tvRestaurantInfoAddress.text =
+            if (!restaurant.roadAddress.isNullOrBlank()) restaurant.roadAddress
+            else restaurant.jibunAddress
+    }
+
+    private fun setRestaurantMenuAdapter() {
+        restaurantMenuListAdapter = RestaurantMenuListAdapter()
+        binding.recyclerviewRestaurantMenu.apply {
+            adapter = restaurantMenuListAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        restaurantMenuListAdapter.submitList(restaurant.menuList)
     }
 
     @UiThread
