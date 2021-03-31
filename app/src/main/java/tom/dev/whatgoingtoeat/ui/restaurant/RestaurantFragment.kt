@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -95,7 +96,11 @@ class RestaurantFragment : Fragment() {
     }
 
     private fun setRestaurantListAdapterInit() {
-        restaurantListAdapter = RestaurantListAdapter()
+        restaurantListAdapter = RestaurantListAdapter { restaurantItem ->
+            val action = RestaurantFragmentDirections
+                .actionRestaurantFragmentToRestaurantInfoFragment(restaurantItem.restaurant)
+            findNavController().navigate(action)
+        }
         binding.recyclerviewRestaurant.apply {
             adapter = restaurantListAdapter
             layoutManager = LinearLayoutManager(requireContext())

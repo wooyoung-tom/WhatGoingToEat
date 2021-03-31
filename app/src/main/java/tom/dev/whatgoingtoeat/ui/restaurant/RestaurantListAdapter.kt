@@ -8,21 +8,23 @@ import androidx.recyclerview.widget.RecyclerView
 import tom.dev.whatgoingtoeat.databinding.ItemRestaurantBinding
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantItem
 
-class RestaurantListAdapter: ListAdapter<RestaurantItem, RestaurantListAdapter.RestaurantViewHolder>(Companion) {
+class RestaurantListAdapter(
+    private val restaurantClickListener: (RestaurantItem) -> Unit
+) : ListAdapter<RestaurantItem, RestaurantListAdapter.RestaurantViewHolder>(Companion) {
 
-    companion object: DiffUtil.ItemCallback<RestaurantItem>() {
+    companion object : DiffUtil.ItemCallback<RestaurantItem>() {
         override fun areItemsTheSame(oldItem: RestaurantItem, newItem: RestaurantItem) = oldItem.restaurant.id == newItem.restaurant.id
         override fun areContentsTheSame(oldItem: RestaurantItem, newItem: RestaurantItem) = oldItem == newItem
     }
 
-    inner class RestaurantViewHolder(val binding: ItemRestaurantBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class RestaurantViewHolder(val binding: ItemRestaurantBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RestaurantItem) {
             binding.tvItemSearchResultCategory.text = item.restaurant.category
             binding.tvItemSearchResultName.text = item.restaurant.restaurantName
             binding.tvItemSearchResultDoro.text = item.restaurant.roadAddress ?: ""
             binding.tvItemSearchResultJibun.text = item.restaurant.jibunAddress ?: ""
             binding.tvItemSearchResultDistance.text = getDistanceStr(item.distance)
-            binding.tvItemSearchResultReviewCnt.text  = getReviewCountStr(item.review)
+            binding.tvItemSearchResultReviewCnt.text = getReviewCountStr(item.review)
             binding.tvItemSearchResultFavoriteCnt.text = getFavoriteCountStr(item.favorite)
         }
 
@@ -39,5 +41,8 @@ class RestaurantListAdapter: ListAdapter<RestaurantItem, RestaurantListAdapter.R
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener {
+            restaurantClickListener(getItem(position))
+        }
     }
 }
