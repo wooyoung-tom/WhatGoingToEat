@@ -7,7 +7,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_restaurant_info_v50"
@@ -139,10 +140,18 @@
             android:id="@+id/linearlayout_restaurant_info_selected_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/recyclerview_restaurant_menu">
+            android:paddingVertical="8dp"
+            app:layout_constraintTop_toBottomOf="@id/recyclerview_restaurant_menu" />
 
-        </LinearLayout>
+        <Button
+            android:id="@+id/btn_restaurant_info_menu_select"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginHorizontal="24dp"
+            android:text="선택완료"
+            app:layout_constraintTop_toBottomOf="@id/linearlayout_restaurant_info_selected_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

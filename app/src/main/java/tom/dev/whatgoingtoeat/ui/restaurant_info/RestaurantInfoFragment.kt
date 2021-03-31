@@ -1,7 +1,6 @@
 package tom.dev.whatgoingtoeat.ui.restaurant_info
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.naver.maps.map.util.MarkerIcons
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentRestaurantInfoBinding
+import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
 
 @AndroidEntryPoint
 class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
@@ -71,13 +71,28 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setRestaurantMenuAdapter() {
-        restaurantMenuListAdapter = RestaurantMenuListAdapter()
+        restaurantMenuListAdapter = RestaurantMenuListAdapter(
+            object : RestaurantMenuListAdapter.SelectedItemControlListener {
+                override fun onItemRemoved(item: RestaurantMenu) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onItemSelected(item: RestaurantMenu) {
+                    TODO("Not yet implemented")
+                }
+            }
+        )
+
         binding.recyclerviewRestaurantMenu.apply {
             adapter = restaurantMenuListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
         restaurantMenuListAdapter.submitList(restaurant.menuList)
+    }
+
+    private fun updateSelectedMenuLayout() {
+
     }
 
     @UiThread

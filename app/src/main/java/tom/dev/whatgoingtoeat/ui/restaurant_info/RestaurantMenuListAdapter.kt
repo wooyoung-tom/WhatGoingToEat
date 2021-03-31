@@ -11,7 +11,14 @@ import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
 import tom.dev.whatgoingtoeat.utils.hide
 import tom.dev.whatgoingtoeat.utils.show
 
-class RestaurantMenuListAdapter : ListAdapter<RestaurantMenu, RestaurantMenuListAdapter.RestaurantMenuViewHolder>(Companion) {
+class RestaurantMenuListAdapter(
+    private val selectedItemControlListener: SelectedItemControlListener
+) : ListAdapter<RestaurantMenu, RestaurantMenuListAdapter.RestaurantMenuViewHolder>(Companion) {
+
+    interface SelectedItemControlListener {
+        fun onItemRemoved(item: RestaurantMenu)
+        fun onItemSelected(item: RestaurantMenu)
+    }
 
     companion object : DiffUtil.ItemCallback<RestaurantMenu>() {
         override fun areItemsTheSame(oldItem: RestaurantMenu, newItem: RestaurantMenu) = oldItem.id == newItem.id
@@ -33,12 +40,20 @@ class RestaurantMenuListAdapter : ListAdapter<RestaurantMenu, RestaurantMenuList
 
             binding.btnItemMenuMinus.setOnClickListener {
                 val currentCounter = binding.tvItemMenuCounter.text.toString().toInt()
-                if (currentCounter != 0) binding.tvItemMenuCounter.text = (currentCounter - 1).toString()
+                if (currentCounter != 0) {
+                    // 메뉴 뺐을 때
+                    selectedItemControlListener.onItemRemoved(item)
+                    binding.tvItemMenuCounter.text = (currentCounter - 1).toString()
+                }
             }
 
             binding.btnItemMenuPlus.setOnClickListener {
                 val currentCounter = binding.tvItemMenuCounter.text.toString().toInt()
-                if (currentCounter != 5) binding.tvItemMenuCounter.text = (currentCounter + 1).toString()
+                if (currentCounter != 5) {
+                    // 메뉴 더했을 때
+                    selectedItemControlListener.onItemSelected(item)
+                    binding.tvItemMenuCounter.text = (currentCounter + 1).toString()
+                }
             }
         }
 
