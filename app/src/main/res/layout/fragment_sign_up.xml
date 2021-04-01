@@ -50,12 +50,13 @@
         android:hint="@string/string_hint_sign_in_password"
         android:textColorHint="@color/dusty_gray"
         app:layout_constraintTop_toBottomOf="@id/til_sign_up_id"
-        app:startIconDrawable="@drawable/ic_baseline_person_24">
+        app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_sign_up_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -71,12 +72,13 @@
         app:errorIconTint="@color/carnation"
         app:errorTextColor="@color/carnation"
         app:layout_constraintTop_toBottomOf="@id/til_sign_up_password"
-        app:startIconDrawable="@drawable/ic_baseline_person_24">
+        app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_sign_up_password_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

@@ -14,7 +14,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tom.dev.whatgoingtoeat.BuildConfig
 import tom.dev.whatgoingtoeat.repository.*
+import tom.dev.whatgoingtoeat.service.OrderService
 import tom.dev.whatgoingtoeat.service.RestaurantService
+import tom.dev.whatgoingtoeat.service.UserService
 import javax.inject.Singleton
 
 @Module
@@ -52,13 +54,13 @@ object NetworkModules {
     @Singleton
     fun provideRestaurantService(retrofit: Retrofit): RestaurantService = retrofit.create(RestaurantService::class.java)
 
-//    @Provides
-//    @Singleton
-//    fun provideHistoryService(retrofit: Retrofit): HistoryService = retrofit.create(HistoryService::class.java)
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
 
-//    @Provides
-//    @Singleton
-//    fun provideSearchService(retrofit: Retrofit): SearchService = retrofit.create(SearchService::class.java)
+    @Provides
+    @Singleton
+    fun provideOrderService(retrofit: Retrofit): OrderService = retrofit.create(OrderService::class.java)
 }
 
 @Module
@@ -68,9 +70,9 @@ abstract class RepositoryModules {
     @Binds
     abstract fun bindRestaurantRepository(restaurantRepositoryImpl: RestaurantRepositoryImpl): RestaurantRepository
 
-//    @Binds
-//    abstract fun bindHistoryRepository(historyRepositoryImpl: HistoryRepositoryImpl): HistoryRepository
+    @Binds
+    abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
 
-//    @Binds
-//    abstract fun bindSearchRepository(searchRepositoryImpl: SearchRepositoryImpl): SearchRepository
+    @Binds
+    abstract fun bindOrderRepository(orderRepositoryImpl: OrderRepositoryImpl): OrderRepository
 }

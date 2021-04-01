@@ -51,14 +51,14 @@
         app:errorIconTint="@color/carnation"
         app:errorTextColor="@color/carnation"
         app:layout_constraintTop_toBottomOf="@id/til_sign_in_id"
-        app:startIconDrawable="@drawable/ic_baseline_person_24">
+        app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_sign_in_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
-            android:inputType="text" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

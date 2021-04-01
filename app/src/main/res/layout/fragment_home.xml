@@ -36,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="웅영잉"
         android:textColor="@color/apricot"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

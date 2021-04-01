@@ -5,15 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentHomeBinding
+import tom.dev.whatgoingtoeat.ui.MainViewModel
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
+    private val activityViewModel: MainViewModel by activityViewModels()
+
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val user by lazy { activityViewModel.userInstance }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -23,17 +30,24 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUserNameTextView()
+
         setKoreanButtonClickListener()
         setChineseButtonClickListener()
         setWesternButtonClickListener()
         setJapaneseButtonClickListener()
-        
+
+        setBasketButtonClickListener()
     }
 
     // Destroy 시에 _binding null
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun setUserNameTextView() {
+        binding.tvHomeName.text = user?.name ?: "센디"
     }
 
     private fun setKoreanButtonClickListener() {
@@ -65,6 +79,12 @@ class HomeFragment : Fragment() {
             val category = binding.tvHomeMenuJapanese.text.toString()
             val action = HomeFragmentDirections.actionHomeFragmentToRestaurantFragment(category)
             findNavController().navigate(action)
+        }
+    }
+
+    private fun setBasketButtonClickListener() {
+        binding.btnHomeBasket.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_basketFragment)
         }
     }
 }

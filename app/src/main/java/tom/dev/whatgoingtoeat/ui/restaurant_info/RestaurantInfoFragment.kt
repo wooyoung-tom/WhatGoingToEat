@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -16,9 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentRestaurantInfoBinding
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
+import tom.dev.whatgoingtoeat.ui.MainViewModel
+import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
 class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
+
+    private val viewModel: RestaurantInfoViewModel by viewModels()
+    private val activityViewModel: MainViewModel by activityViewModels()
 
     private var _binding: FragmentRestaurantInfoBinding? = null
     private val binding get() = _binding!!
@@ -60,6 +68,9 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
 
         setRestaurantInfo()
         setRestaurantMenuAdapter()
+        setSelectMenuButtonClickListener()
+
+        observeOrderSave()
     }
 
     // Destroy 시에 _binding null
@@ -80,11 +91,11 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
         restaurantMenuListAdapter = RestaurantMenuListAdapter(
             object : RestaurantMenuListAdapter.SelectedItemControlListener {
                 override fun onItemRemoved(item: RestaurantMenu) {
-                    TODO("Not yet implemented")
+                    viewModel.removeMenu(item)
                 }
 
                 override fun onItemSelected(item: RestaurantMenu) {
-                    TODO("Not yet implemented")
+                    viewModel.selectMenu(item)
                 }
             }
         )
@@ -95,6 +106,19 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
         }
 
         restaurantMenuListAdapter.submitList(restaurant.menuList)
+    }
+
+    private fun setSelectMenuButtonClickListener() {
+        binding.btnRestaurantInfoMenuSelect.setOnClickListener {
+            viewModel.saveOrder(activityViewModel.userInstance?.id)
+        }
+    }
+
+    private fun observeOrderSave() {
+        viewModel.orderSaveCompleteEvent.observe(viewLifecycleOwner) {
+            requireView().showShortSnackBar("장바구니 담기를 완료하였습니다.")
+            findNavController().navigate(R.id.action_restaurantInfoFragment_to_basketFragment)
+        }
     }
 
     private fun updateSelectedMenuLayout() {
