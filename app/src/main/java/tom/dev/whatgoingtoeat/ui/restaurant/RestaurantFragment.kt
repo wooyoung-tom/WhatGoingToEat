@@ -71,6 +71,12 @@ class RestaurantFragment : Fragment() {
         observeLoading()
     }
 
+    // Destroy 시에 _binding null
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun startTrackingLocation() {
         if (checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED

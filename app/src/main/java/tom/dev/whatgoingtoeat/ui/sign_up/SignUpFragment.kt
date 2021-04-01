@@ -30,6 +30,8 @@ class SignUpFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        setSignUpButtonClickListener()
+
         observeLoading()
     }
 
@@ -37,6 +39,10 @@ class SignUpFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun setSignUpButtonClickListener() {
+
     }
 
     private fun observeLoading() {

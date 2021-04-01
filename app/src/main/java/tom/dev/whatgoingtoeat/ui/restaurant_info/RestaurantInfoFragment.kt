@@ -62,6 +62,12 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
         setRestaurantMenuAdapter()
     }
 
+    // Destroy 시에 _binding null
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun setRestaurantInfo() {
         binding.tvRestaurantInfoName.text = restaurant.restaurantName
         binding.tvRestaurantInfoCategory.text = restaurant.category

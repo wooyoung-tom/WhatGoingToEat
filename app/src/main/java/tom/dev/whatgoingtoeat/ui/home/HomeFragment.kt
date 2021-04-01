@@ -30,6 +30,12 @@ class HomeFragment : Fragment() {
         
     }
 
+    // Destroy 시에 _binding null
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun setKoreanButtonClickListener() {
         binding.btnHomeMenuKorean.setOnClickListener {
             val category = binding.tvHomeMenuKorean.text.toString()

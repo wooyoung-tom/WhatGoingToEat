@@ -41,54 +41,17 @@
             tools:text="음식점 이름" />
 
         <TextView
-            android:id="@+id/tv_item_search_result_doro_title"
-            style="@style/TextAppearance.MaterialComponents.Overline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/background_textview"
-            android:text="도로명"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="@id/tv_item_search_result_category"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_search_result_name" />
-
-        <TextView
-            android:id="@+id/tv_item_search_result_doro"
+            android:id="@+id/tv_item_search_result_addr"
             style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:singleLine="true"
-            app:layout_constraintBottom_toBottomOf="@id/tv_item_search_result_doro_title"
-            app:layout_constraintEnd_toStartOf="@id/imageview_item_search_result_enter"
-            app:layout_constraintStart_toEndOf="@id/tv_item_search_result_doro_title"
-            app:layout_constraintTop_toTopOf="@id/tv_item_search_result_doro_title"
-            tools:text="도로명 주소입니다." />
-
-        <TextView
-            android:id="@+id/tv_item_search_result_jibun_title"
-            style="@style/TextAppearance.MaterialComponents.Overline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/background_textview"
-            android:text="지번"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="@id/tv_item_search_result_category"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_search_result_doro_title" />
-
-        <TextView
-            android:id="@+id/tv_item_search_result_jibun"
-            style="@style/TextAppearance.MaterialComponents.Caption"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
             android:singleLine="true"
-            app:layout_constraintBottom_toBottomOf="@id/tv_item_search_result_jibun_title"
             app:layout_constraintEnd_toStartOf="@id/imageview_item_search_result_enter"
-            app:layout_constraintStart_toEndOf="@id/tv_item_search_result_jibun_title"
-            app:layout_constraintTop_toTopOf="@id/tv_item_search_result_jibun_title"
-            tools:text="지번 주소입니다." />
+            app:layout_constraintStart_toStartOf="@id/tv_item_search_result_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_search_result_name"
+            tools:text="주소입니다." />
 
         <LinearLayout
             android:id="@+id/linearlayout_item_search_result_distance"
@@ -98,7 +61,7 @@
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_search_result_jibun_title">
+            app:layout_constraintTop_toBottomOf="@id/tv_item_search_result_addr">
 
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Caption"
@@ -135,8 +98,8 @@
             style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginStart="18dp"
+            android:gravity="center"
             app:drawableStartCompat="@drawable/ic_baseline_edit_note_24"
             app:layout_constraintStart_toEndOf="@id/tv_item_search_result_favorite_cnt"
             app:layout_constraintTop_toTopOf="@id/tv_item_search_result_favorite_cnt"

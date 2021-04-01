@@ -21,8 +21,7 @@ class RestaurantListAdapter(
         fun bind(item: RestaurantItem) {
             binding.tvItemSearchResultCategory.text = item.restaurant.category
             binding.tvItemSearchResultName.text = item.restaurant.restaurantName
-            binding.tvItemSearchResultDoro.text = item.restaurant.roadAddress ?: ""
-            binding.tvItemSearchResultJibun.text = item.restaurant.jibunAddress ?: ""
+            binding.tvItemSearchResultAddr.text = item.restaurant.roadAddress ?: item.restaurant.jibunAddress
             binding.tvItemSearchResultDistance.text = getDistanceStr(item.distance)
             binding.tvItemSearchResultReviewCnt.text = getReviewCountStr(item.review)
             binding.tvItemSearchResultFavoriteCnt.text = getFavoriteCountStr(item.favorite)

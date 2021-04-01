@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModules {
 
-    private const val BASE_URL = "http://c262e9f53de8.ngrok.io"
+    private const val BASE_URL = "http://c3cb493bcd94.ngrok.io"
 
     @Provides
     @Singleton
@@ -35,7 +35,7 @@ object NetworkModules {
 
     @Provides
     @Singleton
-    fun provideMoshiBuilder() = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    fun provideMoshiBuilder(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
     @Provides
     @Singleton
