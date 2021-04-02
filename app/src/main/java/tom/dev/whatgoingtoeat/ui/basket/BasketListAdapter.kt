@@ -30,14 +30,14 @@ class BasketListAdapter : ListAdapter<OrderBasketResponse, BasketListAdapter.Bas
         private fun getTotalPriceStr(price: Int) = "${price}원"
 
         private fun setMenuListTextView(menuList: List<OrderBasketItem>) {
-            menuList.forEach {
-                val menuTextView = TextView(binding.root.context).apply {
-                    text = getMenuDetailInfo(it)
-                    setTextColor(Color.BLACK)
-                }
-
-                binding.linearlayoutItemBasketMenu.addView(menuTextView)
+            var menuText = ""
+            menuList.forEachIndexed { index, menu ->
+                menuText += if (index != menuList.size - 1) {
+                    "${getMenuDetailInfo(menu)}\n"
+                } else getMenuDetailInfo(menu)
             }
+
+            binding.tvItemBasketMenu.text = menuText
         }
 
         private fun getMenuDetailInfo(menu: OrderBasketItem) = "${menu.orderDetailMarketMenu.name} (${menu.menuCount})"

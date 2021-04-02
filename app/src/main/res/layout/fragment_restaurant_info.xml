@@ -8,8 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_restaurant_info_logo_title"
@@ -24,16 +23,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btn_restaurant_info_basket"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="장바구니"
-            app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_info_logo_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_restaurant_info_logo_title" />
+        <FrameLayout
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/silver"
+            app:layout_constraintDimensionRatio="1.5:1"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_logo_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -53,34 +50,24 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
-            <FrameLayout
-                android:id="@+id/map"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/silver"
-                app:layout_constraintDimensionRatio="1.5:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/tv_restaurant_info_name"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
+                style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="18dp"
                 android:textColor="@color/apricot"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/map"
-                app:layout_constraintTop_toBottomOf="@id/map"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="식당이름" />
 
             <TextView
                 android:id="@+id/tv_restaurant_info_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_name"
@@ -110,6 +97,7 @@
                 app:strokeWidth="1dp">
 
                 <TextView
+                    android:id="@+id/tv_restaurant_info_favorite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -127,6 +115,7 @@
                 android:layout_marginTop="18dp"
                 android:layout_marginEnd="24dp"
                 app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/silver"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guideline_restaurant_info_v50"
                 app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_address"

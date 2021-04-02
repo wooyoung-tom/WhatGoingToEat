@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.UiThread
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -66,11 +67,16 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
 
+        viewModel.checkFavorite(activityViewModel.userInstance?.id, restaurant.id)
+
         setRestaurantInfo()
         setRestaurantMenuAdapter()
         setSelectMenuButtonClickListener()
 
         observeOrderSave()
+        observeFavorite()
+        observeSaveFavoriteSuccess()
+        observeDeleteFavoriteSuccess()
     }
 
     // Destroy 시에 _binding null
@@ -110,7 +116,11 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
 
     private fun setSelectMenuButtonClickListener() {
         binding.btnRestaurantInfoMenuSelect.setOnClickListener {
-            viewModel.saveOrder(activityViewModel.userInstance?.id)
+            if (viewModel.selectedMenuList.isEmpty()) {
+                requireView().showShortSnackBar("메뉴를 선택해주세요.")
+            } else {
+                viewModel.saveOrder(activityViewModel.userInstance?.id)
+            }
         }
     }
 
@@ -119,10 +129,6 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
             requireView().showShortSnackBar("장바구니 담기를 완료하였습니다.")
             findNavController().navigate(R.id.action_restaurantInfoFragment_to_basketFragment)
         }
-    }
-
-    private fun updateSelectedMenuLayout() {
-
     }
 
     @UiThread
@@ -169,6 +175,43 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun getTargetLatLng() = LatLng(restaurant.latitude.toDouble(), restaurant.longitude.toDouble())
+
+    private fun observeFavorite() {
+        viewModel.isMyFavoriteLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> {
+                    binding.tvRestaurantInfoFavorite.text = "즐겨찾기 삭제"
+                    binding.btnRestaurantInfoFavorite.setOnClickListener {
+                        viewModel.deleteFavorite(activityViewModel.userInstance?.id, restaurant.id)
+                    }
+                }
+                false -> {
+                    binding.tvRestaurantInfoFavorite.text = "즐겨찾기 추가"
+                    binding.btnRestaurantInfoFavorite.setOnClickListener {
+                        viewModel.saveFavorite(activityViewModel.userInstance?.id, restaurant.id)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeSaveFavoriteSuccess() {
+        viewModel.saveSuccess.observe(viewLifecycleOwner) {
+            binding.tvRestaurantInfoFavorite.text = "즐겨찾기 삭제"
+            binding.btnRestaurantInfoFavorite.setOnClickListener {
+                viewModel.deleteFavorite(activityViewModel.userInstance?.id, restaurant.id)
+            }
+        }
+    }
+
+    private fun observeDeleteFavoriteSuccess() {
+        viewModel.deleteSuccess.observe(viewLifecycleOwner) {
+            binding.tvRestaurantInfoFavorite.text = "즐겨찾기 추가"
+            binding.btnRestaurantInfoFavorite.setOnClickListener {
+                viewModel.saveFavorite(activityViewModel.userInstance?.id, restaurant.id)
+            }
+        }
+    }
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000

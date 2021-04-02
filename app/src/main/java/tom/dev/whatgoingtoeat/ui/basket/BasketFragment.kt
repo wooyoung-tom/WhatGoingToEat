@@ -52,7 +52,7 @@ class BasketFragment : Fragment() {
     private fun observeReadyStatusOrders() {
         viewModel.orderListLiveData.observe(viewLifecycleOwner) {
             it?.let {
-                basketListAdapter.submitList(it)
+                basketListAdapter.submitList(it.reversed())
             }
             binding.tvBasketTotalPrice.text = getTotalPriceStr(it)
         }

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_basket_logo_title"
@@ -19,71 +18,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
+    <TextView
+        android:id="@+id/tv_basket_title"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="장바구니"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_basket_logo_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_basket"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="12dp"
+        android:splitMotionEvents="false"
+        app:layout_constraintBottom_toTopOf="@id/cardview_basket_total_price"
+        app:layout_constraintTop_toBottomOf="@id/tv_basket_title"
+        tools:listitem="@layout/item_basket" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview_basket_total_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="24dp">
 
             <TextView
-                android:id="@+id/tv_basket_title"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:text="장바구니"
-                android:textColor="@color/black"
+                android:text="총 주문금액"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_basket"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_basket_total_price"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
-                android:overScrollMode="never"
-                app:layout_constraintBottom_toTopOf="@id/cardview_basket_total_price"
-                app:layout_constraintTop_toBottomOf="@id/tv_basket_title"
-                tools:listitem="@layout/item_basket" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardview_basket_total_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="8dp"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:strokeColor="@color/gray"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="24dp">
-
-                    <TextView
-                        style="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="총 주문금액" />
-
-                    <TextView
-                        android:id="@+id/tv_basket_total_price"
-                        style="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:textColor="@color/black"
-                        tools:text="500000 원" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="500000 원" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

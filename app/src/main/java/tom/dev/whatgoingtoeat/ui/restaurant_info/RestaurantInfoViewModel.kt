@@ -6,17 +6,21 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import tom.dev.whatgoingtoeat.dto.favorite.FavoriteRequest
 import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequestItem
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
+import tom.dev.whatgoingtoeat.repository.FavoriteRepository
 import tom.dev.whatgoingtoeat.repository.OrderRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @HiltViewModel
 class RestaurantInfoViewModel
 @Inject
 constructor(
-    private val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository,
+    private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
 
     private val compositeDisposable by lazy { CompositeDisposable() }
@@ -40,7 +44,7 @@ constructor(
         _stopLoadingDialogEvent.call()
     }
 
-    private val selectedMenuList = ArrayList<SelectedRestaurantMenu>()
+    val selectedMenuList = ArrayList<SelectedRestaurantMenu>()
 
     fun selectMenu(menu: RestaurantMenu) {
         val foundMenu = selectedMenuList.find { it.menu.id == menu.id }
@@ -85,6 +89,75 @@ constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     _orderSaveCompleteEvent.call()
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    private val _isMyFavoriteLiveData: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val isMyFavoriteLiveData: LiveData<Boolean> get() = _isMyFavoriteLiveData
+
+    fun checkFavorite(userId: Long?, restaurantId: Long) {
+        if (userId == null) return
+
+        compositeDisposable.add(
+            favoriteRepository.checkFavorite(userId, restaurantId)
+                .doOnSubscribe { startLoading() }
+                .doOnSuccess { stopLoading() }
+                .doOnError { stopLoading() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _isMyFavoriteLiveData.postValue(it.checkFavorite)
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    private val _deleteSuccess: SingleLiveEvent<Any> = SingleLiveEvent()
+    val deleteSuccess: LiveData<Any> get() = _deleteSuccess
+
+    fun deleteFavorite(userId: Long?, restaurantId: Long) {
+        if (userId == null) return
+
+        compositeDisposable.add(
+            favoriteRepository.deleteFavorite(userId, restaurantId)
+                .doOnSubscribe { startLoading() }
+                .doOnError { stopLoading() }
+                .doOnSuccess { stopLoading() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it.code == "SUCCESS") {
+                        _deleteSuccess.call()
+                    }
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    private val _saveSuccess: SingleLiveEvent<Any> = SingleLiveEvent()
+    val saveSuccess: LiveData<Any> get() = _saveSuccess
+
+    fun saveFavorite(userId: Long?, restaurantId: Long) {
+        if (userId == null) return
+
+        val info = FavoriteRequest(userId, restaurantId)
+
+        compositeDisposable.add(
+            favoriteRepository.saveFavorite(info)
+                .doOnSubscribe { startLoading() }
+                .doOnError { stopLoading() }
+                .doOnSuccess { stopLoading() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it.code == "SUCCESS") {
+                        _saveSuccess.call()
+                    }
                 }, {
                     it.printStackTrace()
                 })

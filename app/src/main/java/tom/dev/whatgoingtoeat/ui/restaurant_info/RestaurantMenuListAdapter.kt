@@ -1,15 +1,12 @@
 package tom.dev.whatgoingtoeat.ui.restaurant_info
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tom.dev.whatgoingtoeat.databinding.ItemMenuBinding
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
-import tom.dev.whatgoingtoeat.utils.hide
-import tom.dev.whatgoingtoeat.utils.show
 
 class RestaurantMenuListAdapter(
     private val selectedItemControlListener: SelectedItemControlListener
@@ -30,13 +27,6 @@ class RestaurantMenuListAdapter(
             binding.tvItemMenuTitle.text = item.name
             binding.tvItemMenuPrice.text = getPriceStr(item.price)
             binding.tvItemMenuCounter.text = "0"
-
-            itemView.setOnClickListener {
-                when (binding.linearlayoutItemMenuCounter.visibility) {
-                    View.GONE, View.INVISIBLE -> binding.linearlayoutItemMenuCounter.show()
-                    View.VISIBLE -> binding.linearlayoutItemMenuCounter.hide()
-                }
-            }
 
             binding.btnItemMenuMinus.setOnClickListener {
                 val currentCounter = binding.tvItemMenuCounter.text.toString().toInt()
