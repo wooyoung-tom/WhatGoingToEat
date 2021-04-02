@@ -121,6 +121,7 @@ class RestaurantFragment : Fragment() {
                     restaurantListAdapter.update(restaurantList.list)
                 }
             }
+            binding.recyclerviewRestaurant.scrollToPosition(0)
         }
     }
 }
