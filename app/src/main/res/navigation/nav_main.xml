@@ -79,6 +79,11 @@
         <argument
             android:name="restaurantList"
             app:argType="tom.dev.whatgoingtoeat.dto.restaurant.RestaurantList" />
+        <argument
+            android:name="latitude"
+            app:argType="string" />
+        <argument android:name="longitude"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/restaurantInfoFragment"

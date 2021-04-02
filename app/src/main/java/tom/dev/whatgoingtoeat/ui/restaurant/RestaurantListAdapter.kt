@@ -2,19 +2,21 @@ package tom.dev.whatgoingtoeat.ui.restaurant
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tom.dev.whatgoingtoeat.databinding.ItemRestaurantBinding
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantItem
 
 class RestaurantListAdapter(
     private val restaurantClickListener: (RestaurantItem) -> Unit
-) : ListAdapter<RestaurantItem, RestaurantListAdapter.RestaurantViewHolder>(Companion) {
+) : RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder>() {
 
-    companion object : DiffUtil.ItemCallback<RestaurantItem>() {
-        override fun areItemsTheSame(oldItem: RestaurantItem, newItem: RestaurantItem) = oldItem.restaurant.id == newItem.restaurant.id
-        override fun areContentsTheSame(oldItem: RestaurantItem, newItem: RestaurantItem) = oldItem == newItem
+    private val restaurantList: ArrayList<RestaurantItem> = ArrayList()
+
+    fun update(list: List<RestaurantItem>) {
+        restaurantList.clear()
+        restaurantList.addAll(list)
+
+        notifyDataSetChanged()
     }
 
     inner class RestaurantViewHolder(val binding: ItemRestaurantBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -39,9 +41,11 @@ class RestaurantListAdapter(
     }
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(restaurantList[position])
         holder.itemView.setOnClickListener {
-            restaurantClickListener(getItem(position))
+            restaurantClickListener(restaurantList[position])
         }
     }
+
+    override fun getItemCount(): Int = restaurantList.size
 }

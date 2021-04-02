@@ -141,10 +141,12 @@ class HomeFragment : Fragment() {
 
     private fun observeRestaurantList() {
         viewModel.restaurantListLiveData.observe(viewLifecycleOwner) {
-            val parceledList = RestaurantList(it)
+            val parceledList = RestaurantList(it.body)
             val action = HomeFragmentDirections.actionHomeFragmentToRestaurantFragment(
-                binding.tvHomeMenuJapanese.text.toString(),
-                parceledList
+                it.category,
+                parceledList,
+                lastLocation.latitude.toString(),
+                lastLocation.longitude.toString()
             )
             findNavController().navigate(action)
         }
