@@ -69,6 +69,16 @@
         <action
             android:id="@+id/action_restaurantFragment_to_restaurantInfoFragment"
             app:destination="@id/restaurantInfoFragment" />
+        <action
+            android:id="@+id/action_restaurantFragment_to_basketFragment"
+            app:destination="@id/basketFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="restaurantList"
+            app:argType="tom.dev.whatgoingtoeat.dto.restaurant.RestaurantList" />
     </fragment>
     <fragment
         android:id="@+id/restaurantInfoFragment"
@@ -84,7 +94,9 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/restaurantInfoFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/basketFragment"
