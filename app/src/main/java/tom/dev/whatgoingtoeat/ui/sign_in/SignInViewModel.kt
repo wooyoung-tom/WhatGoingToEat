@@ -7,10 +7,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tom.dev.whatgoingtoeat.dto.user.User
-import tom.dev.whatgoingtoeat.dto.user.UserSignInRequest
+import tom.dev.whatgoingtoeat.dto.user.UserSigningRequest
 import tom.dev.whatgoingtoeat.repository.UserRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,7 +49,7 @@ constructor(
     private val _successEvent: SingleLiveEvent<User> = SingleLiveEvent()
     val successEvent: LiveData<User> get() = _successEvent
 
-    fun signIn(user: UserSignInRequest) {
+    fun signIn(user: UserSigningRequest) {
         compositeDisposable.add(
             userRepository.signIn(user)
                 .doOnSubscribe { startLoading() }
@@ -60,9 +59,9 @@ constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when (it.code) {
-                        "NAME FAILED" -> _nameNotFoundEvent.call()
-                        "PASSWORD FAILED" -> _passwordInvalidEvent.call()
-                        "SUCCESS" -> _successEvent.postValue(it.body)
+                        "NotFound" -> _nameNotFoundEvent.call()
+                        "Failed" -> _passwordInvalidEvent.call()
+                        "Success" -> _successEvent.postValue(it.user)
                     }
                 }, {
                     it.printStackTrace()

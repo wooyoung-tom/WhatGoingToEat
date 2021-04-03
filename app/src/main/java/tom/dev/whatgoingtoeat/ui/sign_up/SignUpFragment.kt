@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentSignUpBinding
-import tom.dev.whatgoingtoeat.dto.user.UserSignUpRequest
+import tom.dev.whatgoingtoeat.dto.user.UserSigningRequest
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
@@ -49,7 +49,7 @@ class SignUpFragment : Fragment() {
             val passwordCheck = binding.etSignUpPasswordCheck.text.toString()
 
             if (checkUserInfoValid(name, password, passwordCheck))
-                viewModel.signUp(UserSignUpRequest(name, password))
+                viewModel.signUp(UserSigningRequest(name, password))
         }
     }
 

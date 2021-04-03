@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentSignInBinding
-import tom.dev.whatgoingtoeat.dto.user.UserSignInRequest
+import tom.dev.whatgoingtoeat.dto.user.UserSigningRequest
 import tom.dev.whatgoingtoeat.ui.MainViewModel
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
 
@@ -57,7 +57,7 @@ class SignInFragment : Fragment() {
             val password = binding.etSignInPassword.text.toString()
 
             if (checkUserInfoValid(userName, password))
-                viewModel.signIn(UserSignInRequest(userName, password))
+                viewModel.signIn(UserSigningRequest(userName, password))
         }
     }
 

@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import tom.dev.whatgoingtoeat.dto.user.UserSignUpRequest
+import tom.dev.whatgoingtoeat.dto.user.UserSigningRequest
 import tom.dev.whatgoingtoeat.repository.UserRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import javax.inject.Inject
@@ -48,7 +48,7 @@ constructor(
     private val _nameDuplicateEvent: SingleLiveEvent<Any> = SingleLiveEvent()
     val nameDuplicateEvent: LiveData<Any> get() = _nameDuplicateEvent
 
-    fun signUp(userSignUpRequest: UserSignUpRequest) {
+    fun signUp(userSignUpRequest: UserSigningRequest) {
         compositeDisposable.add(
             userRepository.signUp(userSignUpRequest)
                 .doOnSubscribe { startLoading() }
@@ -58,9 +58,9 @@ constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when (it.code) {
-                        "FAILED" -> _failSignUpLiveData.call()
-                        "SUCCESS" -> _completeSignUpLiveData.call()
-                        "DUPLICATED" -> _nameDuplicateEvent.call()
+                        "Failed" -> _failSignUpLiveData.call()
+                        "Success" -> _completeSignUpLiveData.call()
+                        "Duplicated" -> _nameDuplicateEvent.call()
                     }
                 }, {
                     it.printStackTrace()
