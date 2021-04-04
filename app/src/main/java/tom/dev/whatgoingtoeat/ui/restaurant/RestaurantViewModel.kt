@@ -2,13 +2,13 @@ package tom.dev.whatgoingtoeat.ui.restaurant
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import tom.dev.whatgoingtoeat.dto.favorite.FavoriteResponse
-import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantItem
-import tom.dev.whatgoingtoeat.repository.FavoriteRepository
+import kotlinx.coroutines.flow.Flow
+import tom.dev.whatgoingtoeat.dto.restaurant.Restaurant
 import tom.dev.whatgoingtoeat.repository.RestaurantRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import javax.inject.Inject
@@ -17,8 +17,7 @@ import javax.inject.Inject
 class RestaurantViewModel
 @Inject
 constructor(
-    private val restaurantRepository: RestaurantRepository,
-    private val favoriteRepository: FavoriteRepository
+    private val restaurantRepository: RestaurantRepository
 ) : ViewModel() {
 
     private val compositeDisposable by lazy { CompositeDisposable() }
@@ -42,24 +41,16 @@ constructor(
         _stopLoadingDialogEvent.call()
     }
 
-    private val _favoriteListLiveData: SingleLiveEvent<List<RestaurantItem>> = SingleLiveEvent()
-    val favoriteListLiveData: LiveData<List<RestaurantItem>> get() = _favoriteListLiveData
+    private var currentCategory: String? = null
+    private var currentSearchResult: Flow<PagingData<Restaurant>>? = null
 
-    fun findFavoriteRestaurants(userId: Long?, category: String, lat: String, lng: String) {
-        if (userId != null) {
-            compositeDisposable.add(
-                favoriteRepository.findFavoriteRestaurants(userId, category, lat, lng)
-                    .doOnSubscribe { startLoading() }
-                    .doOnSuccess { stopLoading() }
-                    .doOnError { stopLoading() }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        _favoriteListLiveData.postValue(it.body)
-                    }, {
-                        it.printStackTrace()
-                    })
-            )
-        }
+    fun searchRestaurant(category: String, lat: Double, lng: Double): Flow<PagingData<Restaurant>> {
+        val lastResult = currentSearchResult
+        if (category == currentCategory && lastResult != null) return lastResult
+        currentCategory = category
+        val newResult = restaurantRepository.findRestaurants(category, lat.toString(), lng.toString())
+            .cachedIn(viewModelScope)
+        currentSearchResult = newResult
+        return newResult
     }
 }

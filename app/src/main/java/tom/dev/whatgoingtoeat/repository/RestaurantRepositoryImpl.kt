@@ -1,7 +1,10 @@
 package tom.dev.whatgoingtoeat.repository
 
-import io.reactivex.Single
-import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantResponse
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import tom.dev.whatgoingtoeat.dto.restaurant.Restaurant
 import tom.dev.whatgoingtoeat.service.RestaurantService
 import javax.inject.Inject
 
@@ -11,17 +14,12 @@ constructor(
     private val restaurantService: RestaurantService
 ) : RestaurantRepository {
 
-    override fun findRestaurants(
-        category: String,
-        lat: String,
-        lng: String,
-        favorite: Boolean?,
-        distance: Boolean?,
-        review: Boolean?,
-        literal: Boolean?
-    ): Single<RestaurantResponse> {
-        return restaurantService.findRestaurants(
-            category, lat, lng, favorite, distance, review, literal
-        )
+    override fun findRestaurants(category: String, lat: String, lng: String): Flow<PagingData<Restaurant>> {
+        return Pager(
+            config = PagingConfig(pageSize = 15),
+            pagingSourceFactory = {
+                RestaurantPagingSource(restaurantService, category, lat, lng)
+            }
+        ).flow
     }
 }

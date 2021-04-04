@@ -76,23 +76,12 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
-        <argument
-            android:name="restaurantList"
-            app:argType="tom.dev.whatgoingtoeat.dto.restaurant.RestaurantList" />
-        <argument
-            android:name="latitude"
-            app:argType="string" />
-        <argument android:name="longitude"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/restaurantInfoFragment"
         android:name="tom.dev.whatgoingtoeat.ui.restaurant_info.RestaurantInfoFragment"
         android:label="RestaurantInfoFragment"
         tools:layout="@layout/fragment_restaurant_info">
-        <argument
-            android:name="restaurant"
-            app:argType="tom.dev.whatgoingtoeat.dto.restaurant.RestaurantEntity" />
         <action
             android:id="@+id/action_restaurantInfoFragment_to_basketFragment"
             app:destination="@id/basketFragment"
@@ -102,6 +91,9 @@
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/restaurantInfoFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="restaurant"
+            app:argType="tom.dev.whatgoingtoeat.dto.restaurant.Restaurant" />
     </fragment>
     <fragment
         android:id="@+id/basketFragment"

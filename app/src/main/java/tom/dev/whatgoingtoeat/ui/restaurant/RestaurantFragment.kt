@@ -1,38 +1,68 @@
 package tom.dev.whatgoingtoeat.ui.restaurant
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentRestaurantBinding
-import tom.dev.whatgoingtoeat.ui.MainViewModel
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
+import tom.dev.whatgoingtoeat.utils.hide
 
 @AndroidEntryPoint
 class RestaurantFragment : Fragment() {
 
     private val viewModel: RestaurantViewModel by viewModels()
-    private val activityViewModel: MainViewModel by activityViewModels()
 
     private var _binding: FragmentRestaurantBinding? = null
     private val binding get() = _binding!!
 
     private val category by lazy { RestaurantFragmentArgs.fromBundle(requireArguments()).category }
-    private val restaurantList by lazy { RestaurantFragmentArgs.fromBundle(requireArguments()).restaurantList }
-    private val latitude by lazy { RestaurantFragmentArgs.fromBundle(requireArguments()).latitude }
-    private val longitude by lazy { RestaurantFragmentArgs.fromBundle(requireArguments()).longitude }
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var lastLocation: Location
 
     private lateinit var restaurantListAdapter: RestaurantListAdapter
 
+    private var searchRestaurantJob: Job? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentRestaurantBinding.inflate(inflater, container, false)
+
+        // FusedLocationClient 초기화
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        val permissionListener = object : PermissionListener {
+            override fun onPermissionGranted() {
+                startTrackingLocation()
+            }
+
+            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                showPermissionNotGrantedView()
+            }
+        }
+
+        TedPermission.with(requireContext())
+            .setPermissionListener(permissionListener)
+            .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+            .check()
 
         return binding.root
     }
@@ -48,13 +78,13 @@ class RestaurantFragment : Fragment() {
         setBasketButtonClickListener()
 
         observeLoading()
-        observeFavoriteList()
     }
 
     // Destroy 시에 _binding null
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        searchRestaurantJob?.cancel()
     }
 
     private fun setBasketButtonClickListener() {
@@ -66,15 +96,13 @@ class RestaurantFragment : Fragment() {
     private fun setRestaurantListAdapterInit() {
         restaurantListAdapter = RestaurantListAdapter { restaurantItem ->
             val action = RestaurantFragmentDirections
-                .actionRestaurantFragmentToRestaurantInfoFragment(restaurantItem.restaurant)
+                .actionRestaurantFragmentToRestaurantInfoFragment(restaurantItem)
             findNavController().navigate(action)
         }
         binding.recyclerviewRestaurant.apply {
             adapter = restaurantListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
-
-        restaurantListAdapter.update(restaurantList.list)
     }
 
     private fun setRestaurantCategoryTitle() {
@@ -91,37 +119,53 @@ class RestaurantFragment : Fragment() {
         }
     }
 
-    private fun observeFavoriteList() {
-        viewModel.favoriteListLiveData.observe(viewLifecycleOwner) {
-            it?.let {
-                restaurantListAdapter.update(it)
-            }
-        }
-    }
-
     private fun setFilter() {
         binding.chipgroupRestaurantFilters.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.chip_restaurant_favorite -> {
-                    viewModel.findFavoriteRestaurants(activityViewModel.userInstance?.id, category, latitude, longitude)
+
                 }
                 R.id.chip_restaurant_distance -> {
-                    val newList = restaurantList.list.sortedBy { it.distance }
-                    restaurantListAdapter.update(newList)
+
                 }
                 R.id.chip_restaurant_review -> {
-                    val newList = restaurantList.list.sortedByDescending { it.review }
-                    restaurantListAdapter.update(newList)
+
                 }
                 R.id.chip_restaurant_asc -> {
-                    val newList = restaurantList.list.sortedBy { it.restaurant.restaurantName }
-                    restaurantListAdapter.update(newList)
+
                 }
                 else -> {
-                    restaurantListAdapter.update(restaurantList.list)
+
                 }
             }
-            binding.recyclerviewRestaurant.scrollToPosition(0)
+        }
+    }
+
+    private fun startTrackingLocation() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ) showPermissionNotGrantedView()
+
+        fusedLocationClient.lastLocation.addOnSuccessListener {
+            lastLocation = it
+
+            searchRestaurant()
+        }
+    }
+
+    private fun showPermissionNotGrantedView() {
+        binding.recyclerviewRestaurant.hide()
+    }
+
+    private fun searchRestaurant() {
+        val lat = lastLocation.latitude
+        val lng = lastLocation.longitude
+
+        searchRestaurantJob?.cancel()
+        searchRestaurantJob = lifecycleScope.launch {
+            viewModel.searchRestaurant(category, lat, lng).collectLatest {
+                restaurantListAdapter.submitData(it)
+            }
         }
     }
 }

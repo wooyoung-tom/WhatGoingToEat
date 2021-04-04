@@ -4,14 +4,17 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class RestaurantEntity(
-    val id: Long,
-    val restaurantName: String,
-    val roadAddress: String?,
+data class Restaurant(
+    val category: String,
     val jibunAddress: String?,
-    val phoneNumber: String?,
     val latitude: String,
     val longitude: String,
-    val category: String,
     val menuList: List<RestaurantMenu>,
+    val phoneNumber: String?,
+    val restaurantId: Long,
+    val restaurantName: String,
+    val roadAddress: String?,
+    val distance: Int,
+    val reviewCount: Int,
+    val favoriteCount: Int
 ) : Parcelable

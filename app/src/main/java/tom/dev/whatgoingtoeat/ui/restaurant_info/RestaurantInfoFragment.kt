@@ -66,7 +66,7 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
 
-        viewModel.checkFavorite(activityViewModel.userInstance?.id, restaurant.id)
+        viewModel.checkFavorite(activityViewModel.userInstance?.userId, restaurant.restaurantId)
 
         setRestaurantInfo()
         setRestaurantMenuAdapter()
@@ -118,7 +118,7 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
             if (viewModel.selectedMenuList.isEmpty()) {
                 requireView().showShortSnackBar("메뉴를 선택해주세요.")
             } else {
-                viewModel.saveOrder(activityViewModel.userInstance?.id)
+                viewModel.saveOrder(activityViewModel.userInstance?.userId)
             }
         }
     }
@@ -181,13 +181,13 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
                 true -> {
                     binding.tvRestaurantInfoFavorite.text = "즐겨찾기 삭제"
                     binding.btnRestaurantInfoFavorite.setOnClickListener {
-                        viewModel.deleteFavorite(activityViewModel.userInstance?.id, restaurant.id)
+                        viewModel.deleteFavorite(activityViewModel.userInstance?.userId, restaurant.restaurantId)
                     }
                 }
                 false -> {
                     binding.tvRestaurantInfoFavorite.text = "즐겨찾기 추가"
                     binding.btnRestaurantInfoFavorite.setOnClickListener {
-                        viewModel.saveFavorite(activityViewModel.userInstance?.id, restaurant.id)
+                        viewModel.saveFavorite(activityViewModel.userInstance?.userId, restaurant.restaurantId)
                     }
                 }
             }
@@ -198,7 +198,7 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
         viewModel.saveSuccess.observe(viewLifecycleOwner) {
             binding.tvRestaurantInfoFavorite.text = "즐겨찾기 삭제"
             binding.btnRestaurantInfoFavorite.setOnClickListener {
-                viewModel.deleteFavorite(activityViewModel.userInstance?.id, restaurant.id)
+                viewModel.deleteFavorite(activityViewModel.userInstance?.userId, restaurant.restaurantId)
             }
         }
     }
@@ -207,7 +207,7 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
         viewModel.deleteSuccess.observe(viewLifecycleOwner) {
             binding.tvRestaurantInfoFavorite.text = "즐겨찾기 추가"
             binding.btnRestaurantInfoFavorite.setOnClickListener {
-                viewModel.saveFavorite(activityViewModel.userInstance?.id, restaurant.id)
+                viewModel.saveFavorite(activityViewModel.userInstance?.userId, restaurant.restaurantId)
             }
         }
     }

@@ -1,10 +1,9 @@
 package tom.dev.whatgoingtoeat.dto.restaurant
 
-import com.squareup.moshi.JsonClass
+import tom.dev.whatgoingtoeat.paging.PagingMetaData
 
-@JsonClass(generateAdapter = true)
 data class RestaurantResponse(
 
-    val category: String,
-    val body: List<RestaurantItem>
+    val meta: PagingMetaData,
+    val body: List<Restaurant>
 )

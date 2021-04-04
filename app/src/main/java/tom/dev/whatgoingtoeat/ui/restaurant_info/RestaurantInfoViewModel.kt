@@ -13,7 +13,6 @@ import tom.dev.whatgoingtoeat.repository.FavoriteRepository
 import tom.dev.whatgoingtoeat.repository.OrderRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @HiltViewModel
 class RestaurantInfoViewModel

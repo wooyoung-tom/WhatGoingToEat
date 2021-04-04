@@ -35,7 +35,7 @@ class BasketFragment : Fragment() {
 
         setBasketListAdapter()
 
-        viewModel.findReadyStateOrders(activityViewModel.userInstance?.id)
+        viewModel.findReadyStateOrders(activityViewModel.userInstance?.userId)
 
         observeReadyStatusOrders()
         observeLoading()
