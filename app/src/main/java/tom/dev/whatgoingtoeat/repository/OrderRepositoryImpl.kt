@@ -19,4 +19,8 @@ constructor(
     override fun findOrders(userId: Long): Single<OrderBasketResponse> {
         return orderService.findOrders(userId)
     }
+
+    override fun deleteOrder(orderId: Long): Single<CommonSimpleResponse> {
+        return orderService.deleteOrder(orderId)
+    }
 }

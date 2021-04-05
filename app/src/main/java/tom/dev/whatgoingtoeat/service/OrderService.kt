@@ -20,4 +20,9 @@ interface OrderService {
     fun findOrders(
         @Path("id") userId: Long
     ): Single<OrderBasketResponse>
+
+    @GET("/orders/delete/{id}")
+    fun deleteOrder(
+        @Path("id") orderId: Long
+    ): Single<CommonSimpleResponse>
 }

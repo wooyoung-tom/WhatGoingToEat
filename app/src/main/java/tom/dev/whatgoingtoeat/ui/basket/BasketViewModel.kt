@@ -59,4 +59,27 @@ constructor(
             )
         }
     }
+
+    private val _deleteCompleteLiveData: SingleLiveEvent<Int> = SingleLiveEvent()
+    val deleteCompleteLiveData: LiveData<Int> get() = _deleteCompleteLiveData
+
+    private val _deleteFailedLiveData: SingleLiveEvent<String> = SingleLiveEvent()
+    val deleteFailedLiveData: LiveData<String> get() = _deleteFailedLiveData
+
+    fun deleteOrder(orderId: Long, position: Int) {
+        compositeDisposable.add(
+            orderRepository.deleteOrder(orderId)
+                .doOnSubscribe { startLoading() }
+                .doOnSuccess { stopLoading() }
+                .doOnError { stopLoading() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it.code == "Success") _deleteCompleteLiveData.postValue(position)
+                    else if (it.code == "Failed") _deleteFailedLiveData.postValue(it.message)
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
 }

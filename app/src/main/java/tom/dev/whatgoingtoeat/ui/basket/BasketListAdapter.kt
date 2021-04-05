@@ -14,8 +14,8 @@ class BasketListAdapter(
 ) : ListAdapter<OrderBasketItem, BasketListAdapter.BasketViewHolder>(Companion) {
 
     interface ClickListeners {
-        fun onDeleteButtonListener(item: OrderBasketItem)
-        fun onItemClickListener(item: OrderBasketItem)
+        fun onDeleteButtonClickListener(item: OrderBasketItem, position: Int)
+        fun onEditButtonClickListener(item: OrderBasketItem)
     }
 
     companion object : DiffUtil.ItemCallback<OrderBasketItem>() {
@@ -57,12 +57,12 @@ class BasketListAdapter(
     override fun onBindViewHolder(holder: BasketViewHolder, position: Int) {
         holder.bind(getItem(position))
 
-        holder.itemView.setOnClickListener {
-            onClickListeners.onItemClickListener(getItem(position))
+        holder.binding.btnItemBasketEdit.setOnClickListener {
+            onClickListeners.onEditButtonClickListener(getItem(position))
         }
 
         holder.binding.btnItemBasketDelete.setOnClickListener {
-            onClickListeners.onDeleteButtonListener(getItem(position))
+            onClickListeners.onDeleteButtonClickListener(getItem(position), position)
         }
     }
 }

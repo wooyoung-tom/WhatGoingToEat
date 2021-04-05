@@ -1,9 +1,12 @@
 package tom.dev.whatgoingtoeat.ui.basket
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -41,15 +44,27 @@ class BasketFragment : Fragment() {
 
         observeReadyStatusOrders()
         observeLoading()
+        observeDeleteComplete()
     }
 
     private fun setBasketListAdapter() {
         basketListAdapter = BasketListAdapter(object : BasketListAdapter.ClickListeners {
-            override fun onDeleteButtonListener(item: OrderBasketItem) {
-                requireView().showShortSnackBar("${item.orderId} 삭제버튼")
+            override fun onDeleteButtonClickListener(item: OrderBasketItem, position: Int) {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle("주문 삭제")
+                    setMessage("해당 주문을 정말 삭제하시겠습니까?\n식당이름: ${item.restaurantName}")
+                    setPositiveButton("삭제") { dialog, _ ->
+                        viewModel.deleteOrder(item.orderId, position)
+                        dialog.dismiss()
+                    }
+                    setNegativeButton("취소") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    setCancelable(false)
+                }.show()
             }
 
-            override fun onItemClickListener(item: OrderBasketItem) {
+            override fun onEditButtonClickListener(item: OrderBasketItem) {
                 requireView().showShortSnackBar("$item")
             }
         })
@@ -80,6 +95,16 @@ class BasketFragment : Fragment() {
         }
         viewModel.stopLoadingDialogEvent.observe(viewLifecycleOwner) {
             loading.dismiss()
+        }
+    }
+
+    private fun observeDeleteComplete() {
+        viewModel.deleteCompleteLiveData.observe(viewLifecycleOwner) {
+            viewModel.findReadyStateOrders(activityViewModel.userInstance?.userId)
+        }
+
+        viewModel.deleteFailedLiveData.observe(viewLifecycleOwner) {
+            requireView().showShortSnackBar(it)
         }
     }
 }

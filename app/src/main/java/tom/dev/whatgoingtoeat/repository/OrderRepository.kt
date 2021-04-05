@@ -8,4 +8,5 @@ import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequest
 interface OrderRepository {
     fun saveOrder(order: OrderSaveRequest): Single<CommonSimpleResponse>
     fun findOrders(userId: Long): Single<OrderBasketResponse>
+    fun deleteOrder(orderId: Long): Single<CommonSimpleResponse>
 }
