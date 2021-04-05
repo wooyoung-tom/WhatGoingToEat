@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -155,8 +156,17 @@ class RestaurantFragment : Fragment() {
 
         fusedLocationClient.lastLocation.addOnSuccessListener {
             lastLocation = it
+            when (binding.chipgroupRestaurantFilters.checkedChipId) {
+                R.id.chip_restaurant_favorite -> searchFavoriteRestaurant()
+                R.id.chip_restaurant_distance -> {
 
-            searchRestaurant()
+                }
+                R.id.chip_restaurant_review -> {
+
+                }
+                R.id.chip_restaurant_asc -> searchRestaurantsByLiteralAsc()
+                else -> searchRestaurant()
+            }
         }
     }
 
