@@ -26,11 +26,15 @@ constructor(
     }
 
     fun searchRestaurant(
-        category: String, lat: Double, lng: Double, userId: Long = 0, favorite: Boolean = false
+        category: String, lat: Double, lng: Double, userId: Long = 0, favorite: Boolean = false, literal: Boolean = false
     ): Flow<PagingData<Restaurant>> {
         return when {
             favorite -> {
                 restaurantRepository.findFavoriteRestaurants(userId, category, lat.toString(), lng.toString(), favorite)
+                    .cachedIn(viewModelScope)
+            }
+            literal -> {
+                restaurantRepository.findRestaurantsByLiteralAsc(category, lat.toString(), lng.toString(), true)
                     .cachedIn(viewModelScope)
             }
             else -> {

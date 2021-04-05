@@ -8,6 +8,8 @@ interface RestaurantRepository {
 
     fun findRestaurants(category: String, lat: String, lng: String): Flow<PagingData<Restaurant>>
 
+    fun findRestaurantsByLiteralAsc(category: String, lat: String, lng: String, literal: Boolean): Flow<PagingData<Restaurant>>
+
     fun findFavoriteRestaurants(
         userId: Long, category: String, lat: String, lng: String, favorite: Boolean
     ): Flow<PagingData<Restaurant>>

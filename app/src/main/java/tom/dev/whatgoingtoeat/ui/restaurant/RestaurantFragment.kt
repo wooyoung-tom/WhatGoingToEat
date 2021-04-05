@@ -135,18 +135,14 @@ class RestaurantFragment : Fragment() {
     private fun setFilter() {
         binding.chipgroupRestaurantFilters.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.chip_restaurant_favorite -> {
-                    searchFavoriteRestaurant()
-                }
+                R.id.chip_restaurant_favorite -> searchFavoriteRestaurant()
                 R.id.chip_restaurant_distance -> {
 
                 }
                 R.id.chip_restaurant_review -> {
 
                 }
-                R.id.chip_restaurant_asc -> {
-
-                }
+                R.id.chip_restaurant_asc -> searchRestaurantsByLiteralAsc()
                 else -> searchRestaurant()
             }
         }
@@ -189,6 +185,19 @@ class RestaurantFragment : Fragment() {
             val userId = activityViewModel.userInstance?.userId ?: return@launch
 
             viewModel.searchRestaurant(userId = userId, category = category, lat = lat, lng = lng, favorite = true)
+                .collectLatest {
+                    restaurantListAdapter.submitData(it)
+                }
+        }
+    }
+
+    private fun searchRestaurantsByLiteralAsc() {
+        val lat = lastLocation.latitude
+        val lng = lastLocation.longitude
+
+        searchRestaurantJob?.cancel()
+        searchRestaurantJob = lifecycleScope.launch {
+            viewModel.searchRestaurant(category = category, lat = lat, lng = lng, literal = true)
                 .collectLatest {
                     restaurantListAdapter.submitData(it)
                 }

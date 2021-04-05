@@ -15,11 +15,21 @@ interface RestaurantService {
         @Query("page") page: Int
     ): RestaurantResponse
 
+    @GET("/restaurants")
+    suspend fun searchRestaurantByLiteralAsc(
+        @Query("category") category: String,
+        @Query("lat") latitude: String,
+        @Query("lng") longitude: String,
+        @Query("page") page: Int,
+        @Query("literal") literal: Boolean
+    ): RestaurantResponse
+
     @GET("/restaurants/favorites/{id}")
     suspend fun findFavoriteRestaurants(
         @Path("id") userId: Long,
         @Query("category") category: String,
         @Query("lat") latitude: String,
-        @Query("lng") longitude: String
+        @Query("lng") longitude: String,
+        @Query("page") page: Int
     ): RestaurantResponse
 }

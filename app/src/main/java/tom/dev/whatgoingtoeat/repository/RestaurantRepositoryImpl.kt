@@ -23,9 +23,16 @@ constructor(
         ).flow
     }
 
-    override fun findFavoriteRestaurants(
-        userId: Long, category: String, lat: String, lng: String, favorite: Boolean
-    ): Flow<PagingData<Restaurant>> {
+    override fun findRestaurantsByLiteralAsc(category: String, lat: String, lng: String, literal: Boolean): Flow<PagingData<Restaurant>> {
+        return Pager(
+            config = PagingConfig(pageSize = 15),
+            pagingSourceFactory = {
+                RestaurantPagingSource(restaurantService, category, lat, lng, literal = true)
+            }
+        ).flow
+    }
+
+    override fun findFavoriteRestaurants(userId: Long, category: String, lat: String, lng: String, favorite: Boolean): Flow<PagingData<Restaurant>> {
         return Pager(
             config = PagingConfig(pageSize = 15),
             pagingSourceFactory = {
