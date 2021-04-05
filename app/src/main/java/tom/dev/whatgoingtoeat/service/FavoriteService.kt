@@ -2,9 +2,9 @@ package tom.dev.whatgoingtoeat.service
 
 import io.reactivex.Single
 import retrofit2.http.*
+import tom.dev.whatgoingtoeat.dto.CommonSimpleResponse
 import tom.dev.whatgoingtoeat.dto.favorite.CheckFavoriteResponse
 import tom.dev.whatgoingtoeat.dto.favorite.FavoriteRequest
-import tom.dev.whatgoingtoeat.dto.favorite.FavoriteResponse
 
 interface FavoriteService {
 
@@ -17,10 +17,10 @@ interface FavoriteService {
     @POST("/favorites")
     fun saveFavorite(
         @Body info: FavoriteRequest
-    ): Single<FavoriteResponse>
+    ): Single<CommonSimpleResponse>
 
     @POST("/favorites/delete")
     fun deleteFavorite(
         @Body info: FavoriteRequest
-    ): Single<FavoriteResponse>
+    ): Single<CommonSimpleResponse>
 }
