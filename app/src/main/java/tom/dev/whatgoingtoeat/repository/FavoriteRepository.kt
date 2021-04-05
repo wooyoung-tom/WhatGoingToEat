@@ -8,11 +8,9 @@ import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantResponse
 
 interface FavoriteRepository {
 
-    fun findFavoriteRestaurants(userId: Long, category: String, lat: String, lng: String): Single<RestaurantResponse>
-
     fun checkFavorite(userId: Long, restaurantId: Long): Single<CheckFavoriteResponse>
 
     fun saveFavorite(info: FavoriteRequest): Single<FavoriteResponse>
 
-    fun deleteFavorite(userId: Long, restaurantId: Long): Single<FavoriteResponse>
+    fun deleteFavorite(info: FavoriteRequest): Single<FavoriteResponse>
 }

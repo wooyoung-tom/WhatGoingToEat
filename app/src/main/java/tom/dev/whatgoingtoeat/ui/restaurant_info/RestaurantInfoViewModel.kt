@@ -114,7 +114,7 @@ constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    _isMyFavoriteLiveData.postValue(it.checkFavorite)
+                    _isMyFavoriteLiveData.postValue(it.favorite)
                 }, {
                     it.printStackTrace()
                 })
@@ -127,15 +127,17 @@ constructor(
     fun deleteFavorite(userId: Long?, restaurantId: Long) {
         if (userId == null) return
 
+        val info = FavoriteRequest(userId, restaurantId)
+
         compositeDisposable.add(
-            favoriteRepository.deleteFavorite(userId, restaurantId)
+            favoriteRepository.deleteFavorite(info)
                 .doOnSubscribe { startLoading() }
                 .doOnError { stopLoading() }
                 .doOnSuccess { stopLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    if (it.code == "SUCCESS") {
+                    if (it.code == "Success") {
                         _deleteSuccess.call()
                     }
                 }, {
@@ -160,7 +162,7 @@ constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    if (it.code == "SUCCESS") {
+                    if (it.code == "Success") {
                         _saveSuccess.call()
                     }
                 }, {

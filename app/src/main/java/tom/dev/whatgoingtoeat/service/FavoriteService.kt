@@ -5,32 +5,22 @@ import retrofit2.http.*
 import tom.dev.whatgoingtoeat.dto.favorite.CheckFavoriteResponse
 import tom.dev.whatgoingtoeat.dto.favorite.FavoriteRequest
 import tom.dev.whatgoingtoeat.dto.favorite.FavoriteResponse
-import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantResponse
 
 interface FavoriteService {
 
-    @GET("/market/favorites/{id}")
-    fun findFavoriteRestaurants(
-        @Path("id") userId: Long,
-        @Query("category") category: String,
-        @Query("lat") latitude: String,
-        @Query("lng") longitude: String
-    ): Single<RestaurantResponse>
-
-    @GET("/market/favorites")
+    @GET("/favorites/check/{id}")
     fun checkFavorite(
-        @Query("user_id") userId: Long,
-        @Query("restaurant_id") restaurantId: Long
+        @Path("id") userId: Long,
+        @Query("restaurantId") restaurantId: Long
     ): Single<CheckFavoriteResponse>
 
-    @POST("/market/favorites")
+    @POST("/favorites")
     fun saveFavorite(
         @Body info: FavoriteRequest
     ): Single<FavoriteResponse>
 
-    @DELETE("/market/favorites")
+    @POST("/favorites/delete")
     fun deleteFavorite(
-        @Query("user_id") userId: Long,
-        @Query("restaurant_id") restaurantId: Long
+        @Body info: FavoriteRequest
     ): Single<FavoriteResponse>
 }
