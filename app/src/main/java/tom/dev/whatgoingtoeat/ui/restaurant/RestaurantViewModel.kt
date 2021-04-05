@@ -1,6 +1,5 @@
 package tom.dev.whatgoingtoeat.ui.restaurant
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -10,7 +9,6 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.Flow
 import tom.dev.whatgoingtoeat.dto.restaurant.Restaurant
 import tom.dev.whatgoingtoeat.repository.RestaurantRepository
-import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,16 +25,18 @@ constructor(
         compositeDisposable.clear()
     }
 
-    private var currentCategory: String? = null
-    private var currentSearchResult: Flow<PagingData<Restaurant>>? = null
-
-    fun searchRestaurant(category: String, lat: Double, lng: Double): Flow<PagingData<Restaurant>> {
-        val lastResult = currentSearchResult
-        if (category == currentCategory && lastResult != null) return lastResult
-        currentCategory = category
-        val newResult = restaurantRepository.findRestaurants(category, lat.toString(), lng.toString())
-            .cachedIn(viewModelScope)
-        currentSearchResult = newResult
-        return newResult
+    fun searchRestaurant(
+        category: String, lat: Double, lng: Double, userId: Long = 0, favorite: Boolean = false
+    ): Flow<PagingData<Restaurant>> {
+        return when {
+            favorite -> {
+                restaurantRepository.findFavoriteRestaurants(userId, category, lat.toString(), lng.toString(), favorite)
+                    .cachedIn(viewModelScope)
+            }
+            else -> {
+                restaurantRepository.findRestaurants(category, lat.toString(), lng.toString())
+                    .cachedIn(viewModelScope)
+            }
+        }
     }
 }

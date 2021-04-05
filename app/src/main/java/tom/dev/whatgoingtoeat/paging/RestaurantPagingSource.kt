@@ -11,7 +11,9 @@ class RestaurantPagingSource(
     private val restaurantService: RestaurantService,
     private val category: String,
     private val latitude: String,
-    private val longitude: String
+    private val longitude: String,
+    private val userId: Long = 0,
+    private val favorite: Boolean = false
 ) : PagingSource<Int, Restaurant>() {
 
     companion object {
@@ -22,7 +24,10 @@ class RestaurantPagingSource(
         val position = params.key ?: FIRST_PAGE
 
         return try {
-            val response = restaurantService.searchRestaurantsByCategory(category, latitude, longitude, position)
+            val response = when {
+                favorite -> restaurantService.findFavoriteRestaurants(userId, category, latitude, longitude)
+                else -> restaurantService.searchRestaurantsByCategory(category, latitude, longitude, position)
+            }
 
             LoadResult.Page(
                 data = response.body,

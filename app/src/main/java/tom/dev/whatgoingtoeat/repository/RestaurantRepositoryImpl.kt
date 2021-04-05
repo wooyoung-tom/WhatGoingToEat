@@ -22,4 +22,22 @@ constructor(
             }
         ).flow
     }
+
+    override fun findFavoriteRestaurants(
+        userId: Long, category: String, lat: String, lng: String, favorite: Boolean
+    ): Flow<PagingData<Restaurant>> {
+        return Pager(
+            config = PagingConfig(pageSize = 15),
+            pagingSourceFactory = {
+                RestaurantPagingSource(
+                    userId = userId,
+                    restaurantService = restaurantService,
+                    category = category,
+                    latitude = lat,
+                    longitude = lng,
+                    favorite = true
+                )
+            }
+        ).flow
+    }
 }

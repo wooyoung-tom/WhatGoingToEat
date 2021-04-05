@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentRestaurantBinding
+import tom.dev.whatgoingtoeat.ui.MainViewModel
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.hide
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
@@ -32,6 +34,7 @@ import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 class RestaurantFragment : Fragment() {
 
     private val viewModel: RestaurantViewModel by viewModels()
+    private val activityViewModel: MainViewModel by activityViewModels()
 
     private var _binding: FragmentRestaurantBinding? = null
     private val binding get() = _binding!!
@@ -133,7 +136,7 @@ class RestaurantFragment : Fragment() {
         binding.chipgroupRestaurantFilters.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.chip_restaurant_favorite -> {
-
+                    searchFavoriteRestaurant()
                 }
                 R.id.chip_restaurant_distance -> {
 
@@ -144,9 +147,7 @@ class RestaurantFragment : Fragment() {
                 R.id.chip_restaurant_asc -> {
 
                 }
-                else -> {
-
-                }
+                else -> searchRestaurant()
             }
         }
     }
@@ -176,6 +177,21 @@ class RestaurantFragment : Fragment() {
             viewModel.searchRestaurant(category, lat, lng).collectLatest {
                 restaurantListAdapter.submitData(it)
             }
+        }
+    }
+
+    private fun searchFavoriteRestaurant() {
+        val lat = lastLocation.latitude
+        val lng = lastLocation.longitude
+
+        searchRestaurantJob?.cancel()
+        searchRestaurantJob = lifecycleScope.launch {
+            val userId = activityViewModel.userInstance?.userId ?: return@launch
+
+            viewModel.searchRestaurant(userId = userId, category = category, lat = lat, lng = lng, favorite = true)
+                .collectLatest {
+                    restaurantListAdapter.submitData(it)
+                }
         }
     }
 }
