@@ -14,6 +14,7 @@ import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
 import tom.dev.whatgoingtoeat.ui.MainViewModel
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
+import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
 class BasketFragment : Fragment() {
@@ -43,7 +44,15 @@ class BasketFragment : Fragment() {
     }
 
     private fun setBasketListAdapter() {
-        basketListAdapter = BasketListAdapter()
+        basketListAdapter = BasketListAdapter(object : BasketListAdapter.ClickListeners {
+            override fun onDeleteButtonListener(item: OrderBasketItem) {
+                requireView().showShortSnackBar("${item.orderId} 삭제버튼")
+            }
+
+            override fun onItemClickListener(item: OrderBasketItem) {
+                requireView().showShortSnackBar("$item")
+            }
+        })
         binding.recyclerviewBasket.apply {
             adapter = basketListAdapter
             layoutManager = LinearLayoutManager(requireContext())

@@ -16,15 +16,37 @@
         <TextView
             android:id="@+id/tv_item_basket_restaurant_name"
             style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
             android:layout_marginTop="18dp"
+            android:layout_marginEnd="8dp"
+            android:singleLine="true"
             android:textColor="@color/apricot"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/btn_item_basket_delete"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="음식점 이름" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_item_basket_delete"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="12dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:backgroundTint="@color/transparent"
+            app:elevation="0dp"
+            app:icon="@drawable/ic_baseline_delete_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/silver"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_basket_restaurant_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_item_basket_restaurant_name"
+            app:strokeWidth="0dp" />
 
         <TextView
             android:id="@+id/tv_item_basket_menu"

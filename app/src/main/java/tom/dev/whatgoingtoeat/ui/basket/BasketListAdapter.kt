@@ -1,18 +1,22 @@
 package tom.dev.whatgoingtoeat.ui.basket
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tom.dev.whatgoingtoeat.databinding.ItemBasketBinding
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
-import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
 import tom.dev.whatgoingtoeat.dto.order.OrderDetailMenu
 
-class BasketListAdapter : ListAdapter<OrderBasketItem, BasketListAdapter.BasketViewHolder>(Companion) {
+class BasketListAdapter(
+    private val onClickListeners: ClickListeners
+) : ListAdapter<OrderBasketItem, BasketListAdapter.BasketViewHolder>(Companion) {
+
+    interface ClickListeners {
+        fun onDeleteButtonListener(item: OrderBasketItem)
+        fun onItemClickListener(item: OrderBasketItem)
+    }
 
     companion object : DiffUtil.ItemCallback<OrderBasketItem>() {
         override fun areItemsTheSame(oldItem: OrderBasketItem, newItem: OrderBasketItem) = oldItem.orderId == newItem.orderId
@@ -52,5 +56,13 @@ class BasketListAdapter : ListAdapter<OrderBasketItem, BasketListAdapter.BasketV
 
     override fun onBindViewHolder(holder: BasketViewHolder, position: Int) {
         holder.bind(getItem(position))
+
+        holder.itemView.setOnClickListener {
+            onClickListeners.onItemClickListener(getItem(position))
+        }
+
+        holder.binding.btnItemBasketDelete.setOnClickListener {
+            onClickListeners.onDeleteButtonListener(getItem(position))
+        }
     }
 }
