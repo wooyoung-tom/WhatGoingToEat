@@ -20,6 +20,7 @@ import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentRestaurantInfoBinding
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
 import tom.dev.whatgoingtoeat.ui.MainViewModel
+import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
@@ -76,6 +77,7 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
         observeFavorite()
         observeSaveFavoriteSuccess()
         observeDeleteFavoriteSuccess()
+        observeLoading()
     }
 
     // Destroy 시에 _binding null
@@ -118,7 +120,7 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
             if (viewModel.selectedMenuList.isEmpty()) {
                 requireView().showShortSnackBar("메뉴를 선택해주세요.")
             } else {
-                viewModel.saveOrder(activityViewModel.userInstance?.userId)
+                viewModel.saveOrder(activityViewModel.userInstance?.userId, restaurant.restaurantId)
             }
         }
     }
@@ -209,6 +211,16 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
             binding.btnRestaurantInfoFavorite.setOnClickListener {
                 viewModel.saveFavorite(activityViewModel.userInstance?.userId, restaurant.restaurantId)
             }
+        }
+    }
+
+    private fun observeLoading() {
+        val loading = LoadingDialog(requireContext())
+        viewModel.startLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.show()
+        }
+        viewModel.stopLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.dismiss()
         }
     }
 

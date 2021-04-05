@@ -10,26 +10,27 @@ import androidx.recyclerview.widget.RecyclerView
 import tom.dev.whatgoingtoeat.databinding.ItemBasketBinding
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
+import tom.dev.whatgoingtoeat.dto.order.OrderDetailMenu
 
-class BasketListAdapter : ListAdapter<OrderBasketResponse, BasketListAdapter.BasketViewHolder>(Companion) {
+class BasketListAdapter : ListAdapter<OrderBasketItem, BasketListAdapter.BasketViewHolder>(Companion) {
 
-    companion object : DiffUtil.ItemCallback<OrderBasketResponse>() {
-        override fun areItemsTheSame(oldItem: OrderBasketResponse, newItem: OrderBasketResponse) = oldItem.restaurantName == newItem.restaurantName
-        override fun areContentsTheSame(oldItem: OrderBasketResponse, newItem: OrderBasketResponse) = oldItem == newItem
+    companion object : DiffUtil.ItemCallback<OrderBasketItem>() {
+        override fun areItemsTheSame(oldItem: OrderBasketItem, newItem: OrderBasketItem) = oldItem.orderId == newItem.orderId
+        override fun areContentsTheSame(oldItem: OrderBasketItem, newItem: OrderBasketItem) = oldItem == newItem
     }
 
     inner class BasketViewHolder(val binding: ItemBasketBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: OrderBasketResponse) {
+        fun bind(item: OrderBasketItem) {
             binding.apply {
                 tvItemBasketRestaurantName.text = item.restaurantName
                 tvItemBasketPrice.text = getTotalPriceStr(item.totalPrice)
-                setMenuListTextView(item.menuList)
+                setMenuListTextView(item.orderDetailList)
             }
         }
 
         private fun getTotalPriceStr(price: Int) = "${price}원"
 
-        private fun setMenuListTextView(menuList: List<OrderBasketItem>) {
+        private fun setMenuListTextView(menuList: List<OrderDetailMenu>) {
             var menuText = ""
             menuList.forEachIndexed { index, menu ->
                 menuText += if (index != menuList.size - 1) {
@@ -40,7 +41,7 @@ class BasketListAdapter : ListAdapter<OrderBasketResponse, BasketListAdapter.Bas
             binding.tvItemBasketMenu.text = menuText
         }
 
-        private fun getMenuDetailInfo(menu: OrderBasketItem) = "${menu.orderDetailMarketMenu.name} (${menu.menuCount})"
+        private fun getMenuDetailInfo(menu: OrderDetailMenu) = "${menu.menu.name} (${menu.menuCount})"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasketViewHolder {

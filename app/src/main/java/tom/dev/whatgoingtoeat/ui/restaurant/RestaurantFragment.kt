@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -25,6 +26,7 @@ import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentRestaurantBinding
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.hide
+import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
 class RestaurantFragment : Fragment() {
@@ -40,6 +42,8 @@ class RestaurantFragment : Fragment() {
     private lateinit var lastLocation: Location
 
     private lateinit var restaurantListAdapter: RestaurantListAdapter
+
+    private lateinit var loading: LoadingDialog
 
     private var searchRestaurantJob: Job? = null
 
@@ -64,6 +68,8 @@ class RestaurantFragment : Fragment() {
             .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
             .check()
 
+        loading = LoadingDialog(requireContext())
+
         return binding.root
     }
 
@@ -76,8 +82,6 @@ class RestaurantFragment : Fragment() {
         setFilter()
 
         setBasketButtonClickListener()
-
-        observeLoading()
     }
 
     // Destroy 시에 _binding null
@@ -98,7 +102,23 @@ class RestaurantFragment : Fragment() {
             val action = RestaurantFragmentDirections
                 .actionRestaurantFragmentToRestaurantInfoFragment(restaurantItem)
             findNavController().navigate(action)
+        }.apply {
+            addLoadStateListener { loadState ->
+                when (loadState.source.refresh) {
+                    is LoadState.NotLoading -> loading.dismiss()
+                    is LoadState.Loading -> loading.show()
+                    is LoadState.Error -> loading.dismiss()
+                }
+
+                val errorState = loadState.source.append as? LoadState.Error
+                    ?: loadState.source.prepend as? LoadState.Error
+                    ?: loadState.append as? LoadState.Error
+                    ?: loadState.prepend as? LoadState.Error
+
+                errorState?.let { requireView().showShortSnackBar("${it.error}") }
+            }
         }
+
         binding.recyclerviewRestaurant.apply {
             adapter = restaurantListAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -107,16 +127,6 @@ class RestaurantFragment : Fragment() {
 
     private fun setRestaurantCategoryTitle() {
         binding.tvRestaurantCategoryTitle.text = category
-    }
-
-    private fun observeLoading() {
-        val loading = LoadingDialog(requireContext())
-        viewModel.startLoadingDialogEvent.observe(viewLifecycleOwner) {
-            loading.show()
-        }
-        viewModel.stopLoadingDialogEvent.observe(viewLifecycleOwner) {
-            loading.dismiss()
-        }
     }
 
     private fun setFilter() {

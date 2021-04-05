@@ -7,7 +7,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tom.dev.whatgoingtoeat.dto.favorite.FavoriteRequest
-import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequestItem
+import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequest
+import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequestMenu
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
 import tom.dev.whatgoingtoeat.repository.FavoriteRepository
 import tom.dev.whatgoingtoeat.repository.OrderRepository
@@ -72,15 +73,20 @@ constructor(
     private val _orderSaveCompleteEvent: SingleLiveEvent<Any> = SingleLiveEvent()
     val orderSaveCompleteEvent: LiveData<Any> get() = _orderSaveCompleteEvent
 
-    fun saveOrder(userId: Long?) {
+    fun saveOrder(userId: Long?, restaurantId: Long) {
         if (userId == null) return
 
-        val requestOrder = selectedMenuList.map { selectedRestaurantMenu ->
-            OrderSaveRequestItem(selectedRestaurantMenu.menu.id, selectedRestaurantMenu.count)
-        }
+        val requestOrder = OrderSaveRequest(
+            menuList = selectedMenuList.map { selectedRestaurantMenu ->
+                OrderSaveRequestMenu(selectedRestaurantMenu.menu.id, selectedRestaurantMenu.count)
+            },
+            restaurantId = restaurantId,
+            userId = userId
+        )
+
 
         compositeDisposable.add(
-            orderRepository.saveOrder(userId, requestOrder)
+            orderRepository.saveOrder(requestOrder)
                 .doOnSubscribe { startLoading() }
                 .doOnSuccess { stopLoading() }
                 .doOnError { stopLoading() }

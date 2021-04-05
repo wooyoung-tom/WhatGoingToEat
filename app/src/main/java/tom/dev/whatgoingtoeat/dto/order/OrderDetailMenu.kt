@@ -1,7 +1,9 @@
 package tom.dev.whatgoingtoeat.dto.order
 
+import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
+
 data class OrderDetailMenu(
     val id: Long,
-    val name: String,
-    val price: Int
+    val menu: RestaurantMenu,
+    val menuCount: Int
 )

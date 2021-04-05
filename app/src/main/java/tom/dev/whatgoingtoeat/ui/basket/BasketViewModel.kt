@@ -39,8 +39,8 @@ constructor(
         _stopLoadingDialogEvent.call()
     }
 
-    private val _orderListLiveData: SingleLiveEvent<List<OrderBasketResponse>> = SingleLiveEvent()
-    val orderListLiveData: LiveData<List<OrderBasketResponse>> get() = _orderListLiveData
+    private val _orderListLiveData: SingleLiveEvent<OrderBasketResponse> = SingleLiveEvent()
+    val orderListLiveData: LiveData<OrderBasketResponse> get() = _orderListLiveData
 
     fun findReadyStateOrders(userId: Long?) {
         if (userId != null) {

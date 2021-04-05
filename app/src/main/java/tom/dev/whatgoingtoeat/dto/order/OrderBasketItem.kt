@@ -1,7 +1,8 @@
 package tom.dev.whatgoingtoeat.dto.order
 
 data class OrderBasketItem(
-    val id: Long,
-    val orderDetailMarketMenu: OrderDetailMenu,
-    val menuCount: Int
+    val orderId: Long,
+    val restaurantName: String,
+    val totalPrice: Int,
+    val orderDetailList: List<OrderDetailMenu>
 )

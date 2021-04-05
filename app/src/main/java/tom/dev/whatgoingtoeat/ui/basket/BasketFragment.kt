@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.databinding.FragmentBasketBinding
+import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
 import tom.dev.whatgoingtoeat.ui.MainViewModel
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
@@ -52,13 +53,13 @@ class BasketFragment : Fragment() {
     private fun observeReadyStatusOrders() {
         viewModel.orderListLiveData.observe(viewLifecycleOwner) {
             it?.let {
-                basketListAdapter.submitList(it.reversed())
+                basketListAdapter.submitList(it.orders.reversed())
             }
-            binding.tvBasketTotalPrice.text = getTotalPriceStr(it)
+            binding.tvBasketTotalPrice.text = getTotalPriceStr(it.orders)
         }
     }
 
-    private fun getTotalPriceStr(menuList: List<OrderBasketResponse>): String {
+    private fun getTotalPriceStr(menuList: List<OrderBasketItem>): String {
         val price = menuList.sumOf { it.totalPrice }
         return "${price}원"
     }
