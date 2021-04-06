@@ -1,7 +1,5 @@
 package tom.dev.whatgoingtoeat.ui.basket
 
-import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +8,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.databinding.FragmentBasketBinding
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
-import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
 import tom.dev.whatgoingtoeat.ui.MainViewModel
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
@@ -52,7 +50,7 @@ class BasketFragment : Fragment() {
             override fun onDeleteButtonClickListener(item: OrderBasketItem, position: Int) {
                 AlertDialog.Builder(requireContext()).apply {
                     setTitle("주문 삭제")
-                    setMessage("해당 주문을 정말 삭제하시겠습니까?\n식당이름: ${item.restaurantName}")
+                    setMessage("해당 주문을 정말 삭제하시겠습니까?\n식당이름: ${item.restaurant.name}")
                     setPositiveButton("삭제") { dialog, _ ->
                         viewModel.deleteOrder(item.orderId, position)
                         dialog.dismiss()
@@ -65,7 +63,8 @@ class BasketFragment : Fragment() {
             }
 
             override fun onEditButtonClickListener(item: OrderBasketItem) {
-                requireView().showShortSnackBar("$item")
+                val action = BasketFragmentDirections.actionBasketFragmentToBasketEditFragment(item)
+                findNavController().navigate(action)
             }
         })
         binding.recyclerviewBasket.apply {

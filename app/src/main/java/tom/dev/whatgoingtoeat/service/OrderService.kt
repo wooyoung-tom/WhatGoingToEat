@@ -8,13 +8,14 @@ import retrofit2.http.Path
 import tom.dev.whatgoingtoeat.dto.CommonSimpleResponse
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
 import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequest
+import tom.dev.whatgoingtoeat.dto.order.OrderSaveResponse
 
 interface OrderService {
 
     @POST("/orders")
     fun saveOrder(
         @Body order: OrderSaveRequest
-    ): Single<CommonSimpleResponse>
+    ): Single<OrderSaveResponse>
 
     @GET("/orders/{id}")
     fun findOrders(

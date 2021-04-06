@@ -1,5 +1,6 @@
 package tom.dev.whatgoingtoeat.ui.restaurant_info
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -96,7 +97,7 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
 
     private fun setRestaurantMenuAdapter() {
         restaurantMenuListAdapter = RestaurantMenuListAdapter(
-            object : RestaurantMenuListAdapter.SelectedItemControlListener {
+            object : RestaurantMenuListAdapter.SelectedItemControlListeners {
                 override fun onItemRemoved(item: RestaurantMenu) {
                     viewModel.removeMenu(item)
                 }
@@ -129,6 +130,26 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
         viewModel.orderSaveCompleteEvent.observe(viewLifecycleOwner) {
             requireView().showShortSnackBar("장바구니 담기를 완료하였습니다.")
             findNavController().navigate(R.id.action_restaurantInfoFragment_to_basketFragment)
+        }
+
+        viewModel.orderSaveFailedLiveData.observe(viewLifecycleOwner) {
+            requireView().showShortSnackBar(it)
+        }
+
+        viewModel.orderDuplicatedLiveData.observe(viewLifecycleOwner) {
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle("주문 확인")
+                setMessage("${it}\n수정하시겠습니까?")
+                setPositiveButton("확인") { dialog, _ ->
+                    val action = RestaurantInfoFragmentDirections
+                        .actionRestaurantInfoFragmentToBasketEditFragment(it)
+                    findNavController().navigate(action)
+                    dialog.dismiss()
+                }
+                setNegativeButton("취소") { dialog, _ ->
+                    dialog.dismiss()
+                }
+            }.show()
         }
     }
 

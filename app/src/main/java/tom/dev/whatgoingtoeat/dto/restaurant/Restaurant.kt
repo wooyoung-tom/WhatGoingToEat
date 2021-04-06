@@ -9,11 +9,13 @@ data class Restaurant(
     val jibunAddress: String?,
     val latitude: String,
     val longitude: String,
-    val menuList: List<RestaurantMenu>,
     val phoneNumber: String?,
     val restaurantId: Long,
     val restaurantName: String,
     val roadAddress: String?,
+
+
+    val menuList: List<RestaurantMenu>,
     val distance: Int,
     val reviewCount: Int,
     val favoriteCount: Int

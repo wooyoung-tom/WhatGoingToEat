@@ -9,10 +9,10 @@ import tom.dev.whatgoingtoeat.databinding.ItemMenuBinding
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
 
 class RestaurantMenuListAdapter(
-    private val selectedItemControlListener: SelectedItemControlListener
+    private val selectedItemControlListener: SelectedItemControlListeners
 ) : ListAdapter<RestaurantMenu, RestaurantMenuListAdapter.RestaurantMenuViewHolder>(Companion) {
 
-    interface SelectedItemControlListener {
+    interface SelectedItemControlListeners {
         fun onItemRemoved(item: RestaurantMenu)
         fun onItemSelected(item: RestaurantMenu)
     }

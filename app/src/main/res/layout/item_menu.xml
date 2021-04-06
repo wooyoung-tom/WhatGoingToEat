@@ -34,39 +34,42 @@
         android:id="@+id/linearlayout_item_menu_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="@id/tv_item_menu_price"
         app:layout_constraintTop_toBottomOf="@id/tv_item_menu_price">
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_item_menu_minus"
-            style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@color/silver_chalice"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:gravity="center"
-            android:text="-" />
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_baseline_remove_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp" />
 
         <TextView
             android:id="@+id/tv_item_menu_counter"
             style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:background="@color/silver"
+            android:layout_height="32dp"
+            android:background="@color/transparent"
             android:gravity="center"
             android:paddingHorizontal="36dp"
             tools:text="12" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_item_menu_plus"
-            style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@color/silver_chalice"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:gravity="center"
-            android:text="+" />
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

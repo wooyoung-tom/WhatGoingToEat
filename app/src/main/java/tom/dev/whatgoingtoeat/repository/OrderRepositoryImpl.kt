@@ -4,6 +4,7 @@ import io.reactivex.Single
 import tom.dev.whatgoingtoeat.dto.CommonSimpleResponse
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
 import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequest
+import tom.dev.whatgoingtoeat.dto.order.OrderSaveResponse
 import tom.dev.whatgoingtoeat.service.OrderService
 import javax.inject.Inject
 
@@ -12,7 +13,7 @@ class OrderRepositoryImpl
 constructor(
     private val orderService: OrderService
 ) : OrderRepository {
-    override fun saveOrder(order: OrderSaveRequest): Single<CommonSimpleResponse> {
+    override fun saveOrder(order: OrderSaveRequest): Single<OrderSaveResponse> {
         return orderService.saveOrder(order)
     }
 

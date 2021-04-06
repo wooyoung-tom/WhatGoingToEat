@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tom.dev.whatgoingtoeat.dto.favorite.FavoriteRequest
+import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
 import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequest
 import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequestMenu
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
@@ -73,6 +74,12 @@ constructor(
     private val _orderSaveCompleteEvent: SingleLiveEvent<Any> = SingleLiveEvent()
     val orderSaveCompleteEvent: LiveData<Any> get() = _orderSaveCompleteEvent
 
+    private val _orderSaveFailedLiveData: SingleLiveEvent<String> = SingleLiveEvent()
+    val orderSaveFailedLiveData: LiveData<String> get() = _orderSaveFailedLiveData
+
+    private val _orderDuplicatedLiveData: SingleLiveEvent<OrderBasketItem> = SingleLiveEvent()
+    val orderDuplicatedLiveData: LiveData<OrderBasketItem> get() = _orderDuplicatedLiveData
+
     fun saveOrder(userId: Long?, restaurantId: Long) {
         if (userId == null) return
 
@@ -84,7 +91,6 @@ constructor(
             userId = userId
         )
 
-
         compositeDisposable.add(
             orderRepository.saveOrder(requestOrder)
                 .doOnSubscribe { startLoading() }
@@ -93,6 +99,11 @@ constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    when (it.code) {
+                        "Failed" -> _orderSaveFailedLiveData.postValue(it.message)
+                        "Duplicated" -> _orderDuplicatedLiveData.postValue(it.order)
+                        else -> _orderSaveCompleteEvent.call()
+                    }
                     _orderSaveCompleteEvent.call()
                 }, {
                     it.printStackTrace()

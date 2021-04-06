@@ -26,7 +26,7 @@ class BasketListAdapter(
     inner class BasketViewHolder(val binding: ItemBasketBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: OrderBasketItem) {
             binding.apply {
-                tvItemBasketRestaurantName.text = item.restaurantName
+                tvItemBasketRestaurantName.text = item.restaurant.name
                 tvItemBasketPrice.text = getTotalPriceStr(item.totalPrice)
                 setMenuListTextView(item.orderDetailList)
             }
