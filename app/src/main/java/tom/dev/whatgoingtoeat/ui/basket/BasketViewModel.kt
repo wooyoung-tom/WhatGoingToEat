@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
 import tom.dev.whatgoingtoeat.repository.OrderRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
@@ -23,6 +24,7 @@ constructor(
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+        selectedOrderList.clear()
     }
 
     private val _startLoadingDialogEvent: SingleLiveEvent<Any> = SingleLiveEvent()
@@ -81,5 +83,20 @@ constructor(
                     it.printStackTrace()
                 })
         )
+    }
+
+    val selectedOrderList = ArrayList<OrderBasketItem>()
+
+    private val _selectedOrderListChangedLiveData: SingleLiveEvent<Any> = SingleLiveEvent()
+    val selectedOrderListChangedLiveData: LiveData<Any> get() = _selectedOrderListChangedLiveData
+
+    fun addOrder(order: OrderBasketItem) {
+        selectedOrderList.add(order)
+        _selectedOrderListChangedLiveData.call()
+    }
+
+    fun removeOrder(order: OrderBasketItem) {
+        selectedOrderList.remove(order)
+        _selectedOrderListChangedLiveData.call()
     }
 }

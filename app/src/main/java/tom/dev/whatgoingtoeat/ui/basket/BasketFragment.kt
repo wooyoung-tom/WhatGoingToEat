@@ -28,6 +28,11 @@ class BasketFragment : Fragment() {
 
     private lateinit var basketListAdapter: BasketListAdapter
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.selectedOrderList.clear()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBasketBinding.inflate(inflater, container, false)
         return binding.root
@@ -40,13 +45,18 @@ class BasketFragment : Fragment() {
 
         viewModel.findReadyStateOrders(activityViewModel.userInstance?.userId)
 
+        binding.tvBasketTotalPrice.text = "0 원"
+
         observeReadyStatusOrders()
         observeLoading()
         observeDeleteComplete()
+        observeSelectedOrderList()
+
+        setBasketOrderButtonClickListener()
     }
 
     private fun setBasketListAdapter() {
-        basketListAdapter = BasketListAdapter(object : BasketListAdapter.ClickListeners {
+        basketListAdapter = BasketListAdapter(viewModel, object : BasketListAdapter.ClickListeners {
             override fun onDeleteButtonClickListener(item: OrderBasketItem, position: Int) {
                 AlertDialog.Builder(requireContext()).apply {
                     setTitle("주문 삭제")
@@ -78,14 +88,15 @@ class BasketFragment : Fragment() {
             it?.let {
                 basketListAdapter.submitList(it.orders.reversed())
             }
-            binding.tvBasketTotalPrice.text = getTotalPriceStr(it.orders)
         }
     }
 
     private fun getTotalPriceStr(menuList: List<OrderBasketItem>): String {
         val price = menuList.sumOf { it.totalPrice }
-        return "${price}원"
+        return "$price 원"
     }
+
+    private fun getButtonText(menuList: List<OrderBasketItem>): String = "${menuList.size}개 주문하기"
 
     private fun observeLoading() {
         val loading = LoadingDialog(requireContext())
@@ -104,6 +115,25 @@ class BasketFragment : Fragment() {
 
         viewModel.deleteFailedLiveData.observe(viewLifecycleOwner) {
             requireView().showShortSnackBar(it)
+        }
+    }
+
+    private fun observeSelectedOrderList() {
+        viewModel.selectedOrderListChangedLiveData.observe(viewLifecycleOwner) {
+            binding.tvBasketTotalPrice.text = getTotalPriceStr(viewModel.selectedOrderList)
+            binding.btnBasketOrder.text = getButtonText(viewModel.selectedOrderList)
+        }
+    }
+
+    private fun setBasketOrderButtonClickListener() {
+        binding.btnBasketOrder.setOnClickListener {
+            if (viewModel.selectedOrderList.isEmpty()) {
+                requireView().showShortSnackBar("주문할 오더를 선택해주세요.")
+            } else {
+                val action = BasketFragmentDirections
+                    .actionBasketFragmentToInvoiceFragment(viewModel.selectedOrderList.toTypedArray())
+                findNavController().navigate(action)
+            }
         }
     }
 }

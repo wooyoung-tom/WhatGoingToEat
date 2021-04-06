@@ -1,5 +1,6 @@
 package tom.dev.whatgoingtoeat.ui.basket
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +11,7 @@ import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
 import tom.dev.whatgoingtoeat.dto.order.OrderDetailMenu
 
 class BasketListAdapter(
+    private val viewModel: BasketViewModel,
     private val onClickListeners: ClickListeners
 ) : ListAdapter<OrderBasketItem, BasketListAdapter.BasketViewHolder>(Companion) {
 
@@ -63,6 +65,19 @@ class BasketListAdapter(
 
         holder.binding.btnItemBasketDelete.setOnClickListener {
             onClickListeners.onDeleteButtonClickListener(getItem(position), position)
+        }
+
+        holder.binding.cardviewItemBasket.setOnClickListener {
+            when (holder.binding.cardviewItemBasket.isChecked) {
+                false -> {
+                    holder.binding.cardviewItemBasket.isChecked = true
+                    viewModel.addOrder(getItem(position))
+                }
+                else -> {
+                    holder.binding.cardviewItemBasket.isChecked = false
+                    viewModel.removeOrder(getItem(position))
+                }
+            }
         }
     }
 }
