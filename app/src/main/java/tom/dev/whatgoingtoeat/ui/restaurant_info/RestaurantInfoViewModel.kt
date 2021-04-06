@@ -104,7 +104,6 @@ constructor(
                         "Duplicated" -> _orderDuplicatedLiveData.postValue(it.order)
                         else -> _orderSaveCompleteEvent.call()
                     }
-                    _orderSaveCompleteEvent.call()
                 }, {
                     it.printStackTrace()
                 })

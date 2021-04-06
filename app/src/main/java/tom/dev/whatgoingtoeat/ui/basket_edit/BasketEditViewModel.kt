@@ -1,15 +1,46 @@
 package tom.dev.whatgoingtoeat.ui.basket_edit
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import tom.dev.whatgoingtoeat.dto.order.OrderDetailEditRequest
+import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequestMenu
 import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
+import tom.dev.whatgoingtoeat.repository.OrderRepository
 import tom.dev.whatgoingtoeat.ui.restaurant_info.SelectedRestaurantMenu
+import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import javax.inject.Inject
 
 @HiltViewModel
 class BasketEditViewModel
 @Inject
-constructor() : ViewModel() {
+constructor(
+    private val orderRepository: OrderRepository
+) : ViewModel() {
+
+    private val compositeDisposable by lazy { CompositeDisposable() }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
+
+    private val _startLoadingDialogEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val startLoadingDialogEvent: LiveData<Any> get() = _startLoadingDialogEvent
+
+    private val _stopLoadingDialogEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val stopLoadingDialogEvent: LiveData<Any> get() = _stopLoadingDialogEvent
+
+    private fun startLoading() {
+        _startLoadingDialogEvent.call()
+    }
+
+    private fun stopLoading() {
+        _stopLoadingDialogEvent.call()
+    }
 
     val selectedMenuList = ArrayList<SelectedRestaurantMenu>()
 
@@ -35,5 +66,33 @@ constructor() : ViewModel() {
                 selectedMenuList.remove(foundMenu)
             } else selectedMenuList[idx].count--
         }
+    }
+
+    private val _editOrderCompleteLiveData: SingleLiveEvent<Any> = SingleLiveEvent()
+    val editOrderCompleteLiveData: LiveData<Any> get() = _editOrderCompleteLiveData
+
+    private val _editOrderFailedLiveData: SingleLiveEvent<String> = SingleLiveEvent()
+    val editOrderFailedLiveData: LiveData<String> get() = _editOrderFailedLiveData
+
+    fun editOrderDetail(orderId: Long) {
+        val map = selectedMenuList.map {
+            OrderSaveRequestMenu(it.menu.id, it.count)
+        }
+        compositeDisposable.add(
+            orderRepository.editOrder(OrderDetailEditRequest(orderId, map))
+                .doOnSubscribe { startLoading() }
+                .doOnSuccess { stopLoading() }
+                .doOnError { stopLoading() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when (it.code) {
+                        "Failed" -> _editOrderFailedLiveData.postValue(it.message)
+                        else -> _editOrderCompleteLiveData.call()
+                    }
+                }, {
+                    it.printStackTrace()
+                })
+        )
     }
 }

@@ -3,6 +3,7 @@ package tom.dev.whatgoingtoeat.repository
 import io.reactivex.Single
 import tom.dev.whatgoingtoeat.dto.CommonSimpleResponse
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
+import tom.dev.whatgoingtoeat.dto.order.OrderDetailEditRequest
 import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequest
 import tom.dev.whatgoingtoeat.dto.order.OrderSaveResponse
 import tom.dev.whatgoingtoeat.service.OrderService
@@ -23,5 +24,9 @@ constructor(
 
     override fun deleteOrder(orderId: Long): Single<CommonSimpleResponse> {
         return orderService.deleteOrder(orderId)
+    }
+
+    override fun editOrder(request: OrderDetailEditRequest): Single<CommonSimpleResponse> {
+        return orderService.editOrder(request)
     }
 }

@@ -139,11 +139,9 @@ class RestaurantInfoFragment : Fragment(), OnMapReadyCallback {
         viewModel.orderDuplicatedLiveData.observe(viewLifecycleOwner) {
             AlertDialog.Builder(requireContext()).apply {
                 setTitle("주문 확인")
-                setMessage("${it}\n수정하시겠습니까?")
+                setMessage("이미 대기중인 주문이 있습니다.\n장바구니로 가시겠습니까?")
                 setPositiveButton("확인") { dialog, _ ->
-                    val action = RestaurantInfoFragmentDirections
-                        .actionRestaurantInfoFragmentToBasketEditFragment(it)
-                    findNavController().navigate(action)
+                    findNavController().navigate(R.id.action_restaurantInfoFragment_to_basketFragment)
                     dialog.dismiss()
                 }
                 setNegativeButton("취소") { dialog, _ ->

@@ -7,26 +7,30 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tom.dev.whatgoingtoeat.databinding.ItemMenuBinding
 import tom.dev.whatgoingtoeat.dto.order.OrderDetailMenu
+import tom.dev.whatgoingtoeat.dto.restaurant.RestaurantMenu
 
 class BasketEditMenuListAdapter(
+    private val viewModel: BasketEditViewModel,
     private val selectedItemControlListeners: SelectedItemControlListeners
-) : ListAdapter<OrderDetailMenu, BasketEditMenuListAdapter.BasketEditMenuViewHolder>(Companion) {
+) : ListAdapter<RestaurantMenu, BasketEditMenuListAdapter.BasketEditMenuViewHolder>(Companion) {
 
     interface SelectedItemControlListeners {
-        fun onItemSelected(item: OrderDetailMenu)
-        fun onItemRemoved(item: OrderDetailMenu)
+        fun onItemSelected(item: RestaurantMenu)
+        fun onItemRemoved(item: RestaurantMenu)
     }
 
-    companion object : DiffUtil.ItemCallback<OrderDetailMenu>() {
-        override fun areItemsTheSame(oldItem: OrderDetailMenu, newItem: OrderDetailMenu) = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: OrderDetailMenu, newItem: OrderDetailMenu) = oldItem == newItem
+    companion object : DiffUtil.ItemCallback<RestaurantMenu>() {
+        override fun areItemsTheSame(oldItem: RestaurantMenu, newItem: RestaurantMenu) = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: RestaurantMenu, newItem: RestaurantMenu) = oldItem == newItem
     }
 
     inner class BasketEditMenuViewHolder(val binding: ItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: OrderDetailMenu) {
-            binding.tvItemMenuTitle.text = item.menu.name
-            binding.tvItemMenuPrice.text = item.menu.price.toString()
-            binding.tvItemMenuCounter.text = item.menuCount.toString()
+        fun bind(item: RestaurantMenu) {
+            binding.tvItemMenuTitle.text = item.name
+            binding.tvItemMenuPrice.text = item.price.toString()
+            binding.tvItemMenuCounter.text = (viewModel.selectedMenuList.find {
+                it.menu.id == item.id
+            }?.count ?: 0).toString()
 
             binding.btnItemMenuMinus.setOnClickListener {
                 val currentCounter = binding.tvItemMenuCounter.text.toString().toInt()
