@@ -121,7 +121,14 @@ class BasketFragment : Fragment() {
     private fun observeSelectedOrderList() {
         viewModel.selectedOrderListChangedLiveData.observe(viewLifecycleOwner) {
             binding.tvBasketTotalPrice.text = getTotalPriceStr(viewModel.selectedOrderList)
-            binding.btnBasketOrder.text = getButtonText(viewModel.selectedOrderList)
+
+            if (viewModel.selectedOrderList.isEmpty()) {
+                binding.btnBasketOrder.text = "주문하기"
+                binding.btnBasketOrder.isEnabled = false
+            } else {
+                binding.btnBasketOrder.text = getButtonText(viewModel.selectedOrderList)
+                binding.btnBasketOrder.isEnabled = true
+            }
         }
     }
 
