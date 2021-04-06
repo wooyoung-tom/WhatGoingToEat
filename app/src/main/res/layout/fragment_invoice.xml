@@ -46,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:overScrollMode="never"
         android:paddingTop="8dp"
         android:paddingBottom="18dp"
         app:layout_constraintBottom_toTopOf="@id/cardview_invoice_total_price"
@@ -97,6 +98,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="지금 결제하기" />
+
+                <RadioGroup
+                    android:id="@+id/radiogroup_payment_now_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radiobutton_payment_now_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:text="카드결제" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radiobutton_payment_now_realtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:text="실시간 계좌이체" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radiobutton_payment_now_virtual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:text="가상계좌" />
+                </RadioGroup>
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/radiobutton_payment_later"

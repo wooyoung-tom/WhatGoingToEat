@@ -11,6 +11,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentInvoiceBinding
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
+import tom.dev.whatgoingtoeat.utils.hide
+import tom.dev.whatgoingtoeat.utils.show
+import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
 class InvoiceFragment : Fragment() {
@@ -31,11 +34,16 @@ class InvoiceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvInvoiceTotalPrice.text = getTotalPriceStr(basketOrderList)
+
+        // 결제수단 선택되어있음
         binding.radiogroupPaymentMethod.check(R.id.radiobutton_payment_now)
+        binding.radiogroupPaymentNowMethod.check(R.id.radiobutton_payment_now_card)
 
         initAdapter()
 
+        setRadioButtonClickListener()
         setBasketButtonClickListener()
+        setPaymentButtonClickListener()
     }
 
     private fun getTotalPriceStr(list: List<OrderBasketItem>) = "${list.sumOf { it.totalPrice }} 원"
@@ -48,9 +56,41 @@ class InvoiceFragment : Fragment() {
         }
     }
 
+    private fun setRadioButtonClickListener() {
+        binding.radiogroupPaymentMethod.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radiobutton_payment_now -> binding.radiogroupPaymentNowMethod.show()
+                else -> binding.radiogroupPaymentNowMethod.hide()
+            }
+        }
+    }
+
     private fun setBasketButtonClickListener() {
         binding.btnInvoiceBasket.setOnClickListener {
             findNavController().navigate(R.id.action_invoiceFragment_pop)
+        }
+    }
+
+    private fun setPaymentButtonClickListener() {
+        binding.btnPaymentReady.setOnClickListener {
+            when (binding.radiogroupPaymentMethod.checkedRadioButtonId) {
+                R.id.radiobutton_payment_now -> {
+                    when (binding.radiogroupPaymentNowMethod.checkedRadioButtonId) {
+                        R.id.radiobutton_payment_now_card -> {
+                            requireView().showShortSnackBar("지금 결제하러가기 -> 카드결제")
+                        }
+                        R.id.radiobutton_payment_now_realtime -> {
+                            requireView().showShortSnackBar("지금 결제하러가기 -> 실시간 계좌이체")
+                        }
+                        R.id.radiobutton_payment_now_virtual -> {
+                            requireView().showShortSnackBar("지금 결제하러가기 -> 가상계좌")
+                        }
+                    }
+                }
+                R.id.radiobutton_payment_later -> {
+                    requireView().showShortSnackBar("나중에 결제하기")
+                }
+            }
         }
     }
 }
