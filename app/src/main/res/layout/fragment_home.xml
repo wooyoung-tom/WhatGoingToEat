@@ -67,8 +67,8 @@
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_home_payment_later"
         app:layout_constraintTop_toBottomOf="@id/tv_home_menu_title">
 
         <androidx.constraintlayout.widget.Guideline
@@ -213,4 +213,42 @@
                 android:src="@drawable/ic_japanese" />
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btn_home_payment_later"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="24dp"
+        android:visibility="invisible"
+        app:cardBackgroundColor="@color/apricot"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:orientation="vertical"
+            android:paddingVertical="12dp">
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💡 아직 결제하지 않은 주문이 있어요."
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_home_payment_later"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                tools:text="yyyy년 MM월 dd일 주문 결제하기\n(결제 만료까지 dd일)" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

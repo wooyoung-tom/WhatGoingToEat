@@ -14,10 +14,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tom.dev.whatgoingtoeat.BuildConfig
 import tom.dev.whatgoingtoeat.repository.*
-import tom.dev.whatgoingtoeat.service.FavoriteService
-import tom.dev.whatgoingtoeat.service.OrderService
-import tom.dev.whatgoingtoeat.service.RestaurantService
-import tom.dev.whatgoingtoeat.service.UserService
+import tom.dev.whatgoingtoeat.service.*
 import javax.inject.Singleton
 
 @Module
@@ -66,6 +63,10 @@ object NetworkModules {
     @Provides
     @Singleton
     fun provideFavoriteService(retrofit: Retrofit): FavoriteService = retrofit.create(FavoriteService::class.java)
+
+    @Provides
+    @Singleton
+    fun providePaymentService(retrofit: Retrofit): PaymentService = retrofit.create(PaymentService::class.java)
 }
 
 @Module
@@ -83,4 +84,7 @@ abstract class RepositoryModules {
 
     @Binds
     abstract fun bindFavoriteRepository(favoriteRepositoryImpl: FavoriteRepositoryImpl): FavoriteRepository
+
+    @Binds
+    abstract fun bindPaymentRepository(paymentRepositoryImpl: PaymentRepositoryImpl): PaymentRepository
 }

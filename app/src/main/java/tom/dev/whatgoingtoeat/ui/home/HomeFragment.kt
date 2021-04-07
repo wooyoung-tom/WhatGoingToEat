@@ -13,6 +13,10 @@ import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentHomeBinding
 import tom.dev.whatgoingtoeat.ui.MainViewModel
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
+import tom.dev.whatgoingtoeat.utils.invisible
+import tom.dev.whatgoingtoeat.utils.show
+import java.time.LocalDate
+import java.time.Period
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -34,6 +38,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (user != null) viewModel.findNotPaidPayment(user!!.id)
+
         setUserNameTextView()
 
         setKoreanButtonClickListener()
@@ -42,8 +48,10 @@ class HomeFragment : Fragment() {
         setJapaneseButtonClickListener()
 
         setBasketButtonClickListener()
+        setNotPaidPaymentButtonClickListener()
 
         observeLoading()
+        observeNotPaidPayment()
     }
 
     // Destroy 시에 _binding null
@@ -94,6 +102,12 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setNotPaidPaymentButtonClickListener() {
+        binding.btnHomePaymentLater.setOnClickListener {
+
+        }
+    }
+
     private fun observeLoading() {
         val loading = LoadingDialog(requireContext())
         viewModel.startLoadingDialogEvent.observe(viewLifecycleOwner) {
@@ -102,5 +116,36 @@ class HomeFragment : Fragment() {
         viewModel.stopLoadingDialogEvent.observe(viewLifecycleOwner) {
             loading.dismiss()
         }
+    }
+
+    private fun observeNotPaidPayment() {
+        viewModel.notPaidPaymentEmptyLiveData.observe(viewLifecycleOwner) {
+            binding.btnHomePaymentLater.invisible()
+        }
+
+        viewModel.notPaidPaymentListLiveData.observe(viewLifecycleOwner) {
+            binding.btnHomePaymentLater.show()
+            binding.tvHomePaymentLater.text = getCompleteDateStr(it[0].datetime)
+        }
+    }
+
+    private fun getCompleteDateStr(datetime: String) = "${getPaymentDateStr(datetime)}\n${getPaymentDueDateStr(datetime)}"
+
+    private fun getPaymentDateStr(datetime: String): String {
+        val date = datetime.split("T")[0]
+        val expireDateTime = LocalDate.parse(date)
+        val paymentDateTime = expireDateTime.minusDays(7)
+
+        return "${paymentDateTime.year}년 ${paymentDateTime.monthValue}월 ${paymentDateTime.dayOfMonth}일 주문 결제하기"
+    }
+
+    private fun getPaymentDueDateStr(datetime: String): String {
+        val nowDateTime = LocalDate.now()
+        val date = datetime.split("T")[0]
+        val expireDateTime = LocalDate.parse(date)
+
+        val betweenDateTime = Period.between(nowDateTime, expireDateTime)
+
+        return "(결제 만료까지 ${betweenDateTime.days}일)"
     }
 }
