@@ -7,7 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tom.dev.whatgoingtoeat.dto.user.User
-import tom.dev.whatgoingtoeat.dto.user.UserSigningRequest
+import tom.dev.whatgoingtoeat.dto.user.UserSignInRequest
 import tom.dev.whatgoingtoeat.repository.UserRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
 import javax.inject.Inject
@@ -49,7 +49,7 @@ constructor(
     private val _successEvent: SingleLiveEvent<User> = SingleLiveEvent()
     val successEvent: LiveData<User> get() = _successEvent
 
-    fun signIn(user: UserSigningRequest) {
+    fun signIn(user: UserSignInRequest) {
         compositeDisposable.add(
             userRepository.signIn(user)
                 .doOnSubscribe { startLoading() }

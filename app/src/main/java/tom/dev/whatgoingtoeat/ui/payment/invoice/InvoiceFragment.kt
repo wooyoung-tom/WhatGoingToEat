@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +18,8 @@ import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
 class InvoiceFragment : Fragment() {
+
+    private val viewModel: InvoiceViewModel by viewModels()
 
     private var _binding: FragmentInvoiceBinding? = null
     private val binding get() = _binding!!
@@ -44,6 +47,8 @@ class InvoiceFragment : Fragment() {
         setRadioButtonClickListener()
         setBasketButtonClickListener()
         setPaymentButtonClickListener()
+
+        observePaymentResult()
     }
 
     private fun getTotalPriceStr(list: List<OrderBasketItem>) = "${list.sumOf { it.totalPrice }} 원"
@@ -73,24 +78,30 @@ class InvoiceFragment : Fragment() {
 
     private fun setPaymentButtonClickListener() {
         binding.btnPaymentReady.setOnClickListener {
-            when (binding.radiogroupPaymentMethod.checkedRadioButtonId) {
+            val method: String = when (binding.radiogroupPaymentMethod.checkedRadioButtonId) {
                 R.id.radiobutton_payment_now -> {
                     when (binding.radiogroupPaymentNowMethod.checkedRadioButtonId) {
-                        R.id.radiobutton_payment_now_card -> {
-                            requireView().showShortSnackBar("지금 결제하러가기 -> 카드결제")
-                        }
-                        R.id.radiobutton_payment_now_realtime -> {
-                            requireView().showShortSnackBar("지금 결제하러가기 -> 실시간 계좌이체")
-                        }
-                        R.id.radiobutton_payment_now_virtual -> {
-                            requireView().showShortSnackBar("지금 결제하러가기 -> 가상계좌")
-                        }
+                        R.id.radiobutton_payment_now_card -> "카드결제"
+                        R.id.radiobutton_payment_now_realtime -> "실시간 계좌이체"
+                        else -> "가상계좌"
                     }
                 }
-                R.id.radiobutton_payment_later -> {
-                    requireView().showShortSnackBar("나중에 결제하기")
-                }
+                else -> "나중에 결제하기"
             }
+
+            viewModel.orderPayment(basketOrderList.map { it.orderId }, method)
+        }
+    }
+
+    private fun observePaymentResult() {
+        viewModel.orderPaidSuccessLiveData.observe(viewLifecycleOwner) {
+            val action = InvoiceFragmentDirections
+                .actionInvoiceFragmentToPaidFragment(it, basketOrderList.toTypedArray())
+            findNavController().navigate(action)
+        }
+
+        viewModel.orderPaidFailedLiveData.observe(viewLifecycleOwner) {
+            requireView().showShortSnackBar(it)
         }
     }
 }

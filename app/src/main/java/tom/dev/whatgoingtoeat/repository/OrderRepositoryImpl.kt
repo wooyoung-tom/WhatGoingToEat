@@ -6,6 +6,8 @@ import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
 import tom.dev.whatgoingtoeat.dto.order.OrderDetailEditRequest
 import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequest
 import tom.dev.whatgoingtoeat.dto.order.OrderSaveResponse
+import tom.dev.whatgoingtoeat.dto.order.payment.OrderPaymentRequest
+import tom.dev.whatgoingtoeat.dto.order.payment.OrderPaymentResponse
 import tom.dev.whatgoingtoeat.service.OrderService
 import javax.inject.Inject
 
@@ -28,5 +30,9 @@ constructor(
 
     override fun editOrder(request: OrderDetailEditRequest): Single<CommonSimpleResponse> {
         return orderService.editOrder(request)
+    }
+
+    override fun orderPayment(request: OrderPaymentRequest): Single<OrderPaymentResponse> {
+        return orderService.orderPayment(request)
     }
 }

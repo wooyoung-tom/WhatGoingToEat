@@ -18,12 +18,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_sign_up_id"
+        android:id="@+id/til_sign_up_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="18dp"
         android:layout_marginTop="24dp"
+        android:hint="이름을 입력해주세요."
+        android:textColorHint="@color/dusty_gray"
+        app:errorEnabled="true"
+        app:errorIconTint="@color/carnation"
+        app:errorTextColor="@color/carnation"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign_in_title"
+        app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_sign_up_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_sign_up_id"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="8dp"
         android:hint="@string/string_hint_sign_in_id"
         android:textColorHint="@color/dusty_gray"
         app:counterEnabled="true"
@@ -31,7 +52,7 @@
         app:errorEnabled="true"
         app:errorIconTint="@color/carnation"
         app:errorTextColor="@color/carnation"
-        app:layout_constraintTop_toBottomOf="@id/tv_sign_in_title"
+        app:layout_constraintTop_toBottomOf="@id/til_sign_up_name"
         app:startIconDrawable="@drawable/ic_baseline_person_24">
 
         <com.google.android.material.textfield.TextInputEditText

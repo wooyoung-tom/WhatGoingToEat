@@ -75,13 +75,18 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/restaurantFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/restaurantInfoFragment"
         android:name="tom.dev.whatgoingtoeat.ui.restaurant_info.RestaurantInfoFragment"
         android:label="RestaurantInfoFragment"
         tools:layout="@layout/fragment_restaurant_info">
+        <argument
+            android:name="restaurant"
+            app:argType="tom.dev.whatgoingtoeat.dto.restaurant.Restaurant" />
         <action
             android:id="@+id/action_restaurantInfoFragment_to_basketFragment"
             app:destination="@id/basketFragment"
@@ -89,11 +94,8 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/restaurantInfoFragment"
+            app:popUpTo="@id/restaurantFragment"
             app:popUpToInclusive="true" />
-        <argument
-            android:name="restaurant"
-            app:argType="tom.dev.whatgoingtoeat.dto.restaurant.Restaurant" />
     </fragment>
     <fragment
         android:id="@+id/basketFragment"
@@ -136,7 +138,7 @@
         android:id="@+id/invoiceFragment"
         android:name="tom.dev.whatgoingtoeat.ui.payment.invoice.InvoiceFragment"
         android:label="InvoiceFragment"
-        tools:layout="@layout/fragment_invoice" >
+        tools:layout="@layout/fragment_invoice">
         <argument
             android:name="basketItemList"
             app:argType="tom.dev.whatgoingtoeat.dto.order.OrderBasketItem[]" />
@@ -147,6 +149,43 @@
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/invoiceFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_invoiceFragment_to_paidFragment"
+            app:destination="@id/paidFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/invoiceFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/paidFragment"
+        android:name="tom.dev.whatgoingtoeat.ui.payment.paid.PaidFragment"
+        android:label="PaidFragment"
+        tools:layout="@layout/fragment_paid" >
+        <argument
+            android:name="paidResult"
+            app:argType="tom.dev.whatgoingtoeat.dto.order.payment.OrderPaymentItem" />
+        <action
+            android:id="@+id/action_paidFragment_pop_including_basketFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/basketFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="paidOrderList"
+            app:argType="tom.dev.whatgoingtoeat.dto.order.OrderBasketItem[]" />
+        <action
+            android:id="@+id/action_paidFragment_pop"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/paidFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

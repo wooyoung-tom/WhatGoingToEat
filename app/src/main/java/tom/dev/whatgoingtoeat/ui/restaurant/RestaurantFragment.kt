@@ -192,7 +192,7 @@ class RestaurantFragment : Fragment() {
 
         searchRestaurantJob?.cancel()
         searchRestaurantJob = lifecycleScope.launch {
-            val userId = activityViewModel.userInstance?.userId ?: return@launch
+            val userId = activityViewModel.userInstance?.id ?: return@launch
 
             viewModel.searchRestaurant(userId = userId, category = category, lat = lat, lng = lng, favorite = true)
                 .collectLatest {

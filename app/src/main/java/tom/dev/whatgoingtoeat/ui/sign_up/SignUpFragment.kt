@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentSignUpBinding
-import tom.dev.whatgoingtoeat.dto.user.UserSigningRequest
+import tom.dev.whatgoingtoeat.dto.user.UserSignUpRequest
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
@@ -44,21 +44,26 @@ class SignUpFragment : Fragment() {
 
     private fun setSignUpButtonClickListener() {
         binding.btnSignUp.setOnClickListener {
-            val name = binding.etSignUpId.text.toString()
+            val name = binding.etSignUpName.text.toString()
+            val id = binding.etSignUpId.text.toString()
             val password = binding.etSignUpPassword.text.toString()
             val passwordCheck = binding.etSignUpPasswordCheck.text.toString()
 
-            if (checkUserInfoValid(name, password, passwordCheck))
-                viewModel.signUp(UserSigningRequest(name, password))
+            if (checkUserInfoValid(name, id, password, passwordCheck))
+                viewModel.signUp(UserSignUpRequest(id, password, name))
         }
     }
 
-    private fun checkUserInfoValid(name: String, password: String, passwordCheck: String): Boolean {
-        if (name.length > 10) {
+    private fun checkUserInfoValid(name: String, id: String, password: String, passwordCheck: String): Boolean {
+        if (name.isBlank()) {
+            binding.tilSignUpName.error = "이름을 입력해주세요."
+            return false
+        }
+        if (id.length > 10) {
             binding.tilSignUpId.error = "글자수가 10자를 초과했습니다."
             return false
         }
-        if (name.isBlank()) {
+        if (id.isBlank()) {
             binding.tilSignUpId.error = "아이디를 입력해주세요."
             return false
         }

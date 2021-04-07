@@ -30,6 +30,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_basket_logo_title" />
 
+    <LinearLayout
+        android:id="@+id/linearlayout_basket_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tv_basket_title">
+
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_box_24" />
+
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
+            android:text="준비된 오더가 아직 없어요!" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_basket"
         android:layout_width="match_parent"
@@ -39,6 +63,7 @@
         android:overScrollMode="never"
         android:paddingBottom="12dp"
         android:splitMotionEvents="false"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/cardview_basket_total_price"
         app:layout_constraintTop_toBottomOf="@id/tv_basket_title"
         tools:listitem="@layout/item_basket" />
@@ -82,8 +107,8 @@
                 android:layout_height="65dp"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
-                android:text="주문하기"
                 android:enabled="false"
+                android:text="주문하기"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_basket_total_price" />

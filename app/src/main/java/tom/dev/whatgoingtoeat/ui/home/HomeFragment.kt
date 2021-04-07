@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUserNameTextView() {
-        binding.tvHomeName.text = user?.userName ?: "센디"
+        binding.tvHomeName.text = user?.username ?: "센디"
     }
 
     private fun setKoreanButtonClickListener() {

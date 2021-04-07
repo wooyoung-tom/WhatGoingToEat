@@ -6,10 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import tom.dev.whatgoingtoeat.dto.CommonSimpleResponse
-import tom.dev.whatgoingtoeat.dto.order.OrderBasketResponse
-import tom.dev.whatgoingtoeat.dto.order.OrderDetailEditRequest
-import tom.dev.whatgoingtoeat.dto.order.OrderSaveRequest
-import tom.dev.whatgoingtoeat.dto.order.OrderSaveResponse
+import tom.dev.whatgoingtoeat.dto.order.*
+import tom.dev.whatgoingtoeat.dto.order.payment.OrderPaymentRequest
+import tom.dev.whatgoingtoeat.dto.order.payment.OrderPaymentResponse
 
 interface OrderService {
 
@@ -32,4 +31,9 @@ interface OrderService {
     fun editOrder(
         @Body request: OrderDetailEditRequest
     ): Single<CommonSimpleResponse>
+
+    @POST("/orders/payment")
+    fun orderPayment(
+        @Body request: OrderPaymentRequest
+    ): Single<OrderPaymentResponse>
 }

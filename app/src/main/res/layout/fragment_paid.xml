@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_paid_logo_title"
+        style="@style/TextAppearance.MaterialComponents.Headline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:text="런치마켓"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_paid_basket"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="장바구니"
+        app:layout_constraintBottom_toBottomOf="@id/tv_paid_logo_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_paid_logo_title" />
+
+    <TextView
+        android:id="@+id/tv_paid_title"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_logo_title"
+        tools:text="런치마켓 결제완료" />
+
+    <View
+        android:id="@+id/view_paid_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="18dp"
+        android:background="@color/silver_chalice"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_title" />
+
+    <TextView
+        android:id="@+id/tv_paid_name"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        app:layout_constraintStart_toStartOf="@id/tv_paid_title"
+        app:layout_constraintTop_toBottomOf="@id/view_paid_divider"
+        tools:text="최우영(tom)님의 결제내역" />
+
+    <TextView
+        android:id="@+id/tv_paid_menu_title"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="메뉴명"
+        android:textColor="@color/apricot"
+        app:layout_constraintStart_toStartOf="@id/tv_paid_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_name" />
+
+    <TextView
+        android:id="@+id/tv_paid_menu"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_menu_title"
+        tools:text="음식점1 외 2개" />
+
+    <TextView
+        android:id="@+id/tv_paid_method_title"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="결제수단"
+        android:textColor="@color/apricot"
+        app:layout_constraintStart_toStartOf="@id/tv_paid_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_menu" />
+
+    <TextView
+        android:id="@+id/tv_paid_method"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_method_title"
+        tools:text="카드결제" />
+
+    <TextView
+        android:id="@+id/tv_paid_price_title"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="결제금액"
+        android:textColor="@color/apricot"
+        app:layout_constraintStart_toStartOf="@id/tv_paid_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_method" />
+
+    <TextView
+        android:id="@+id/tv_paid_price"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_price_title"
+        tools:text="50500 원" />
+
+    <TextView
+        android:id="@+id/tv_paid_date_title"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="결제일"
+        android:textColor="@color/apricot"
+        app:layout_constraintStart_toStartOf="@id/tv_paid_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_price" />
+
+    <TextView
+        android:id="@+id/tv_paid_date"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_date_title"
+        tools:text="2021년 4월 7일" />
+
+    <TextView
+        android:id="@+id/tv_paid_date_expire"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tv_paid_date"
+        tools:text="2021년 4월 7일" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_paid_go_main"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="18dp"
+        android:text="메인으로 이동"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

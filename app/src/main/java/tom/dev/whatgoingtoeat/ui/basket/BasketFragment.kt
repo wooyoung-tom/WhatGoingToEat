@@ -15,6 +15,8 @@ import tom.dev.whatgoingtoeat.databinding.FragmentBasketBinding
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
 import tom.dev.whatgoingtoeat.ui.MainViewModel
 import tom.dev.whatgoingtoeat.utils.LoadingDialog
+import tom.dev.whatgoingtoeat.utils.hide
+import tom.dev.whatgoingtoeat.utils.show
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
@@ -43,7 +45,7 @@ class BasketFragment : Fragment() {
 
         setBasketListAdapter()
 
-        viewModel.findReadyStateOrders(activityViewModel.userInstance?.userId)
+        viewModel.findReadyStateOrders(activityViewModel.userInstance?.id)
 
         binding.tvBasketTotalPrice.text = "0 원"
 
@@ -86,7 +88,17 @@ class BasketFragment : Fragment() {
     private fun observeReadyStatusOrders() {
         viewModel.orderListLiveData.observe(viewLifecycleOwner) {
             it?.let {
-                basketListAdapter.submitList(it.orders.reversed())
+                when (it.orders.isEmpty()) {
+                    true -> {
+                        binding.linearlayoutBasketEmpty.show()
+                        binding.recyclerviewBasket.hide()
+                    }
+                    false -> {
+                        basketListAdapter.submitList(it.orders.reversed())
+                        binding.linearlayoutBasketEmpty.hide()
+                        binding.recyclerviewBasket.show()
+                    }
+                }
             }
         }
     }
@@ -110,7 +122,7 @@ class BasketFragment : Fragment() {
 
     private fun observeDeleteComplete() {
         viewModel.deleteCompleteLiveData.observe(viewLifecycleOwner) {
-            viewModel.findReadyStateOrders(activityViewModel.userInstance?.userId)
+            viewModel.findReadyStateOrders(activityViewModel.userInstance?.id)
         }
 
         viewModel.deleteFailedLiveData.observe(viewLifecycleOwner) {
