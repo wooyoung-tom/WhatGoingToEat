@@ -1,6 +1,7 @@
 package tom.dev.whatgoingtoeat.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,7 +105,9 @@ class HomeFragment : Fragment() {
 
     private fun setNotPaidPaymentButtonClickListener() {
         binding.btnHomePaymentLater.setOnClickListener {
-
+            val payment = viewModel.notPaidPaymentListLiveData.value?.get(0)
+            val action = HomeFragmentDirections.actionHomeFragmentToInvoiceFragment(payment!!.orderItems.toTypedArray(), "later")
+            findNavController().navigate(action)
         }
     }
 

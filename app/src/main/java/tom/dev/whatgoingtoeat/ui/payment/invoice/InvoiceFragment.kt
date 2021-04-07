@@ -25,6 +25,7 @@ class InvoiceFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val basketOrderList by lazy { InvoiceFragmentArgs.fromBundle(requireArguments()).basketItemList.asList() }
+    private val type by lazy { InvoiceFragmentArgs.fromBundle(requireArguments()).type }
 
     private lateinit var invoiceOrderListAdapter: InvoiceOrderListAdapter
 
@@ -36,11 +37,26 @@ class InvoiceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvInvoiceTotalPrice.text = getTotalPriceStr(basketOrderList)
+        when (type) {
+            "normal" -> {
+                // 결제수단 선택되어있음
+                binding.radiogroupPaymentMethod.check(R.id.radiobutton_payment_now)
+                binding.radiogroupPaymentNowMethod.check(R.id.radiobutton_payment_now_card)
+            }
+            else -> {
+                binding.radiobuttonPaymentLater.hide()
 
-        // 결제수단 선택되어있음
-        binding.radiogroupPaymentMethod.check(R.id.radiobutton_payment_now)
-        binding.radiogroupPaymentNowMethod.check(R.id.radiobutton_payment_now_card)
+                binding.radiogroupPaymentMethod.check(R.id.radiobutton_payment_now)
+                binding.radiogroupPaymentNowMethod.check(R.id.radiobutton_payment_now_card)
+
+                // 장바구니 버튼 hide
+                binding.btnInvoiceBasket.hide()
+                // 결제취소버튼 show
+                binding.btnInvoiceCancel.show()
+            }
+        }
+
+        binding.tvInvoiceTotalPrice.text = getTotalPriceStr(basketOrderList)
 
         initAdapter()
 

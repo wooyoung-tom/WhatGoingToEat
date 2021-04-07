@@ -150,7 +150,7 @@ class BasketFragment : Fragment() {
                 requireView().showShortSnackBar("주문할 오더를 선택해주세요.")
             } else {
                 val action = BasketFragmentDirections
-                    .actionBasketFragmentToInvoiceFragment(viewModel.selectedOrderList.toTypedArray())
+                    .actionBasketFragmentToInvoiceFragment(viewModel.selectedOrderList.toTypedArray(), "normal")
                 findNavController().navigate(action)
             }
         }

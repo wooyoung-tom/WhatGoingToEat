@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tom.dev.whatgoingtoeat.dto.order.payment.OrderPaymentItem
+import tom.dev.whatgoingtoeat.dto.order.payment.PaymentLaterItem
 import tom.dev.whatgoingtoeat.dto.order.payment.PaymentLaterResponse
 import tom.dev.whatgoingtoeat.repository.PaymentRepository
 import tom.dev.whatgoingtoeat.utils.SingleLiveEvent
@@ -40,8 +41,8 @@ constructor(
         _stopLoadingDialogEvent.call()
     }
 
-    private val _notPaidPaymentListLiveData: SingleLiveEvent<List<OrderPaymentItem>> = SingleLiveEvent()
-    val notPaidPaymentListLiveData: LiveData<List<OrderPaymentItem>> get() = _notPaidPaymentListLiveData
+    private val _notPaidPaymentListLiveData: SingleLiveEvent<List<PaymentLaterItem>> = SingleLiveEvent()
+    val notPaidPaymentListLiveData: LiveData<List<PaymentLaterItem>> get() = _notPaidPaymentListLiveData
 
     private val _notPaidPaymentEmptyLiveData: SingleLiveEvent<Any> = SingleLiveEvent()
     val notPaidPaymentEmptyLiveData: LiveData<Any> get() = _notPaidPaymentEmptyLiveData
