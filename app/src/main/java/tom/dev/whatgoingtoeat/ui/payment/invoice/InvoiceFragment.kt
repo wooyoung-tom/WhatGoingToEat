@@ -37,6 +37,7 @@ class InvoiceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 지금 결제 & 나중 결제 프로세스 분기 설정
         when (type) {
             "normal" -> {
                 // 결제수단 선택되어있음

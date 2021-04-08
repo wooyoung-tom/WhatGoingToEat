@@ -164,8 +164,8 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/invoiceFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
         <argument
             android:name="type"
             app:argType="string" />
@@ -178,14 +178,6 @@
         <argument
             android:name="paidResult"
             app:argType="tom.dev.whatgoingtoeat.dto.order.payment.OrderPaymentItem" />
-        <action
-            android:id="@+id/action_paidFragment_pop_including_basketFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/basketFragment"
-            app:popUpToInclusive="true" />
         <argument
             android:name="paidOrderList"
             app:argType="tom.dev.whatgoingtoeat.dto.order.OrderBasketItem[]" />

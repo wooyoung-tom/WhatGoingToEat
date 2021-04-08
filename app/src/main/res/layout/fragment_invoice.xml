@@ -1,178 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_invoice_logo_title"
-        style="@style/TextAppearance.MaterialComponents.Headline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="36dp"
-        android:text="런치마켓"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_invoice_basket"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="장바구니"
-        app:layout_constraintBottom_toBottomOf="@id/tv_invoice_logo_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_invoice_logo_title" />
-
-    <Button
-        android:id="@+id/btn_invoice_cancel"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="결제취소"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/tv_invoice_logo_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_invoice_logo_title" />
-
-    <TextView
-        android:id="@+id/tv_invoice_title"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="결제하기"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_invoice_logo_title" />
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_invoice_title">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_invoice_logo_title"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="36dp"
+            android:text="런치마켓"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_invoice_basket"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="장바구니"
+            app:layout_constraintBottom_toBottomOf="@id/tv_invoice_logo_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_invoice_logo_title" />
+
+        <Button
+            android:id="@+id/btn_invoice_cancel"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="결제취소"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_invoice_logo_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_invoice_logo_title" />
+
+        <TextView
+            android:id="@+id/tv_invoice_title"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:text="결제하기"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_invoice_logo_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_invoice"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingTop="8dp"
+            android:paddingBottom="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_invoice_title"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_invoice" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_invoice"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:nestedScrollingEnabled="false"
-                android:overScrollMode="never"
-                android:paddingTop="8dp"
-                android:paddingBottom="18dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardview_invoice_total_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_rounded_bottom_sheet"
+        app:behavior_peekHeight="76dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <View
+            android:id="@+id/view_invoice_total_price_bar"
+            android:layout_width="32dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/silver"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearlayout_invoice_header"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            app:layout_constraintTop_toBottomOf="@id/view_invoice_total_price_bar">
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="총 주문금액"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_invoice_total_price"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_invoice" />
+                tools:text="0 원" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardview_invoice_total_price"
+        <RadioGroup
+            android:id="@+id/radiogroup_payment_method"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/linearlayout_invoice_header">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/radiobutton_payment_now"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp"
-                app:layout_constraintTop_toBottomOf="@id/recyclerview_invoice">
+                android:text="지금 결제하기" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+            <RadioGroup
+                android:id="@+id/radiogroup_payment_now_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/radiobutton_payment_now_card"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="18dp">
+                    android:layout_marginHorizontal="4dp"
+                    android:text="카드결제" />
 
-                    <TextView
-                        style="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:text="총 주문금액"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/radiobutton_payment_now_realtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:text="실시간 계좌이체" />
 
-                    <TextView
-                        android:id="@+id/tv_invoice_total_price"
-                        style="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="24dp"
-                        android:textColor="@color/black"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="0 원" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/radiobutton_payment_now_virtual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:text="가상계좌" />
+            </RadioGroup>
 
-                    <RadioGroup
-                        android:id="@+id/radiogroup_payment_method"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="24dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_invoice_total_price">
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/radiobutton_payment_later"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="나중에 결제하기" />
+        </RadioGroup>
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/radiobutton_payment_now"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="지금 결제하기" />
-
-                        <RadioGroup
-                            android:id="@+id/radiogroup_payment_now_method"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/radiobutton_payment_now_card"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="4dp"
-                                android:text="카드결제" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/radiobutton_payment_now_realtime"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="4dp"
-                                android:text="실시간 계좌이체" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/radiobutton_payment_now_virtual"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="4dp"
-                                android:text="가상계좌" />
-                        </RadioGroup>
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/radiobutton_payment_later"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="나중에 결제하기" />
-                    </RadioGroup>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_payment_ready"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_marginHorizontal="24dp"
-                        android:layout_marginTop="8dp"
-                        android:text="결제하기"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/radiogroup_payment_method" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_payment_ready"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="8dp"
+            android:text="결제하기"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radiogroup_payment_method" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

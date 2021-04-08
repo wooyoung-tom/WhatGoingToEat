@@ -65,8 +65,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="18dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_home_payment_later"
         app:layout_constraintTop_toBottomOf="@id/tv_home_menu_title">
@@ -217,7 +216,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/btn_home_payment_later"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="24dp"
         android:visibility="invisible"
@@ -228,15 +227,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical"
+            android:paddingHorizontal="24dp"
             android:paddingVertical="12dp">
 
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:text="💡 아직 결제하지 않은 주문이 있어요."
                 android:textColor="@color/white"
                 android:textStyle="bold" />

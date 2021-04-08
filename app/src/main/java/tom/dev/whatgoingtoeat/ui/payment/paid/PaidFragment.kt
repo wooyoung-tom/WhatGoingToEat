@@ -92,7 +92,7 @@ class PaidFragment : Fragment() {
 
     private fun setButtonClickListeners() {
         binding.btnPaidGoMain.setOnClickListener {
-            findNavController().navigate(R.id.action_paidFragment_pop_including_basketFragment)
+            findNavController().navigate(R.id.action_paidFragment_pop)
         }
         binding.btnPaidBasket.setOnClickListener {
             findNavController().navigate(R.id.action_paidFragment_pop)
