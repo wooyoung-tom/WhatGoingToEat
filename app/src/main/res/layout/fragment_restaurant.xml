@@ -90,6 +90,16 @@
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
+    <ProgressBar
+        android:id="@+id/progressbar_restaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:indeterminateTint="@color/apricot"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/h_scroll_view_restaurant_filters" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_restaurant"
         android:layout_width="match_parent"
@@ -97,6 +107,7 @@
         android:clipToPadding="false"
         android:paddingBottom="24dp"
         android:splitMotionEvents="false"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/h_scroll_view_restaurant_filters"
         tools:listitem="@layout/item_restaurant" />

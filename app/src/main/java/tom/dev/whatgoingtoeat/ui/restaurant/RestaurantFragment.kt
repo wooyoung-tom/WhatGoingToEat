@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +26,8 @@ import kotlinx.coroutines.launch
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentRestaurantBinding
 import tom.dev.whatgoingtoeat.ui.MainViewModel
-import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.hide
+import tom.dev.whatgoingtoeat.utils.show
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
 
 @AndroidEntryPoint
@@ -46,8 +45,6 @@ class RestaurantFragment : Fragment() {
     private lateinit var lastLocation: Location
 
     private lateinit var restaurantListAdapter: RestaurantListAdapter
-
-    private lateinit var loading: LoadingDialog
 
     private var searchRestaurantJob: Job? = null
 
@@ -71,8 +68,6 @@ class RestaurantFragment : Fragment() {
             .setPermissionListener(permissionListener)
             .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
             .check()
-
-        loading = LoadingDialog(requireContext())
 
         return binding.root
     }
@@ -109,9 +104,18 @@ class RestaurantFragment : Fragment() {
         }.apply {
             addLoadStateListener { loadState ->
                 when (loadState.source.refresh) {
-                    is LoadState.NotLoading -> loading.dismiss()
-                    is LoadState.Loading -> loading.show()
-                    is LoadState.Error -> loading.dismiss()
+                    is LoadState.NotLoading -> {
+                        binding.progressbarRestaurant.hide()
+                        binding.recyclerviewRestaurant.show()
+                    }
+                    is LoadState.Loading -> {
+                        binding.progressbarRestaurant.show()
+                        binding.recyclerviewRestaurant.hide()
+                    }
+                    is LoadState.Error -> {
+                        binding.progressbarRestaurant.hide()
+                        binding.recyclerviewRestaurant.hide()
+                    }
                 }
 
                 val errorState = loadState.source.append as? LoadState.Error

@@ -235,19 +235,20 @@
 
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
+                android:gravity="center"
                 android:text="💡 아직 결제하지 않은 주문이 있어요."
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_home_payment_later"
-                style="@style/TextAppearance.MaterialComponents.Caption"
+                style="@style/TextAppearance.MaterialComponents.Body2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:gravity="center"
                 android:textColor="@color/white"
                 tools:text="yyyy년 MM월 dd일 주문 결제하기\n(결제 만료까지 dd일)" />
         </LinearLayout>
