@@ -137,12 +137,8 @@ class RestaurantFragment : Fragment() {
         binding.chipgroupRestaurantFilters.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.chip_restaurant_favorite -> searchFavoriteRestaurant()
-                R.id.chip_restaurant_distance -> {
-
-                }
-                R.id.chip_restaurant_review -> {
-
-                }
+                R.id.chip_restaurant_distance -> searchRestaurantByDistanceAsc()
+                R.id.chip_restaurant_review -> searchRestaurantByReviewDesc()
                 R.id.chip_restaurant_asc -> searchRestaurantsByLiteralAsc()
                 else -> searchRestaurant()
             }
@@ -158,12 +154,8 @@ class RestaurantFragment : Fragment() {
             lastLocation = it
             when (binding.chipgroupRestaurantFilters.checkedChipId) {
                 R.id.chip_restaurant_favorite -> searchFavoriteRestaurant()
-                R.id.chip_restaurant_distance -> {
-
-                }
-                R.id.chip_restaurant_review -> {
-
-                }
+                R.id.chip_restaurant_distance -> searchRestaurantByDistanceAsc()
+                R.id.chip_restaurant_review -> searchRestaurantByReviewDesc()
                 R.id.chip_restaurant_asc -> searchRestaurantsByLiteralAsc()
                 else -> searchRestaurant()
             }
@@ -208,6 +200,32 @@ class RestaurantFragment : Fragment() {
         searchRestaurantJob?.cancel()
         searchRestaurantJob = lifecycleScope.launch {
             viewModel.searchRestaurant(category = category, lat = lat, lng = lng, literal = true)
+                .collectLatest {
+                    restaurantListAdapter.submitData(it)
+                }
+        }
+    }
+
+    private fun searchRestaurantByDistanceAsc() {
+        val lat = lastLocation.latitude
+        val lng = lastLocation.longitude
+
+        searchRestaurantJob?.cancel()
+        searchRestaurantJob = lifecycleScope.launch {
+            viewModel.searchRestaurant(category = category, lat = lat, lng = lng, distance = true)
+                .collectLatest {
+                    restaurantListAdapter.submitData(it)
+                }
+        }
+    }
+
+    private fun searchRestaurantByReviewDesc() {
+        val lat = lastLocation.latitude
+        val lng = lastLocation.longitude
+
+        searchRestaurantJob?.cancel()
+        searchRestaurantJob = lifecycleScope.launch {
+            viewModel.searchRestaurant(category = category, lat = lat, lng = lng, review = true)
                 .collectLatest {
                     restaurantListAdapter.submitData(it)
                 }

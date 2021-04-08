@@ -14,7 +14,9 @@ class RestaurantPagingSource(
     private val longitude: String,
     private val userId: Long = 0,
     private val favorite: Boolean = false,
-    private val literal: Boolean = false
+    private val literal: Boolean = false,
+    private val distance: Boolean = false,
+    private val review: Boolean = false
 ) : PagingSource<Int, Restaurant>() {
 
     companion object {
@@ -27,7 +29,9 @@ class RestaurantPagingSource(
         return try {
             val response = when {
                 favorite -> restaurantService.findFavoriteRestaurants(userId, category, latitude, longitude, position)
-                literal -> restaurantService.searchRestaurantByLiteralAsc(category, latitude, longitude, position, true)
+                literal -> restaurantService.searchRestaurantByLiteralAsc(category, latitude, longitude, position, literal = true)
+                distance -> restaurantService.searchRestaurantByDistanceAsc(category, latitude, longitude, position, distance = true)
+                review -> restaurantService.searchRestaurantByReviewDesc(category, latitude, longitude, position, review = true)
                 else -> restaurantService.searchRestaurantsByCategory(category, latitude, longitude, position)
             }
 

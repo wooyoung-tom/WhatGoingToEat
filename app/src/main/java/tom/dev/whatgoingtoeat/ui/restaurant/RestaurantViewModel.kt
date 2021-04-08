@@ -26,21 +26,28 @@ constructor(
     }
 
     fun searchRestaurant(
-        category: String, lat: Double, lng: Double, userId: Long = 0, favorite: Boolean = false, literal: Boolean = false
+        category: String, lat: Double, lng: Double, userId: Long = 0,
+        favorite: Boolean = false,
+        literal: Boolean = false,
+        distance: Boolean = false,
+        review: Boolean = false
     ): Flow<PagingData<Restaurant>> {
         return when {
-            favorite -> {
-                restaurantRepository.findFavoriteRestaurants(userId, category, lat.toString(), lng.toString(), favorite)
-                    .cachedIn(viewModelScope)
-            }
-            literal -> {
-                restaurantRepository.findRestaurantsByLiteralAsc(category, lat.toString(), lng.toString(), true)
-                    .cachedIn(viewModelScope)
-            }
-            else -> {
-                restaurantRepository.findRestaurants(category, lat.toString(), lng.toString())
-                    .cachedIn(viewModelScope)
-            }
+            favorite -> restaurantRepository
+                .findFavoriteRestaurants(userId, category, lat.toString(), lng.toString(), favorite)
+                .cachedIn(viewModelScope)
+            literal -> restaurantRepository
+                .findRestaurantsByLiteralAsc(category, lat.toString(), lng.toString(), literal = true)
+                .cachedIn(viewModelScope)
+            distance -> restaurantRepository
+                .searchRestaurantByDistanceAsc(category, lat.toString(), lng.toString(), distance = true)
+                .cachedIn(viewModelScope)
+            review -> restaurantRepository
+                .searchRestaurantByReviewDesc(category, lat.toString(), lng.toString(), review = true)
+                .cachedIn(viewModelScope)
+            else -> restaurantRepository
+                .findRestaurants(category, lat.toString(), lng.toString())
+                .cachedIn(viewModelScope)
         }
     }
 }
