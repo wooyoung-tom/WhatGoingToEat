@@ -217,7 +217,7 @@
         android:id="@+id/btn_home_payment_later"
         android:layout_width="match_parent"
         android:layout_height="96dp"
-        android:layout_marginHorizontal="24dp"
+        android:layout_marginHorizontal="32dp"
         android:layout_marginBottom="24dp"
         android:visibility="invisible"
         app:cardBackgroundColor="@color/apricot"
