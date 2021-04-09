@@ -19,6 +19,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/btn_home_payment"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="결제내역"
+        app:layout_constraintBottom_toBottomOf="@id/tv_home_logo_title"
+        app:layout_constraintEnd_toStartOf="@id/btn_home_basket"
+        app:layout_constraintTop_toTopOf="@id/tv_home_logo_title" />
+
+    <Button
         android:id="@+id/btn_home_basket"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"

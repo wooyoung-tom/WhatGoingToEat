@@ -1,7 +1,6 @@
 package tom.dev.whatgoingtoeat.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +47,7 @@ class HomeFragment : Fragment() {
         setWesternButtonClickListener()
         setJapaneseButtonClickListener()
 
-        setBasketButtonClickListener()
+        setButtonClickListener()
         setNotPaidPaymentButtonClickListener()
 
         observeLoading()
@@ -97,9 +96,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setBasketButtonClickListener() {
+    private fun setButtonClickListener() {
         binding.btnHomeBasket.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_basketFragment)
+        }
+        binding.btnHomePayment.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_paymentHistoryFragment)
         }
     }
 

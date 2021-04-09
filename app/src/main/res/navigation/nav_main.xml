@@ -64,6 +64,13 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_paymentHistoryFragment"
+            app:destination="@id/paymentHistoryFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/restaurantFragment"
@@ -174,7 +181,7 @@
         android:id="@+id/paidFragment"
         android:name="tom.dev.whatgoingtoeat.ui.payment.paid.PaidFragment"
         android:label="PaidFragment"
-        tools:layout="@layout/fragment_paid" >
+        tools:layout="@layout/fragment_paid">
         <argument
             android:name="paidResult"
             app:argType="tom.dev.whatgoingtoeat.dto.order.payment.OrderPaymentItem" />
@@ -190,4 +197,9 @@
             app:popUpTo="@id/paidFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/paymentHistoryFragment"
+        android:name="tom.dev.whatgoingtoeat.ui.payment.history.PaymentHistoryFragment"
+        android:label="PaymentHistoryFragment"
+        tools:layout="@layout/fragment_payments" />
 </navigation>

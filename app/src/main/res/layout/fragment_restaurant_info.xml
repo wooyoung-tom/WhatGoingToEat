@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,18 +10,105 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_restaurant_info_v50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
         <TextView
-            android:id="@+id/tv_restaurant_info_logo_title"
+            android:id="@+id/tv_restaurant_info_name"
             style="@style/TextAppearance.MaterialComponents.Headline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="36dp"
-            android:text="런치마켓"
-            android:textColor="@color/black"
+            android:textColor="@color/apricot"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="식당이름" />
+
+        <TextView
+            android:id="@+id/tv_restaurant_info_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_name"
+            tools:text="카테고리" />
+
+        <TextView
+            android:id="@+id/tv_restaurant_info_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="18dp"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_category"
+            tools:text="주소입니다." />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btn_restaurant_info_favorite"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="@id/guideline_restaurant_info_v50"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_address"
+            app:strokeColor="@color/silver_chalice"
+            app:strokeWidth="1dp">
+
+            <TextView
+                android:id="@+id/tv_restaurant_info_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="8dp"
+                android:paddingVertical="8dp"
+                app:drawableStartCompat="@drawable/ic_baseline_favorite_24"
+                tools:text="즐겨찾기 추가" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btn_restaurant_info_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:cardBackgroundColor="@color/silver"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_restaurant_info_v50"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_address"
+            app:strokeColor="@color/silver_chalice"
+            app:strokeWidth="1dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="8dp"
+                android:paddingVertical="8dp"
+                android:text="평가하기"
+                app:drawableStartCompat="@drawable/ic_baseline_edit_note_24" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:id="@+id/view_restaurant_info_divider1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
+            app:layout_constraintTop_toBottomOf="@id/btn_restaurant_info_favorite" />
 
         <FrameLayout
             android:id="@+id/map"
@@ -29,147 +116,48 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:background="@color/silver"
-            app:layout_constraintDimensionRatio="2:1"
-            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_logo_title" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintDimensionRatio="1.5:1"
+            app:layout_constraintTop_toBottomOf="@id/view_restaurant_info_divider1" />
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        <View
+            android:id="@+id/view_restaurant_info_divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
+            app:layout_constraintTop_toBottomOf="@id/map" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/tv_restaurant_info_menu_title"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="메뉴"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
+            app:layout_constraintTop_toBottomOf="@id/view_restaurant_info_divider2" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_restaurant_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="24dp">
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_menu_title"
+            tools:itemCount="3"            tools:listitem="@layout/item_menu" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_restaurant_info_v50"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-
-            <TextView
-                android:id="@+id/tv_restaurant_info_name"
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="18dp"
-                android:textColor="@color/apricot"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="식당이름" />
-
-            <TextView
-                android:id="@+id/tv_restaurant_info_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_name"
-                tools:text="카테고리" />
-
-            <TextView
-                android:id="@+id/tv_restaurant_info_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="18dp"
-                app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_category"
-                tools:text="주소입니다." />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btn_restaurant_info_favorite"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                app:cardCornerRadius="8dp"
-                app:layout_constraintEnd_toEndOf="@id/guideline_restaurant_info_v50"
-                app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_address"
-                app:strokeColor="@color/silver_chalice"
-                app:strokeWidth="1dp">
-
-                <TextView
-                    android:id="@+id/tv_restaurant_info_favorite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawablePadding="8dp"
-                    android:paddingVertical="8dp"
-                    app:drawableStartCompat="@drawable/ic_baseline_favorite_24"
-                    tools:text="즐겨찾기 추가" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btn_restaurant_info_review"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                app:cardBackgroundColor="@color/silver"
-                app:cardCornerRadius="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guideline_restaurant_info_v50"
-                app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_address"
-                app:strokeColor="@color/silver_chalice"
-                app:strokeWidth="1dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawablePadding="8dp"
-                    android:paddingVertical="8dp"
-                    android:text="평가하기"
-                    app:drawableStartCompat="@drawable/ic_baseline_edit_note_24" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <View
-                android:id="@+id/view_restaurant_info_divider"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="24dp"
-                android:background="@color/gray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tv_restaurant_info_name"
-                app:layout_constraintTop_toBottomOf="@id/btn_restaurant_info_favorite" />
-
-            <TextView
-                android:id="@+id/tv_restaurant_info_menu_title"
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="메뉴"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/view_restaurant_info_divider"
-                app:layout_constraintTop_toBottomOf="@id/view_restaurant_info_divider" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_restaurant_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:nestedScrollingEnabled="false"
-                app:layout_constraintTop_toBottomOf="@id/tv_restaurant_info_menu_title"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_menu" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <Button
-        android:id="@+id/btn_restaurant_info_menu_select"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_marginHorizontal="24dp"
-        android:text="선택완료" />
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_restaurant_info_menu_select"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="18dp"
+            android:text="선택완료"
+            app:layout_constraintTop_toBottomOf="@id/recyclerview_restaurant_menu" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

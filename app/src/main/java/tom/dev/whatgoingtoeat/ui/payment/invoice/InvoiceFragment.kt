@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import tom.dev.whatgoingtoeat.R
 import tom.dev.whatgoingtoeat.databinding.FragmentInvoiceBinding
 import tom.dev.whatgoingtoeat.dto.order.OrderBasketItem
+import tom.dev.whatgoingtoeat.utils.LoadingDialog
 import tom.dev.whatgoingtoeat.utils.hide
 import tom.dev.whatgoingtoeat.utils.show
 import tom.dev.whatgoingtoeat.utils.showShortSnackBar
@@ -66,6 +67,7 @@ class InvoiceFragment : Fragment() {
         setPaymentButtonClickListener()
 
         observePaymentResult()
+        observeLoading()
     }
 
     private fun getTotalPriceStr(list: List<OrderBasketItem>) = "${list.sumOf { it.totalPrice }} 원"
@@ -119,6 +121,16 @@ class InvoiceFragment : Fragment() {
 
         viewModel.orderPaidFailedLiveData.observe(viewLifecycleOwner) {
             requireView().showShortSnackBar(it)
+        }
+    }
+
+    private fun observeLoading() {
+        val loading = LoadingDialog(requireContext())
+        viewModel.startLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.show()
+        }
+        viewModel.stopLoadingDialogEvent.observe(viewLifecycleOwner) {
+            loading.dismiss()
         }
     }
 }
