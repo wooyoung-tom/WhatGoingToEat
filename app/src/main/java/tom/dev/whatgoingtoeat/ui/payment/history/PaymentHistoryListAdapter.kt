@@ -24,7 +24,7 @@ class PaymentHistoryListAdapter : ListAdapter<PaymentHistoryItem, PaymentHistory
             binding.tvItemPaymentDate.text = getDateTimeStr(item.date)
             binding.tvItemPaymentOrder.text = getOrderListStr(item.orders)
             binding.tvItemPaymentOrderPrice.text = getOrderListPriceStr(item.orders)
-            binding.tvItemPaymentPrice.text = item.price.toString()
+            binding.tvItemPaymentPrice.text = getPaymentPriceStr(item.price)
         }
 
         private fun getDateTimeStr(localDateTime: String): String {
@@ -64,6 +64,8 @@ class PaymentHistoryListAdapter : ListAdapter<PaymentHistoryItem, PaymentHistory
 
             return priceText
         }
+
+        private fun getPaymentPriceStr(price: Int) = "$price 원"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentHistoryViewHolder {
