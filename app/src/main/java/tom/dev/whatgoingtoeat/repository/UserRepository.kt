@@ -8,5 +8,6 @@ import tom.dev.whatgoingtoeat.dto.user.UserSignUpRequest
 
 interface UserRepository {
     fun signUp(user: UserSignUpRequest): Single<CommonSimpleResponse>
-    fun signIn(user: UserSignInRequest): Single<UserSignInResponse>
+
+    suspend fun signIn(user: UserSignInRequest): UserSignInResponse
 }

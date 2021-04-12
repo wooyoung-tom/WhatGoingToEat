@@ -17,7 +17,7 @@ constructor(
         return userService.signUp(user)
     }
 
-    override fun signIn(user: UserSignInRequest): Single<UserSignInResponse> {
+    override suspend fun signIn(user: UserSignInRequest): UserSignInResponse {
         return userService.signIn(user)
     }
 }

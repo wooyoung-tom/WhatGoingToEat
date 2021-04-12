@@ -4,6 +4,7 @@ import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.POST
 import tom.dev.whatgoingtoeat.dto.CommonSimpleResponse
+import tom.dev.whatgoingtoeat.dto.NetworkResult
 import tom.dev.whatgoingtoeat.dto.user.UserSignInRequest
 import tom.dev.whatgoingtoeat.dto.user.UserSignInResponse
 import tom.dev.whatgoingtoeat.dto.user.UserSignUpRequest
@@ -16,7 +17,7 @@ interface UserService {
     ): Single<CommonSimpleResponse>
 
     @POST("/users/sign-in")
-    fun signIn(
+    suspend fun signIn(
         @Body user: UserSignInRequest
-    ): Single<UserSignInResponse>
+    ): UserSignInResponse
 }

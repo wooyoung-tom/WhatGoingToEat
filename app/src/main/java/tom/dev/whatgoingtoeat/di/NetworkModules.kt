@@ -2,7 +2,6 @@ package tom.dev.whatgoingtoeat.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +12,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tom.dev.whatgoingtoeat.BuildConfig
-import tom.dev.whatgoingtoeat.repository.*
 import tom.dev.whatgoingtoeat.service.*
 import javax.inject.Singleton
 
@@ -67,24 +65,4 @@ object NetworkModules {
     @Provides
     @Singleton
     fun providePaymentService(retrofit: Retrofit): PaymentService = retrofit.create(PaymentService::class.java)
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class RepositoryModules {
-
-    @Binds
-    abstract fun bindRestaurantRepository(restaurantRepositoryImpl: RestaurantRepositoryImpl): RestaurantRepository
-
-    @Binds
-    abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
-
-    @Binds
-    abstract fun bindOrderRepository(orderRepositoryImpl: OrderRepositoryImpl): OrderRepository
-
-    @Binds
-    abstract fun bindFavoriteRepository(favoriteRepositoryImpl: FavoriteRepositoryImpl): FavoriteRepository
-
-    @Binds
-    abstract fun bindPaymentRepository(paymentRepositoryImpl: PaymentRepositoryImpl): PaymentRepository
 }
